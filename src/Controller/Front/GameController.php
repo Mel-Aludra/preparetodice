@@ -33,6 +33,7 @@ class GameController extends AbstractController
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
+            $game->setMoneyTerm("Gold");
             $userGame = new UserGame();
             $userGame->setGame($game);
             $userGame->setUser($this->getUser());
