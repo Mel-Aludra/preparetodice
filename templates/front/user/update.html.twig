@@ -1,0 +1,20 @@
+{% extends 'front/_layout/_base.html.twig' %}
+{% form_theme form 'front/_layout/form-theme.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="strip ghost title">
+        <h1>Update account</h1>
+    </div>
+    <div class="strip translucent focus screenEmphasis">
+        <form method="post" action="">
+            {{ form_start(form) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.password) }}
+            <input type="submit" value="Update" />
+            {{ form_end(form) }}
+        </form>
+    </div>
+{% endblock %}

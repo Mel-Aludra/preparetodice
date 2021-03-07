@@ -1,0 +1,57 @@
+{% block form_row %}
+    <div class="formRow">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        <p class="inputError"><i class="fas fa-exclamation-circle"></i><span></span>{{ block('errors') }}</p>
+    </div>
+{% endblock %}
+
+{% block form_label %}
+    <label for="{{ name }}">{{ label }}</label>
+{% endblock %}
+
+{% block text_widget %}
+    <input
+            {% if value != "" %}value="{{ value }}"{% endif %}
+            name="{{ full_name }}"
+            type="text"
+            id="{{ name }}"
+            {% if errors is not empty %}class="error"{% endif %}
+            data-name="{{ label }}"
+            {% if form.vars.attr.dataFormChecker is defined %}data-form-checker="{{ form.vars.attr.dataFormChecker }}"{% endif %}
+            {% if form.vars.attr.placeholder is defined %}placeholder="{{ form.vars.attr.placeholder }}"{% endif %}
+            {% if form.vars.errors|length > 0 %}class="error"{% endif %}
+    />
+{% endblock %}
+
+{% block email_widget %}
+    <input
+            {% if value != "" %}value="{{ value }}"{% endif %}
+            name="{{ full_name }}"
+            type="email"
+            id="{{ name }}"
+            data-name="{{ label }}"
+            {% if form.vars.attr.dataFormChecker is defined %}data-form-checker="{{ form.vars.attr.dataFormChecker }}"{% endif %}
+            {% if form.vars.attr.placeholder is defined %}placeholder="{{ form.vars.attr.placeholder }}"{% endif %}
+            {% if form.vars.errors|length > 0 %}class="error"{% endif %}
+    />
+{% endblock %}
+
+{% block password_widget %}
+    <input
+            value=""
+            name="{{ full_name }}"
+            type="password"
+            id="{{ name }}"
+            data-name="{{ label }}"
+            {% if form.vars.attr.dataFormChecker is defined %}data-form-checker="{{ form.vars.attr.dataFormChecker }}"{% endif %}
+            {% if form.vars.attr.placeholder is defined %}placeholder="{{ form.vars.attr.placeholder }}"{% endif %}
+            {% if form.vars.errors|length > 0 %}class="error"{% endif %}
+    />
+{% endblock %}
+
+{% block errors %}
+    {% if errors is not empty %}
+        {% for error in errors %}<span class="system">{{ error.message }}</span>{% endfor %}
+    {% endif %}
+{% endblock %}

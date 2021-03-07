@@ -1,0 +1,39 @@
+{% include "front/_layout/menu-action.html.twig" with {
+    'name': "Login",
+    'icon': "fal fa-sign-in-alt",
+    'route': 'login',
+    'loggedAction': false,
+    'hiddenIfLogged': true
+} %}
+
+{% include "front/_layout/menu-action.html.twig" with {
+    'name': "Register",
+    'icon': "fal fa-user-plus",
+    'route': 'front_user_add',
+    'loggedAction': false,
+    'hiddenIfLogged': true
+} %}
+
+{% include "front/_layout/menu-action.html.twig" with {
+    'name': "My games",
+    'icon': "fal fa-books",
+    'route': 'front_game_list',
+    'loggedAction': true,
+    'hiddenIfLogged': false
+} %}
+
+{% include "front/_layout/menu-action.html.twig" with {
+    'name': "Create game",
+    'icon': "fal fa-book-medical",
+    'route': 'front_game_add',
+    'loggedAction': true,
+    'hiddenIfLogged': false
+} %}
+
+{% include "front/_layout/menu-action.html.twig" with {
+    'name': "Logout",
+    'icon': "fal fa-sign-out-alt",
+    'route': 'logout',
+    'loggedAction': true,
+    'hiddenIfLogged': false,
+} %}

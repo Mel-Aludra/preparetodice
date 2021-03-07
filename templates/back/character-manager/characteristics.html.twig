@@ -1,0 +1,58 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}{{ character.name }} | Equipment{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_characterSheet", {'game': game.id, 'gameCharacter': character.id}) }}"><i class="fal fa-user"></i>{{ character.name }}</a>
+        <span> > </span>
+        <span><i class="fal fa-tasks-alt"></i>Characteristics</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <form method="post" data-form-checker="true">
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>Characteristics - {{ character.name }}</h1>
+                <p>Update characteristics of {{ character.name }}.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-tasks-alt"></i>Update characteristics</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2>Resources</h2>
+                            {% include "back/_common/character-resources-form.html.twig" %}
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2>Attributes</h2>
+                            {% include "back/_common/character-attributes-form.html.twig" %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+    </script>
+{% endblock %}

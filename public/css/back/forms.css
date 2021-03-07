@@ -1,0 +1,238 @@
+/* ------------------- */
+/* --- FORMS --------- */
+/* ------------------- */
+
+/* Forms > Container */
+
+div.formRow {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 18px 0;
+}
+
+/* Forms > Inputs */
+
+input, select, textarea {
+    background-color: var(--primary-color-dark);
+    border: 1px solid transparent;
+    font-family: "PtdBold", sans-serif;
+    font-size: 13px;
+    border-radius: 3px;
+    height: 28px;
+    padding: 6px;
+    outline: none;
+    color: white;
+    width: calc(100% - 12px);
+    transition: all 0.3s;
+}
+select { height: 42px; width: 100%; }
+textarea { min-height: 60px; font-size: 13px; }
+
+input[type="checkbox"] {
+    box-shadow: none;
+    width: 20px; height: 20px;
+    margin-bottom: 16px;
+}
+
+/* Forms > Inputs in error */
+
+input.error, select.error, textarea.error {
+    background-color: var(--color-error-light);
+}
+
+p.inputError { color: var(--color-error-light); }
+p.inputError>i { font-size: 14px; margin-right: 6px; }
+p.inputError>span { font-size: 13px; }
+
+.inputError {
+    display: none;
+    font-size: 13px;
+    color: var(--color-error-dark);
+    padding-top: 4px;
+}
+
+input.error+p.inputError, .postErrors>.inputError { display: block; }
+textarea.error+label+p.inputError, textarea.error+p.inputError, textarea.error+div+p.inputError, .inputError.forceDisplay { display: block; }
+
+/* Forms > Labels, inputs focus and placeholders */
+
+label {
+    color: var(--primary-color-lighter);
+    display: block;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+input::placeholder, textarea::placeholder {
+    font-size: 13px;
+    color: var(--primary-color-darker);
+}
+
+input:focus, select:focus, textarea:focus, .collectionContainer input:focus, .collectionContainer select:focus, .collectionContainer textarea:focus {
+    background-color: var(--secondary-color-dark);
+}
+
+input[type="checkbox"]+label {
+    margin-bottom: 25px;
+}
+
+/* Forms > Submit */
+
+button[type="submit"] {
+    background-color: var(--secondary-color-dark);
+    border: 1px solid black;
+    color: white;
+    margin: auto;
+    display: block;
+    height: 38px;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: auto;
+    min-width: 180px;
+    outline: none;
+}
+button[type="submit"]:hover { background-color: var(--secondary-color-darker); color: white; }
+button[type="submit"].emphasis { margin: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+
+/* Form > Submit with icon */
+
+input[type="submit"]>i, button[type="submit"]>i { margin-right: 6px; font-size: 14px; }
+
+/* ------------------- */
+/* --- COLLECTIONS --- */
+/* ------------------- */
+
+/* Collection > Containers */
+
+.collectionContainer {
+    background-color: var(--primary-color-dark);
+    border-radius: 3px;
+    padding: 6px;
+    border: 1px solid black;
+    margin: 10px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.collectionContainer>.header {
+    display: flex; flex-direction: row; justify-content: space-between; align-items: center;
+    padding: 0;
+}
+.collectionContainer>.header>p { font-family: "PtdMedium", sans-serif; font-size: 13px; }
+.collectionContainer>.body>div { display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end; }
+
+.collectionContainer .formRow {
+    width: calc(100% - 16px);
+    display: flex;
+    flex-direction: column;
+    margin: 8px;
+}
+
+/* Collection > Inputs and labels overload */
+
+.collectionContainer label { font-size: 12px; }
+
+.collectionContainer input::placeholder, .collectionContainer textarea::placeholder {
+    font-size: 13px;
+    color: var(--primary-color-darker);
+}
+
+/* Collection > Add item button */
+
+a[data-collection-adder] {
+    cursor: pointer;
+    padding: 4px 6px;
+    border: 1px solid var(--tertiary-color-light);
+    border-radius: 3px;
+    display: flex; flex-direction: row; justify-content: center; align-items: center;
+    min-width: 200px;
+    transition: all 0.3s;
+    text-overflow: ellipsis;
+    color: white;
+}
+a[data-collection-adder]>i { margin-right: 4px; font-size: 14px; }
+a[data-collection-adder]>span { font-family: "PtdBold", sans-serif; font-size: 14px; }
+a[data-collection-adder]:hover { background-color: var(--tertiary-color-darker); }
+
+/* Collection > Remove item button */
+
+.collectionContainer>.header {
+    position: relative;
+}
+
+.collectionContainer>.header>a {
+    position: absolute; top: 0; right: 0;
+    color: var(--color-error-light);
+    cursor: pointer;
+    padding: 1px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    display: flex; flex-direction: row; justify-content: flex-start; align-items: center;
+}
+.collectionContainer>.header>a>i { margin-right: 4px; font-size: 12px; }
+.collectionContainer>.header>a>span { font-size: 12px; font-family: "PtdMedium", sans-serif; }
+.collectionContainer>.header>a:hover { background-color: var(--color-error-dark); border-color: var(--color-error-dark); }
+
+.collectionContainer input, .collectionContainer select, .collectionContainer textarea {
+    background-color: var(--primary-color-medium);
+    border: 1px solid var(--primary-color-darker);
+}
+
+.collectionContainer input.ghost {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+@media all AND (max-width: 1200px) {
+
+    .collectionContainer>.body>div { flex-direction: column; }
+    a[data-collection-adder] { width: 100%; }
+
+}
+
+/* -------------------------------- */
+/* --- FILTERING AND ORDERING ----- */
+/* -------------------------------- */
+
+.filteringContainer { display: flex; flex-direction: row; justify-content: flex-end; align-items: flex-end; }
+.filteringContainer>.formRow { width: auto; margin: 0 2px 0 0; }
+.filteringContainer input, .filteringContainer select {
+    border-color: var(--primary-color-dark);
+    background-color: var(--primary-color-dark);
+    max-width: 200px;
+    font-size: 12px;
+    font-family: "PtdRegular", sans-serif;
+}
+.filteringContainer input::placeholder { color: var(--primary-color-light); }
+.filteringContainer input:focus, .filteringContainer select:focus { background-color: var(--primary-color-medium); }
+.filteringContainer input { padding: 4px; height: 19px; }
+.filteringContainer select { height: 29px; }
+.filteringContainer button[type="submit"] {
+    border-color: var(--primary-color-dark);
+    background-color: var(--primary-color-dark);
+    padding: 0 6px; margin-left: 2px; width: auto; height: 29px; min-width: auto;
+}
+.filteringContainer button[type="submit"]>span, .filteringContainer button[type="submit"]>i { font-size: 13px; }
+.filteringContainer button[type="submit"]:hover { background-color: var(--primary-color-darker); }
+.filteringContainer button.deleteFilters {
+    background-color: var(--color-error-light);
+    color: var(--color-error-dark);
+    border: 1px solid var(--color-error-darker);
+    border-radius: 3px;
+    font-size: 11px;
+    padding: 0 0 0 4px;
+    width: auto;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    display: flex; flex-direction: row; justify-content: space-between; align-items: center;
+}
+.filteringContainer button.deleteFilters>i {
+    margin-left: 6px; margin-right: 0; background-color: var(--color-error-dark); height: 28px; width: 30px;
+    border-top-right-radius: 3px; border-top-left-radius: 3px;
+    border-left: 1px solid black;
+    padding: 0 3px;
+    display: flex; flex-direction: row; justify-content: center; align-items: center;
+    color: white;
+}
+.filteringContainer button.deleteFilters:hover { background-color: var(--color-error-dark); color: white; }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class="admin" lang="en">
+<head>
+    <style>
+
+        body {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            line-height: 1.5;
+            background-color: #232323;
+            color: white;
+        }
+
+        div.header>p, div.content>p { color: white !important; }
+
+        div.header {
+            background-color: #293b63;
+            font-weight: bold;
+            padding: 5px 10px;
+            margin: 30px auto 0 auto;
+            max-width: 600px;
+        }
+
+        div.content {
+            background-color: #494949;
+            margin: 0 auto 30px auto;
+            max-width: 600px;
+            padding: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div>
+    <div class="header">
+        {% block title %}{% endblock %}
+    </div>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+</body>
+</html>

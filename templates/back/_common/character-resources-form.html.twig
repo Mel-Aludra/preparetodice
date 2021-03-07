@@ -1,0 +1,29 @@
+{% for characterResource in character.characterResources %}
+    <div class="collectionContainer" style="background-color:{{ characterResource.resource.darkColor }}">
+        <div class="header">
+            <p>{{ characterResource.resource.name }}</p>
+        </div>
+        <div class="body">
+            <div>
+                {% set characterResourceId = characterResource.id %}
+                {% if characterResourceId is null %}
+                    {% set characterResourceId = characterResource.resource.id %}
+                    <input type="hidden" name="character_resources[{{ characterResourceId }}][resourceId]" value="{{ characterResource.resource.id }}" />
+                {% endif %}
+                <input type="hidden" />
+                <div class="formRow">
+                    <label for="cr_{{ characterResourceId }}_current">Current value</label>
+                    <input name="character_resources[{{ characterResourceId }}][current]" id="cr_{{ characterResourceId }}_current" type="number" value="{{ characterResource.currentValue }}" />
+                </div>
+                <div class="formRow">
+                    <label for="cr_{{ characterResourceId }}_base">Base value</label>
+                    <input name="character_resources[{{ characterResourceId }}][base]" id="cr_{{ characterResourceId }}_base" type="number" value="{{ characterResource.value }}" />
+                </div>
+                <div class="formRow">
+                    <label for="cr_{{ characterResourceId }}_final">Final value</label>
+                    <input id="cr_{{ characterResourceId }}_final" class="ghost" disabled="disabled" type="number" value="{{ characterResource.finalValue }}" />
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

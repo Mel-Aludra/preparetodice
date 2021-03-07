@@ -1,0 +1,45 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Define life resource{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_resource_list", {'game': game.id}) }}"><i class="fal fa-tasks-alt"></i>Resources</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>Define life resource</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="stickyPageHeader">
+        <div>
+            <h1>Define resource as life</h1>
+            <p>A character who has 0 hit points is considered dead and cannot be healed or acted.</p>
+        </div>
+    </div>
+    <div class="strip focus">
+        <div class="card">
+            <div class="body">
+                <h2 style="margin-bottom: 8px;"><i class="fal fa-heart-square"></i>What resource represents life in your game?</h2>
+                {% if game.lifeResource is not null %}
+                    <p><strong>{{ game.lifeResource.name }}</strong> is actually define as life resource in your game.</p>
+                {% else %}
+                    <p>
+                        No resource is actually define as life resource. Please choose a resource who will represents life in your game.
+                    </p>
+                {% endif %}
+                {% for resource in resources %}
+                    {% if game.lifeResource is null or game.lifeResource.id != resource.id %}
+                        <div class="narrow">
+                            <a href="{{ path('gameBack_resource_defineAsLifeSelected', {'game': game.id, 'resource': resource.id}) }}" class="solidLink">
+                                Define {{ resource.name }} as life resource
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

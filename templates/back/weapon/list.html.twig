@@ -1,0 +1,53 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Weapons{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-sword"></i>Weapons</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    {% include "back/_common/list-page-header.html.twig" with {
+        'pageTitle': "Weapons",
+        'pageDescription': "Weapons can be equipped to characters so that they can attack with.",
+        'addActionRoute': path('gameBack_weapon_add', {'game': game.id}),
+        'addActionName': "Add weapon"
+    } %}
+
+    <div class="strip column">
+        {% if weapons|length == 0 %}
+            <p>You have no weapon in your game. To add a weapon, click on the top right button "Add weapon".</p>
+        {% endif %}
+        {% for weapon in weapons %}
+            <div class="object unfoldable">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-book-alt"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ weapon.name }}</h2>
+                        <p>{{ weapon.description }}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_weapon_update', {'game': game.id, 'weapon': weapon.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_weapon_delete', {'game': game.id, 'weapon': weapon.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="body">
+                    {% include "_common/entity-bodies/skill.html.twig" with {'skill': weapon} %}
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

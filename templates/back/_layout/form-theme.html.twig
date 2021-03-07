@@ -1,0 +1,103 @@
+{% block form_row %}
+    <div class="formRow">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        <p class="inputError"><i class="fas fa-exclamation-circle"></i><span></span>{{ block('errors') }}</p>
+    </div>
+{% endblock %}
+
+{% block form_label %}
+    <label for="{{ name }}">{{ label }}</label>
+{% endblock %}
+
+{% block text_widget %}
+    <input
+            {% if value != "" %}value="{{ value }}"{% endif %}
+            name="{{ full_name }}"
+            type="text"
+            id="{{ name }}"
+            data-name="{{ label }}"
+            {% if form.vars.attr.placeholder is defined %}placeholder="{{ form.vars.attr.placeholder }}"{% endif %}
+            {% if form.vars.attr.dataFormChecker is defined %}data-form-checker="{{ form.vars.attr.dataFormChecker }}"{% endif %}
+            {% if form.vars.errors|length > 0 %}class="error"{% endif %}
+    />
+{% endblock %}
+
+{% block textarea_widget %}
+    <textarea
+            name="{{ full_name }}"
+            id="{{ name }}"
+            data-name="{{ label }}"
+            {% if form.vars.attr.placeholder is defined %}placeholder="{{ form.vars.attr.placeholder }}"{% endif %}
+            {% if form.vars.attr.dataFormChecker is defined %}data-form-checker="{{ form.vars.attr.dataFormChecker }}"{% endif %}
+            {% if form.vars.errors|length > 0 %}class="error"{% endif %}
+    >{% if value != "" %}{{ value }}{% endif %}</textarea>
+{% endblock %}
+
+{% block email_widget %}
+    <input
+            {% if value != "" %}value="{{ value }}"{% endif %}
+            name="{{ full_name }}"
+            type="email"
+            id="{{ name }}"
+            data-name="{{ label }}"
+            {% if form.vars.attr.placeholder is defined %}placeholder="{{ form.vars.attr.placeholder }}"{% endif %}
+            {% if form.vars.attr.dataFormChecker is defined %}data-form-checker="{{ form.vars.attr.dataFormChecker }}"{% endif %}
+            {% if form.vars.errors|length > 0 %}class="error"{% endif %}
+    />
+{% endblock %}
+
+{% block password_widget %}
+    <input
+            value=""
+            name="{{ full_name }}"
+            type="password"
+            id="{{ name }}"
+            data-name="{{ label }}"
+            {% if form.vars.attr.placeholder is defined %}placeholder="{{ form.vars.attr.placeholder }}"{% endif %}
+            {% if form.vars.attr.dataFormChecker is defined %}data-form-checker="{{ form.vars.attr.dataFormChecker }}"{% endif %}
+            {% if form.vars.errors|length > 0 %}class="error"{% endif %}
+    />
+{% endblock %}
+
+{% block submit_widget %}
+    <button type="submit"><i class="fal fa-search"></i><span>Filtrer</span></button>
+{% endblock %}
+
+{% block errors %}
+    {% if errors is not empty %}
+        {% for error in errors %}
+            <span>{{ error.message }} </span>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{# Collections #}
+
+{% block collection_entry_row %}
+    {% set entityName = "dynamic" %}
+    {% set headerTitle = "New element" %}
+    {% if form.vars.value is not null %}
+        {% set entityName = form.vars.value.getClassName %}
+        {% set headerTitle = form.vars.value.getDisplayableClassName %}
+    {% endif %}
+
+    <div class="collectionContainer">
+        <div class="header">
+{#            <p>{{ headerTitle }}</p>#}
+            <a data-collection-remover="{{ entityName }}" {% if entityName == "dynamic" %}onclick="this.parentNode.parentNode.remove()"{% endif %}><i class="fas fa-minus-square"></i><span>rem.</span></a>
+        </div>
+        <div class="body">
+            {{ form_widget(form) }}
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block collection_label %}
+{% endblock %}
+
+{# memo - to delete when... idk we'll see - beat me if I forget #}
+{#{% block collection_entry_label %} ... {% endblock %}#}
+{#{% block collection_entry_help %} ... {% endblock %}#}
+{#{% block collection_entry_errors %} ... {% endblock %}#}

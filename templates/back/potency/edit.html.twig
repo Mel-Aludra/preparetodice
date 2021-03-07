@@ -1,0 +1,55 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% set title = "Create potency augmentator" %}
+{% set actionName = "Create potency augmentator" %}
+{% if context is defined and context == "update" %}
+    {% set title = "Update potency augmentator " ~ potencyAugmentator.name %}
+    {% set actionName = "Update potency augmentator" %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_potency_list", {'game': game.id}) }}"><i class="fal fa-chart-line"></i>Potency augmentators</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>{{ title }}</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form method="post" data-form-checker="true">
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>{{ title }}</h1>
+                <p>Define the properties of your potency augmentator and click on the "{{ actionName }}" button at the top right.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-chart-line"></i>{{ actionName }}</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                <div class="card">
+                    <div class="body">
+                        <form method="post" action="">
+                            {{ form_start(form) }}
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.type) }}
+                            {{ form_row(form.attribute) }}
+                            {{ form_row(form.percentCeiling) }}
+                            {{ form_end(form) }}
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </form>
+{% endblock %}

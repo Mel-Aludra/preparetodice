@@ -1,0 +1,29 @@
+.panels {
+    display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start;
+    width: 100%;
+}
+.panels>div { width: 100%; }
+.panels>div:first-child { margin-left:0; }
+.panels>div:last-child { margin-right:0; }
+.panels>div.small { width: 40%;}
+
+/* Handle specific margins in panels */
+
+.panels>div>.card { margin-right: 15px; }
+.panels>div:last-child>.card { margin-right: 0; }
+
+/* Panels with margins */
+.panels.spacedChildren>div { margin: 15px; }
+.panels.spacedChildren>div:first-child { margin-left: 15px; }
+.panels.spacedChildren>div:last-child { margin-right: 15px; }
+
+/* Panels in panels */
+.panels.spacedChildren>.panels.spacedChildren {
+    margin: 0;
+}
+
+@media all AND (max-width: 1200px) {
+    .panels { flex-direction: column; }
+    .panels>div.small { width: 100%; }
+    .panels.spacedChildren>div, .panels.spacedChildren>div:first-child, .panels.spacedChildren>div:last-child { margin: 4px; width: calc(100% - 8px); }
+}

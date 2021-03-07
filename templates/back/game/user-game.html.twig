@@ -1,0 +1,55 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}{{ userGame.user.name }} | Characters{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_settings", {'game': game.id}) }}"><i class="fal fa-cog"></i>Settings</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>{{ userGame.user.name }} - Characters</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form method="post" data-form-checker="true">
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>{{ userGame.user.name }} - Characters</h1>
+                <p>Define characters of the user {{ userGame.user.name }}.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-user"></i>Update characters</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                <div class="card">
+                    <div class="body">
+                        <form method="post" action="">
+                            {{ form_start(form) }}
+                                {{ form_row(form.userGameCharacters) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="userGameCharacter"><i class="fas fa-plus-square"></i><span>Add character to user</span></a>
+                                </div>
+                            {{ form_end(form) }}
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let eltManager = new FormCollectionManager($('#user_game_userGameCharacters'), {{ userGame.userGameCharacters|length }}, 'userGameCharacter');
+        eltManager.init();
+    </script>
+{% endblock %}

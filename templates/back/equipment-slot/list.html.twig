@@ -1,0 +1,57 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Equipment slots{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-female"></i>Equipment slots</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="stickyPageHeader">
+        <div>
+            <h1>Equipment slots</h1>
+            <p>
+                Equipment represents the places of equipment that the characters can have (head, body, etc.).
+            </p>
+        </div>
+        {% if game.attributes|length > 0 %}
+            <a class="solidLink" href="{{ path('gameBack_slot_add', {'game': game.id}) }}">
+                <i class="fas fa-plus"></i>
+                <span>Add equipment slot</span>
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="strip column">
+        {% if equipmentSlots|length == 0 %}
+            <p>You have no equipment slot in your game. To add an equipment slot, click on the top right button "Add equipment slot".</p>
+        {% endif %}
+        {% for equipmentSlot in equipmentSlots %}
+            <div class="object">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-female"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ equipmentSlot.name }}</h2>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_slot_update', {'game': game.id, 'equipmentSlot': equipmentSlot.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_slot_delete', {'game': game.id, 'equipmentSlot': equipmentSlot.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

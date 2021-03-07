@@ -1,0 +1,150 @@
+/* ---- TITLES ---- */
+
+h1 {
+    font-family: "PtdBold", sans-serif;
+    letter-spacing: 0.1em;
+    color: white;
+    font-size: 38px;
+}
+
+h2 {
+    font-family: "PtdMedium", sans-serif;
+    letter-spacing: 0.1em;
+    color: white;
+    font-size: 28px;
+}
+
+h3 {
+    font-family: "PtdThin", sans-serif;
+    letter-spacing: 0;
+    color: white;
+    font-size: 22px;
+    margin: 12px 0;
+}
+
+/* --------------------------- */
+/* ---------- BLOCKS --------- */
+/* --------------------------- */
+
+.widget {
+    background-color: var(--primary-color-darkest);
+    padding: 24px;
+    border-radius: 5px;
+    min-width: 600px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.widget.alt { background-color: var(--secondary-color-darker); }
+
+.widget>h1 {
+    border-bottom: 1px solid white;
+    padding-bottom: 11px;
+    font-size: 24px;
+}
+
+.widget.secondary { background-color: var(--secondary-color-lighter); }
+.widget.secondary h2, .widget.secondary p { color: var(--secondary-color-darker); }
+.widget.secondary h2, .widget.secondary p { color: var(--secondary-color-darker); }
+.widget.secondary .linksEmphasisContainer>a, a.linkEmphasis {
+    background-color: var(--secondary-color-dark);
+    border-color: var(--secondary-color-darker);
+}
+.widget.secondary .linksEmphasisContainer>a:hover, a.linkEmphasis:hover {
+    background-color: var(--secondary-color-darker);
+    color: white;
+}
+
+@media all AND (max-width: 1200px) {
+
+    .widget {
+        min-width: auto;
+        width: 100%;
+    }
+
+}
+
+/* --------------------------- */
+/* --- PANELS PRESENTATION --- */
+/* --------------------------- */
+
+.presentationPanelsContainer {
+    display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;
+    width: 100%;
+}
+
+.presentationPanelsContainer>div {
+    width: calc(30% - 30px);
+    margin: 30px 15px;
+    background-color: var(--secondary-color-darker);
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.presentationPanelsContainer>div>h2 {
+    border-bottom: 1px solid white;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+    display: flex; flex-direction: row; justify-content: flex-start; align-items: center;
+}
+.presentationPanelsContainer>div>h2>i {
+    margin-right: 6px;
+}
+.presentationPanelsContainer>div.extend {
+    width: calc(100% - 30px);
+}
+
+@media all AND (max-width: 1200px) {
+
+    .presentationPanelsContainer { flex-direction: column; }
+
+    .presentationPanelsContainer>div {
+        width: calc(100% - 36px);
+        margin: 3px;
+        padding: 15px;
+    }
+
+}
+
+/* --------------------------- */
+/* LIST PRESENTATION CONTAINER */
+/* --------------------------- */
+
+.listPresentationContainer { display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; }
+
+.listPresentationContainer>div {
+    background-color: var(--primary-color-darkest);
+    border-radius: 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    margin: 15px;
+    flex: 1;
+}
+.listPresentationContainer>div:first-child { margin-left: 0; }
+.listPresentationContainer>div:last-child { margin-right: 0; }
+
+.listPresentationContainer>div>h2 {
+    font-family: "PtdThin", sans-serif;
+    font-size: 20px;
+    padding: 15px;
+    border-bottom: 1px solid white;
+    border-top-left-radius: 5px; border-top-right-radius: 5px;
+}
+.listPresentationContainer>div>ul {
+    padding: 10px 40px;
+}
+.listPresentationContainer>div>ul>li {
+    margin-top: 8px;
+}
+.listPresentationContainer>div>ul>li:last-child { margin-bottom: 8px; }
+
+@media all AND (max-width: 1200px) {
+
+    .listPresentationContainer { flex-direction: column; }
+    .listPresentationContainer>div:first-child, .listPresentationContainer>div:last-child, .listPresentationContainer>div {
+        margin: 5px;
+    }
+
+}
+
+/* ---- LINKS ---- */
+
+a { color: var(--primary-color-light); }
+a:hover { text-decoration: underline; color: white; }

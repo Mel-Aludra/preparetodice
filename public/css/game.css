@@ -1,0 +1,120 @@
+:root {
+    --game-nav-width: 230px;
+    --tabs-height: 45px;
+}
+
+nav + .content {
+    margin-left: var(--game-nav-width);
+}
+
+
+/* Links > Detail */
+
+nav .detail {
+    width: 100%;
+    display: flex; flex-direction: column;
+}
+
+nav .detail>a {
+    margin-top: 0;
+    padding-left: 55px;
+    padding-right: 0;
+    width: calc(100% - 55px);
+}
+
+nav .linksContainer.detail {
+    border-top: none;
+}
+
+/* Characters tabs */
+
+.characterTabs {
+    position: fixed;
+    top: calc(var(--header-height) + 1px);
+    left: var(--game-nav-width);
+    width: calc(100% - var(--game-nav-width));
+    display: flex; flex-direction: row; justify-content: center; align-items: center;
+}
+
+body.noHeader .characterTabs {
+    top: 0;
+}
+
+.characterTabs>a {
+    width: 100%;
+    color: white;
+    display: flex; flex-direction: row; justify-content: center; align-items: center;
+    height: 44px;
+    background-color: var(--primary-color-dark);
+    cursor: pointer;
+    transition: var(--anim-default) var(--anim-duration-default);
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.characterTabs>a:first-child {
+    border-left: none;
+}
+
+.characterTabs>a>i {
+    margin-right: 8px;
+}
+
+.characterTabs>a:hover {
+    text-decoration: none;
+}
+
+.characterTabs>a.active {
+    background-color: var(--secondary-special);
+    border-bottom-color: transparent;
+}
+
+.characterTabs + #content {
+    width: calc(100% - 52px);
+    min-height: calc(100vh - var(--header-height) - 44px);
+    margin-top: var(--tabs-height);
+    padding: 25px;
+    background-color: var(--secondary-special);
+}
+
+body.noHeader .characterTabs + #content {
+    margin-top: 25px;
+    min-height: calc(100vh - 44px);
+}
+
+/* Mangement for back display */
+
+.stickyPageHeader + .characterTabs {
+    top: calc(var(--header-height) + 79px);
+}
+
+.stickyPageHeader + .characterTabs + #content {
+    margin-top: calc(var(--tabs-height) + 79px);
+}
+
+
+/* Responsive */
+
+@media all AND (max-width: 1200px) {
+
+    .characterTabs {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    .characterTabs + #content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .characterTabs>a {
+        flex-direction: column;
+    }
+
+    nav + .content {
+        margin-left: 0;
+    }
+
+}

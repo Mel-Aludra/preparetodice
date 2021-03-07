@@ -1,0 +1,20 @@
+<div>
+    <div>
+        {% for characterSkill in character.characterSkills %}
+            <div class="object">
+                <div class="header" onclick="unfold(this)">
+                    <div class="graph">
+                        <i class="fal fa-book-alt"></i>
+                    </div>
+                    <div class="identity">
+                        <p><strong>{{ characterSkill.skill.name }}</strong></p>
+                        <p>{{ characterSkill.skill.description }}</p>
+                    </div>
+                </div>
+                <div class="body">
+                    {% include "_common/entity-bodies/skill.html.twig" with {'skill': characterSkill.skill} %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

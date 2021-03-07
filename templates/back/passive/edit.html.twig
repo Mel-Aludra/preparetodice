@@ -1,0 +1,137 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% set title = "Create passive" %}
+{% set actionName = "Create passive" %}
+{% if context is defined and context == "update" %}
+    {% set title = "Update passive " ~ passive.name %}
+    {% set actionName = "Update passive" %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_passive_list", {'game': game.id}) }}"><i class="fal fa-fingerprint"></i>Passives</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>{{ title }}</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <form method="post" data-form-checker="true">
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>{{ title }}</h1>
+                <p>Define the properties of your passive and click on the "Create passive" button at the top right.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-fingerprint"></i>{{ actionName }}</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                {# Left block #}
+                <div class="small">
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-book-alt"></i>Status effect properties</h2>
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.description) }}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-user-minus"></i>Attribute alterations</h2>
+                            <p class="spaceBefore">Use to increase or decrease attributes of affected character</p>
+                            {% if game.attributes|length == 0 %}
+                                <p class="alert">You cannot add an alteration because no attribute exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.attributeAlterations) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="attributeAlteration"><i class="fas fa-plus-square"></i><span>Add an alteration</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-user-minus"></i>Resource alterations</h2>
+                            <p class="spaceBefore">Use to increase or decrease resources of affected character</p>
+                            {% if game.resources|length == 0 %}
+                                <p class="alert">You cannot add an alteration because no resource exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.resourceAlterations) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="resourceAlteration"><i class="fas fa-plus-square"></i><span>Add an alteration</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+                {# Right block #}
+                <div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Damage over time</h2>
+                            <p class="spaceBefore">Set the damage triggered at each turn start under this status effect</p>
+                            {% if game.resources|length == 0 or game.damageNatures|length == 0 %}
+                                <p class="alert">You cannot add a damage over time because no resources or no damage natures exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.damageOverTimes) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="damageOverTime"><i class="fas fa-plus-square"></i><span>Add a damage over time</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sparkles"></i>Heal over time</h2>
+                            <p class="spaceBefore">Set the heal triggered at each turn start under this status effect</p>
+                            {% if game.resources|length == 0 %}
+                                <p class="alert">You cannot add a heal over time because no resources exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.healOverTimes) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="healOverTime"><i class="fas fa-plus-square"></i><span>Add a heal over time</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let attributeAlterationsElementsManager = new FormCollectionManager($('#passive_attributeAlterations'), {{ passive.attributeAlterations|length }}, 'attributeAlteration');
+        attributeAlterationsElementsManager.init();
+
+        let resourceAlterationsElementsManager = new FormCollectionManager($('#passive_resourceAlterations'), {{ passive.resourceAlterations|length }}, 'resourceAlteration');
+        resourceAlterationsElementsManager.init();
+
+        let dotElementsManager = new FormCollectionManager($('#passive_damageOverTimes'), {{ passive.damageOverTimes|length }}, 'damageOverTime');
+        dotElementsManager.init();
+
+        let hotElementsManager = new FormCollectionManager($('#passive_healOverTimes'), {{ passive.healOverTimes|length }}, 'healOverTime');
+        hotElementsManager.init();
+    </script>
+{% endblock %}

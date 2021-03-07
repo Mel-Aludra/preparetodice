@@ -1,0 +1,114 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Settings{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>Game settings</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>Game settings</h1>
+                <p>Rename your game, describe it, invite people and manage your players.</p>
+            </div>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                {# Left block #}
+                <div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-book-alt"></i>Elements</h2>
+                            <form method="post" data-form-checker="true">
+                            {{ form_start(gameForm) }}
+                                {{ form_row(gameForm.name) }}
+                                {{ form_row(gameForm.description) }}
+                                {{ form_row(gameForm.background) }}
+                                {{ form_row(gameForm.isActive) }}
+                                <button type="submit">Update game</button>
+                            {{ form_end(gameForm) }}
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+                {# Right block #}
+                <div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-book-alt"></i>Owner</h2>
+                            {% for userGame in game.userGames %}
+                                {% if userGame.accessType == "owner" %}
+                                    <p class="labelRow {% if loop.first %}spaceBefore{% endif %}"><span>{{ userGame.user.name }}</span><span class="ghost">{{ userGame.user.email }}</span></p>
+                                {% endif %}
+                            {% endfor %}
+                            <h2><i class="fas fa-book-alt"></i>Game master(s)</h2>
+                            {% set counter = 0 %}
+                            {% for userGame in game.userGames %}
+                                {% if userGame.accessType == "master" %}
+                                    <p class="labelRow {% if loop.first %}spaceBefore{% endif %}"><span>{{ userGame.user.name }}</span><span class="ghost">{{ userGame.user.email }}</span></p>
+                                    {% set counter = counter + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if counter == 0 %}<p>There is no game master except you, the owner, in this game.</p>{% endif %}
+                            <h2><i class="fas fa-book-alt"></i>Player(s)</h2>
+                            {% set counter = 0 %}
+                            {% for userGame in game.userGames %}
+                                {% if userGame.accessType == "player" %}
+                                    <p class="labelRow {% if loop.first %}spaceBefore{% endif %}">
+                                        <span class="ghost">{{ userGame.user.name }} | {{ userGame.user.email }}</span>
+                                        {% for userGameCharacter in userGame.userGameCharacters %}
+                                            <span>{{ userGameCharacter.gameCharacter.name }}</span>
+                                        {% endfor %}
+                                        <a href="{{ path('gameBack_settings_characters', {'game': game.id, 'userGame': userGame.id}) }}">Update user characters</a>
+                                    </p>
+                                    {% set counter = counter + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if counter == 0 %}<p>There is no player in this game. You can invite players from this page.</p>{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-book-alt"></i>Invitation</h2>
+                            <form method="post" action="">
+                                <div class="formRow">
+                                    <label for="userEmail">User email</label>
+                                    <input name="invitation[email]" type="text" id="userEmail" placeholder="Type email belong to the user you want to invite" />
+                                </div>
+                                <div class="formRow">
+                                    <label for="accessType">Access type</label>
+                                    <select name="invitation[accessType]" id="accessType">
+                                        <option value="player">Player</option>
+                                        <option value="master">Game master</option>
+                                    </select>
+                                </div>
+                                <button type="submit">Send invitation</button>
+                            </form>
+                            <div class="separator"></div>
+                            {% for invitation in game.invitations %}
+                                <p>User <strong>{{ invitation.user.email }}</strong> has been invited but has not yet responded</p>
+                            {% endfor %}
+                            {% if game.invitations|length == 0 %}
+                                <p>There is no current invitation</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+{% endblock %}

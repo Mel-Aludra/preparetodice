@@ -1,0 +1,77 @@
+:root {
+
+    /* -- Primary colors -- */
+    --primary-color-lighter: #fafafa;
+    --primary-color-light: #eeeeee;
+    --primary-color-medium: #6f6f6f;
+    --primary-color-dark: #494949; /* DEFAULT */
+    --primary-color-darker: #2f2f2f;
+    --primary-color-darkest: #232323;
+
+    /* -- Secondary colors -- */
+    --secondary-color-lighter: #c4dcff;
+    --secondary-color-light: #90bac9;
+    --secondary-color-dark: #315c9c;  /* DEFAULT */
+    --secondary-color-darker: #172f67;
+    --secondary-special: #293b63;
+
+    /* -- Tertiary colors -- */
+    --tertiary-color-light: #ebf9ff;
+    --tertiary-color-dark: #00485a;  /* DEFAULT */
+    --tertiary-color-darker: #002734;
+
+    /* -- Success and failures colors -- */
+    --color-success-light: #a5d6a7;
+    --color-success-dark: #003300;
+    --color-success-darker: #001b00;
+    --color-error-light: #ffcccb;
+    --color-error-dark: #7f0000;
+    --color-error-darker: #580000;
+
+    /* -- Teams colors -- */
+    --color-allies-dark: #245216;
+    --color-allies-light: #a5d6a7;
+    --color-foes-dark: #8b1414;
+    --color-foes-light: #ffcccb;
+
+    /* -- Damage, heal and SE */
+    --color-damage-dark: rgba(102, 14, 14, 0.7);
+    --color-damage-darker: #360707;
+    --color-heal-dark: rgba(29, 68, 18, 0.7);
+    --color-heal-darker: #10280a;
+    --color-effect-dark: rgba(24, 49, 87, 0.7);
+    --color-effect-darker: #0c192d;
+
+    /* Others colors */
+    --battle-context-darker: #531301;
+    --battle-context-dark: #8b2404;
+    --battle-context-light: #fbe9e7;
+    --rgba-primary-color-darker: rgba(32, 44, 55, 1);
+
+    /* -- Animations variables -- */
+    --anim-default: cubic-bezier(0.65, 0, 0.35, 1);
+    --anim-duration-default: 0.4s;
+    --anim-duration-fast: 0.2s;
+
+}
+
+/* Fonts */
+@font-face { font-family: "PtdThin"; src: url("../resources/fonts/rajdhani/Rajdhani-Light.ttf") format("truetype") }
+@font-face { font-family: "PtdRegular"; src: url("../resources/fonts/rajdhani/Rajdhani-Regular.ttf") format("truetype") }
+@font-face { font-family: "PtdMedium"; src: url("../resources/fonts/rajdhani/Rajdhani-Medium.ttf") format("truetype") }
+@font-face { font-family: "PtdBold"; src: url("../resources/fonts/rajdhani/Rajdhani-Bold.ttf") format("truetype") }
+
+/* Global texts properties */
+* {
+    margin: 0;
+    text-decoration: none;
+    font-family: "PtdRegular", sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.025em;
+}
+p, ul, li {
+    color: white;
+}
+
+/* Generic properties */
+.hidden { display: none; }

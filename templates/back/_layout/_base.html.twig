@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" type="image/png" href="/resources/images/favicon-2-ptd.png" />
+    {% include 'back/_layout/css.html.twig' %}
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+<nav id="nav" class="{% block navClass %}{% endblock %}">
+    <div class="title">
+        <p>{{ game.name }}</p>
+    </div>
+    {% include 'back/_layout/menu.html.twig' %}
+    <div class="burgerMenu" id="burgerMenu">
+        <div></div><div></div><div></div>
+    </div>
+</nav>
+
+<div>
+    <header class="{% block headerClass %}{% endblock %}">
+        {% block breadcrumb %}
+            <div class="breadcrumb">
+                <a href="{{ path("gameBack_home", {'game': game.id}) }}">Home</a>
+            </div>
+        {% endblock %}
+        <div class="quickActions">
+            {% block quickActions %}{% endblock %}
+        </div>
+    </header>
+    <div class="container">
+        {% if app.flashes is defined %}
+            {% for type, typeMessages in app.flashes %}
+                {% for message in typeMessages %}
+                    <p onclick="this.remove()" class="infoPlate {{ type }}">{{ message }}</p>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        {% block body %}{% endblock %}
+    </div>
+</div>
+
+{% include '_common/js.html.twig' %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

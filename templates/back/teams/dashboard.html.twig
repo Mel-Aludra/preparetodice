@@ -1,0 +1,61 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Teams{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-users-class"></i>Teams</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="stickyPageHeader">
+        <div class="firstPart">
+            <h1>Teams</h1>
+            <p>Teams</p>
+        </div>
+        <div class="secondPart">
+            <a class="solidLink emphasis" href="{{ path('gameBack_teams_edit', {'game': game.id}) }}">
+                <i class="fa fa-users-class"></i>
+                <span>Manage teams</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="strip">
+        <div class="panels">
+            {% for teamName, teamCharacters in teams %}
+                <div>
+                    <div class="card {{ teamName }}">
+                        <div class="header">
+                            <p>{{ teamName|capitalize }}</p>
+                        </div>
+                        <div class="body">
+                            {% for character in teamCharacters %}
+                                <div class="object unfoldable">
+                                    <div class="header {{ character.team }}">
+                                        <div class="graph">
+                                            <i class="fal fa-user"></i>
+                                        </div>
+                                        <div class="identity">
+                                            <h2>{{ character.name }}</h2>
+                                        </div>
+                                        <div class="actions">
+                                        </div>
+                                    </div>
+                                    <div class="body">
+                                        <div class="grid">
+                                            {% include "_common/entity-bodies/character.html.twig" with {'character': character} %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

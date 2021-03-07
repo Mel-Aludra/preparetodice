@@ -1,0 +1,103 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Attributes{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-sort-numeric-up-alt"></i>Attributes</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="stickyPageHeader">
+        <div>
+            <h1>Attributes</h1>
+            <p>Attributes define certain skills or fields of knowledge of the characters, such as dexterity, luck or intelligence.</p>
+        </div>
+        <a class="solidLink" href="{{ path('gameBack_attribute_add', {'game': game.id}) }}">
+            <i class="fas fa-plus"></i>
+            <span>Add attribute</span>
+        </a>
+    </div>
+    <div class="strip column">
+        {% if attributes|length == 0 %}
+            <p class="spaceBefore">You have no attribute in your game. To add an attribute, click on the top right button "Add attribute".</p>
+        {% endif %}
+        {% for attribute in attributes %}
+            <div class="object unfoldable">
+                <div class="header" style="background-color: {{ attribute.getDarkColor }}">
+                    <div class="graph" style="background-color: {{ attribute.getDarkColor }}">
+                        <i class="fal fa-user"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ attribute.name }}</h2>
+                        <p>{{ attribute.description }}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_attribute_update', {'game': game.id, 'attribute': attribute.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_attribute_delete', {'game': game.id, 'attribute': attribute.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="panels spacedChildren">
+                        <div>
+                            <h2 class="lined"><i class="fal fa-list"></i>Properties</h2>
+                            {% if attribute.maximumValue == null %}
+                                <p class="labelRow">
+                                    <span>No maximum value</span>
+                                </p>
+                            {% else %}
+                                <p class="labelRow">
+                                    <span>Maximum value: {{ attribute.maximumValue }}</span>
+                                </p>
+                            {% endif %}
+                            <p class="labelRow">
+                                <span>Color: {{ attribute.color.name }}</span>
+                            </p>
+                            <h2 class="lined spaceBefore"><i class="fal fa-user-ninja"></i>Limitations</h2>
+                            {% if attribute.jobs|length == 0 %}
+                                <p class="small">No job limitation</p>
+                            {% else %}
+                                {% for job in attribute.jobs %}
+                                    <p class="labelRow">
+                                        <span>Limited to <strong>{{ job.name }}</strong></span>
+                                    </p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div>
+                            <h2 class="lined"><i class="fal fa-shield"></i>Defenses</h2>
+                            {% if attribute.defenses|length == 0 %}
+                                <p class="small">No defense</p>
+                            {% else %}
+                                {% for defense in attribute.defenses %}
+                                    <p class="labelRow">
+                                        <span>Block <strong>{{ defense.damageNature.name }}</strong> (efficiency: 1 point = {{ defense.efficiency }} / 100 %)</span>
+                                    </p>
+                                {% endfor %}
+                            {% endif %}
+                            <h2 class="lined spaceBefore"><i class="fal fa-tasks-alt"></i>Effects</h2>
+                            {% if attribute.attributeEffects|length == 0 %}
+                                <p class="small">No defense</p>
+                            {% else %}
+                                {% for effect in attribute.attributeEffects %}
+                                    <p class="labelRow">
+                                        <span>For each point, {{ effect.resource.abreviation }} {% if effect.isNegative %}decreases{% else %}increases{% endif %} by {{ effect.valuePerPoint }} point</span>
+                                    </p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

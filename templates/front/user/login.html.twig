@@ -1,0 +1,25 @@
+{% extends 'front/_layout/_base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+    <div class="strip backgrounded screenEmphasis">
+        <div class="widget">
+            <h1>Login</h1>
+            <form method="post" action="" data-form-checker="true">
+                <div class="formRow">
+                    <label for="username">User name</label>
+                    <input data-name="User name" type="text" id="username" name="_username" placeholder="Enter your user name" required="required" data-form-checker="notEmpty" />
+                    <p class="inputError"><i class="fas fa-exclamation-circle"></i><span></span></p>
+                </div>
+                <div class="formRow">
+                    <label for="password">Password</label>
+                    <input data-name="Password" type="password" id="password" name="_password" placeholder="Enter your password" data-form-checker="notEmpty" required="required" />
+                    <p class="inputError"><i class="fas fa-exclamation-circle"></i><span></span></p>
+                </div>
+                <input type="submit" value="Login" />
+                <p>Password forgotten? <a href="{{ path('front_password_ask') }}">Click here</a>.</p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Jobs{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-user-ninja"></i>Jobs</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="stickyPageHeader">
+        <div>
+            <h1>Jobs</h1>
+            <p>Jobs are used to reserve certain resources, attributes or equipment according to them. It is possible for a character to have several jobs.</p>
+        </div>
+        <a class="solidLink" href="{{ path('gameBack_job_add', {'game': game.id}) }}">
+            <i class="fas fa-plus"></i>
+            <span>Add job</span>
+        </a>
+    </div>
+
+    <div class="strip column">
+        {% if jobs|length == 0 %}
+            <p>You have no job in your game. To add a job, click on the top right button "Add job".</p>
+        {% endif %}
+        {% for job in jobs %}
+            <div class="object">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-user"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ job.name }}</h2>
+                        <p>{{ job.description }}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_job_update', {'game': game.id, 'job': job.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_job_delete', {'game': game.id, 'job': job.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

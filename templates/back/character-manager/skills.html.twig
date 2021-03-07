@@ -1,0 +1,52 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}{{ character.name }} | Equipment{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_characterSheet", {'game': game.id, 'gameCharacter': character.id}) }}"><i class="fal fa-user"></i>{{ character.name }}</a>
+        <span> > </span>
+        <span><i class="fal fa-book-alt"></i>Skills</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <form method="post" data-form-checker="true">
+
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>Skills - {{ character.name }}</h1>
+                <p>Update skills of {{ character.name }}.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-book-alt"></i>Update skills</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+                <div class="card">
+                    <div class="body">
+                            {{ form_row(form.characterSkills) }}
+                            <div class="genericFlex right">
+                                <a data-collection-adder="characterSkill"><i class="fas fa-plus-square"></i><span>Add skill to character</span></a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let characterSkillsElementsManager = new FormCollectionManager($('#character_skills_characterSkills'), {{ character.characterSkills|length }}, 'characterSkill');
+        characterSkillsElementsManager.init();
+    </script>
+{% endblock %}

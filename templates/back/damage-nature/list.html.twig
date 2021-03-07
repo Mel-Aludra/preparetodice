@@ -1,0 +1,58 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Damage natures{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-fire-alt"></i>Damage natures</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="stickyPageHeader">
+        <div>
+            <h1>Damage natures</h1>
+            <p>
+                Damage natures represent type of damage that can be used on skill or weapon effects.
+            </p>
+        </div>
+        {% if game.attributes|length > 0 %}
+            <a class="solidLink" href="{{ path('gameBack_nature_add', {'game': game.id}) }}">
+                <i class="fas fa-plus"></i>
+                <span>Add damage nature</span>
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="strip column">
+        {% if damageNatures|length == 0 %}
+            <p>You have no damage nature in your game. To add an damage nature, click on the top right button "Add damage nature".</p>
+        {% endif %}
+        {% for damageNature in damageNatures %}
+            <div class="object">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-user"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ damageNature.name }}</h2>
+                        <p>{{ damageNature.abreviation }}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_nature_update', {'game': game.id, 'damageNature': damageNature.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_nature_delete', {'game': game.id, 'damageNature': damageNature.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

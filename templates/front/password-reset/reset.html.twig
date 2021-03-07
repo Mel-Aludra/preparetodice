@@ -1,0 +1,23 @@
+{% extends 'front/_layout/_base.html.twig' %}
+
+{% block title %}Password reset{% endblock %}
+
+{% block body %}
+    <div class="strip backgrounded screenEmphasis">
+        <div class="widget">
+            <h1>Reset password</h1>
+            <form method="post" action="" data-form-checker="true">
+                <div class="formRow">
+                    <label>New password</label>
+                    <input type="password" placeholder="Choose a strong password" name="password" />
+                </div>
+                <div class="formRow">
+                    <label>Confirm new password</label>
+                    <input type="password" placeholder="Confirm your new password" name="check_password" />
+                </div>
+                <input type="hidden" value="{{ reset.hash }}" name="hash" />
+                <input type="submit" value="Reset password" />
+            </form>
+        </div>
+    </div>
+{% endblock %}

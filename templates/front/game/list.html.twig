@@ -1,0 +1,62 @@
+{% extends 'front/_layout/_base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <div class="strip backgrounded titled">
+        <div>
+            <h1>Games</h1>
+            <p>Your games and invitations to games are here.</p>
+        </div>
+    </div>
+
+    {% if app.user.invitations|length > 0 %}
+        <div class="strip column horizontalBreath primaryDarker">
+            <h2>Games invitations</h2>
+        </div>
+
+        <div class="strip backgrounded column corner reverse img_forest breath">
+            <div></div>
+            <div class="presentationPanelsContainer">
+                {% for invitation in app.user.invitations %}
+                    <div class="widget secondary spaceBefore">
+                        <h2>{{ invitation.game.name }}</h2>
+                        <p>You have been invited to join this game</p>
+                        <div class="linksEmphasisContainer">
+                            <a href="{{ path('front_invitation_accept', {'invitation': invitation.id}) }}">Accept</a>
+                            <a href="{{ path('front_invitation_decline', {'invitation': invitation.id}) }}">Decline</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="strip column horizontalBreath secondaryDarker">
+        <h2>Your games</h2>
+    </div>
+
+    <div class="strip backgrounded expand img_modernLandscape breath corner">
+        <div></div>
+        <div class="presentationPanelsContainer">
+            {% if userGames|length == 0 %}
+                <p>You have no game yet. You can create a game <a href="{{ path('front_game_add') }}">here</a> or, if you are a player, ask an invitation to your game master.</p>
+            {% endif %}
+            {% for userGame in userGames %}
+                <div>
+                    <h2>{{ userGame.game.name }}</h2>
+                    <p>{{ userGame.game.description }}</p>
+                    <div class="linksEmphasisContainer growth">
+                        <a href="{{ path('gameFront_home', {'game':userGame.game.id, 'fade': 'true'}) }}">Access game</a>
+                    </div>
+                    {% if userGame.accessType == constant('App\\Entity\\UserGame::OWNER_ACCESS') or userGame.accessType == constant('App\\Entity\\UserGame::GM_ACCESS') %}
+                        <div class="linksEmphasisContainer growth">
+                            <a href="{{ path('gameBack_home', {'game':userGame.game.id}) }}">Access admin</a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

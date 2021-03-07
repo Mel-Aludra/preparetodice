@@ -1,0 +1,49 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Skills{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-book-alt"></i>Skills</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    {% include "back/_common/list-page-header.html.twig" with {
+        'pageTitle': "Skills",
+        'pageDescription': "Skills can be used in battle. To add a skill on a character, go to the 'Characters' menu.",
+        'addActionRoute': path('gameBack_skill_add', {'game': game.id}),
+        'addActionName': "Add skill"
+    } %}
+
+    <div class="strip column">
+        {% for skill in skills %}
+            <div class="object unfoldable">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-book-alt"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ skill.name }}</h2>
+                        <p>{{ skill.description }}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_skill_update', {'game': game.id, 'skill': skill.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_skill_delete', {'game': game.id, 'skill': skill.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="body">
+                    {% include "_common/entity-bodies/skill.html.twig" with {'skill': skill} %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

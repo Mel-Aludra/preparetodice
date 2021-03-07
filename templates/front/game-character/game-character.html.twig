@@ -1,0 +1,62 @@
+{% extends 'front/_layout/_base.html.twig' %}
+
+{% block title %}{{ character.name }}{% endblock %}
+
+{% block headerTitle %}
+    <p>{{ game.name }}</p>
+{% endblock %}
+
+{% block body %}
+    <div class="characterTabs">
+        <a class="characterSheetTab active" data-tab="status"><i class="fal fa-user"></i><span>Status</span></a>
+        <a class="characterSheetTab" data-tab="skills"><i class="fal fa-book"></i><span>Skills</span></a>
+        <a class="characterSheetTab" data-tab="inventory"><i class="fal fa-sack"></i><span>Inventory</span></a>
+        <a class="characterSheetTab" data-tab="battle"><i class="fal fa-swords"></i><span>Battle</span></a>
+    </div>
+    <div id="content">
+        {% include "front/game-character/content-status.html.twig" %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let currentTab = "status";
+        $(".characterSheetTab").on("click", function() {
+            currentTab = null;
+            $(".characterSheetTab").each(function() {
+                $(this).removeClass("active");
+            });
+            $(this).addClass("active");
+            const tab = this.getAttribute("data-tab");
+            currentTab = tab;
+            $.ajax({
+                url: '{{ path('ajaxCharacter_content', {"game": game.id, "character": character.id}) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "tab": tab
+                },
+                async: true,
+                success: function (data) {
+                    $('#content').html(data.response);
+                }
+            })
+        });
+        let intervalId = window.setInterval(function() {
+            if(currentTab !== null) {
+                $.ajax({
+                    url: '{{ path('ajaxCharacter_content', {"game": game.id, "character": character.id}) }}',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "tab": currentTab
+                    },
+                    async: true,
+                    success: function (data) {
+                        $('#content').html(data.response);
+                    }
+                })
+            }
+        }, 5000);
+    </script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'front/_layout/_base.html.twig' %}
+{% block title %}{{ game.name }} | Home{% endblock %}
+
+{% block body %}
+    <div class="strip column horizontalBreath secondaryDarker">
+        <h2>Characters</h2>
+        <p>Your characters in {{ game.name }}</p>
+    </div>
+    <div class="strip backgrounded focus expand column corner {{ game.background }} breath">
+        <div></div>
+        {% for character in characters %}
+            <div class="widget alt spaceAfter">
+                <h1 class="spaceAfter">{{ character.name }}</h1>
+                <p>{{ character.description }}</p>
+                <div class="linksEmphasisContainer">
+                    <a href="{{ path('gameFront_character', {'gameCharacter': character.id, 'game': game.id}) }}">Character sheet</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

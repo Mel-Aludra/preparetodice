@@ -1,0 +1,14 @@
+{% set appRoute = app.request.attributes.get('_route') %}
+{% set active = false %}
+{% if appRoute|split('_').1 == route|split('_').1 %}
+    {% set active = true %}
+{% endif %}
+
+{% if appRoute|split('_').1 == 'currentBattle' and route|split('_').1 == "battle" %}
+    {% set active = true %}
+{% endif %}
+
+<a class="{% if active %}active{% endif %}" href="{{ path(route, {'game': game.id}) }}">
+    <i class="{{ icon }}"></i>
+    <span>{{ name }}</span>
+</a>

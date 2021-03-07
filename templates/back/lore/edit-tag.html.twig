@@ -1,0 +1,50 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% set title = "Create tag" %}
+{% set actionName = "Create tag" %}
+{% if context is defined and context == "update" %}
+    {% set title = "Update tag " ~ loreTag.name %}
+    {% set actionName = "Update tag" %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_lore_list", {'game': game.id}) }}"><i class="fal fa-file-alt"></i>Game elements</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>{{ title }}</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form method="post" data-form-checker="true">
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>{{ title }}</h1>
+                <p>Define how your lore will be presented on the game home screen</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fal fa-tasks-alt"></i>{{ actionName }}</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                <div class="card">
+                    <div class="body">
+                        <h2><i class="fal fa-tasks-alt"></i>Lore tag</h2>
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.sort) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </form>
+{% endblock %}

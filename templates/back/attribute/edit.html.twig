@@ -1,0 +1,101 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% set title = "Create attribute" %}
+{% set actionName = "Create attribute" %}
+{% if context is defined and context == "update" %}
+    {% set title = "Update attribute" ~ attribute.name %}
+    {% set actionName = "Update attribute" %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_attribute_list", {'game': game.id}) }}"><i class="fal fa-sort-numeric-up-alt"></i>Attributes</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>{{ title }}</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form method="post" data-form-checker="true">
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>{{ title }}</h1>
+                <p>Define the properties of your attribute and click on the "{{ actionName }}" button at the top right.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fal fa-chart-line"></i>{{ actionName }}</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fal fa-sort-numeric-up-alt"></i>Attribute</h2>
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.abreviation) }}
+                            {{ form_row(form.description) }}
+                            {{ form_row(form.maximumValue) }}
+                            {{ form_row(form.jobs) }}
+                            {% if game.jobs|length == 0 %}
+                                <p class="small">You don't have any job in your game, so you can't define this option</p>
+                            {% endif %}
+                            {{ form_row(form.color) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fal fa-shield"></i>Attribute defenses</h2>
+                            <p class="spaceBefore">The defenses of an attribute allow you to define what kind of damage is reduced thanks to this attribute.</p>
+                            {% if game.damageNatures|length == 0 %}
+                                <p class="alert">You don't have any damage nature in your game so you can't define defenses for an attribute.</p>
+                            {% else %}
+                                {{ form_row(form.defenses) }}
+                                <div class="genericFlex right">
+                                    <a class="" data-collection-adder="defense">Add a defense</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fal fa-tasks-alt"></i>Attribute effects on resources</h2>
+                            <p class="spaceBefore">The attributes can influence (bonus or penalty) the resources.</p>
+                            {% if game.resources|length == 0 %}
+                                <p class="alert">You don't have any resource in your game so you can't define effects.</p>
+                            {% else %}
+                                {{ form_row(form.attributeEffects) }}
+                                <div class="genericFlex right">
+                                    <a class="" data-collection-adder="attributeEffect">Add an effect</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let defensesElementsManager = new FormCollectionManager($('#attribute_defenses'), {{ attribute.defenses|length }}, 'defense');
+        defensesElementsManager.init();
+
+        let effectsElementsManager = new FormCollectionManager($('#attribute_attributeEffects'), {{ attribute.attributeEffects|length }}, 'attributeEffect');
+        effectsElementsManager.init();
+    </script>
+{% endblock %}

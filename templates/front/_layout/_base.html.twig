@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+{# Head #}
+<head>
+
+    {# Meta data #}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>{% block title %}Prepare to dice{% endblock %}</title>
+    <link rel="icon" type="image/png" href="/resources/images/favicon-2-ptd.png" />
+
+    {# Css import #}
+    {% include 'front/_layout/css.html.twig' %}
+    {% block stylesheets %}{% endblock %}
+
+</head>
+<body {% if game is defined %}class="noHeader"{% endif %}>
+
+{# Header #}
+{% if game is not defined %}
+<header>
+    <a href="{{ path("front_home") }}">Prepare to dice</a>
+
+    <div class="burgerMenu" id="frontBurgerMenu">
+        <div></div><div></div><div></div>
+    </div>
+
+    <div class="menuContainer {% block menuClass %}{% endblock %}" id="frontMenuContainer">
+        {% include 'front/_layout/menu.html.twig' %}
+    </div>
+</header>
+{% endif %}
+
+{# Game nav #}
+{% block gameNav %}
+    {% if game is defined and game is not null %}
+        <div class="burgerMenu" id="gameFrontBurgerMenu">
+            <div></div><div></div><div></div>
+        </div>
+
+        <nav id="nav">
+            <div class="title">
+                <p>{{ game.name }}</p>
+            </div>
+            <div class="linksContainer">
+                <a href="{{ path('gameFront_home', {'game': game.id}) }}" {% if app.request.attributes.get('_route') == 'gameFront_home' %} class="active" {% endif %}>
+                    <i class="fal fa-home"></i>
+                    <span>Game home</span>
+                </a>
+                {% for tag in game.loreTags  %}
+                    <a href="{{ path('gameFront_lore_tag', {'game': game.id, 'loreTag': tag.id}) }}" {% if loreTag is defined and loreTag.id == tag.id %}class="active"{% endif %}>
+                        <i class="fal fa-file-alt"></i>
+                        <span>{{ tag.name }}</span>
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="linksSeparator"></div>
+            <div class="linksContainer">
+                <a href="{{ path('gameFront_characters', {'game': game.id}) }}" {% if app.request.attributes.get('_route') == 'gameFront_characters' %} class="active" {% endif %}>
+                    <i class="fal fa-users"></i>
+                    <span>Characters</span>
+                </a>
+                <div class="linksContainer detail">
+                    {% set characterId = null %}
+                    {% if character is defined %}
+                        {% set characterId = character.id %}
+                    {% endif %}
+                    {% for character in app.user.gameCharacters(game) %}
+                        <a href="{{ path('gameFront_character', {'gameCharacter': character.id, 'game': game.id}) }}" {% if characterId == character.id %}class="active"{% endif %}>
+                            <i class="fal fa-user"></i>
+                            <span>{{ character.name }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="linksSeparator"></div>
+            <div class="linksContainer">
+                <a href="{{ path('front_game_list') }}">
+                    <i class="fal fa-undo"></i>
+                    <span>Back to games</span>
+                </a>
+            </div>
+        </nav>
+    {% endif %}
+{% endblock %}
+
+{# Page content #}
+<div class="content">
+    {% if app.flashes is defined %}
+        {% for type, typeMessages in app.flashes %}
+            {% for message in typeMessages %}
+                <p onclick="this.remove()" class="infoPlate {{ type }}">{{ message }}</p>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    {% block body %}{% endblock %}
+</div>
+
+{% if game is not defined or game is null %}
+<footer>
+    <div>
+        <p>Prepare to dice</p>
+        <p class="small">RPG digital manager</p>
+    </div>
+    <div>
+        <p>Version beta</p>
+        <div>
+            <a>Contact: mel.aludra@gmail.com</a>
+        </div>
+    </div>
+</footer>
+{% endif %}
+
+{# Js import #}
+{% include '_common/js.html.twig' %}
+{% block javascripts %}{% endblock %}
+
+</body>
+</html>

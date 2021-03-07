@@ -1,0 +1,100 @@
+/* Strips > Global properties */
+
+.strip {
+    width: calc(100% - 30px);
+    padding: 15px;
+    display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start;
+    background-color: transparent;
+}
+.strip.focus { justify-content: center; align-items: center; } .strip.focus>div { max-width: 800px; }
+.strip.column { flex-direction: column; }
+.strip.focus.column { justify-content: flex-start; align-items: center; }
+.strip.threshold { border-bottom: 1px solid black; }
+
+/* Strips > Colors */
+
+.strip.secondaryDark { background-color: var(--secondary-color-dark); }
+.strip.secondarySpecial { background-color: var(--secondary-special); }
+.strip.secondaryDarker { background-color: var(--secondary-color-darker); }
+.strip.primaryDark { background-color: var(--primary-color-dark); }
+.strip.primaryDarker { background-color: var(--primary-color-darkest); }
+
+/* Strips > large padding */
+
+.strip.breath { padding: 45px 180px; width: calc(100% - 360px); }
+.strip.horizontalBreath { padding-left: 180px; padding-right: 180px; width: calc(100% - 360px); }
+
+/* --- BACKGROUNDED --- */
+
+.strip.backgrounded {
+    background-image: url("../resources/images/bg-1.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Strip backgrounded > Home page first block */
+
+.strip.backgrounded.screenEmphasis {
+    height: calc(100vh - var(--header-height));
+    display: flex; flex-direction: row; justify-content: center; align-items: center;
+}
+
+/* Strip backgrounded > Home page other blocks */
+
+.strip.backgrounded.img_modernLandscape { background-image: url("../resources/images/modernLandscape.jpg"); }
+.strip.backgrounded.img_forest { background-image: url("../resources/images/forest.jpg"); }
+.strip.backgrounded.img_neutral { background-image: url("../resources/images/neutral.jpeg"); }
+.strip.backgrounded.img_flashingSpace { background-image: url("../resources/images/flashingSpace.jpeg"); }
+.strip.backgrounded.img_cosmos { background-image: url("../resources/images/cosmos.jpeg"); }
+.strip.backgrounded.img_nightLake { background-image: url("../resources/images/nightLake.jpeg"); }
+
+/* Strip backgrounded > Titled background */
+
+.strip.backgrounded.titled {
+    height: 400px;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 0 90px 12px 90px;
+    width: calc(100% - 180px);
+}
+
+/* Strip backgrounded expand */
+
+.strip.backgrounded.expand { min-height: calc(100vh - var(--header-height)); }
+
+/* Corner */
+
+.corner { position: relative; }
+
+.corner>div:first-child {
+    position: absolute;
+    top: 0; right: 0;
+    display : inline-block;
+    height : 0;
+    width : 0;
+    border-top : 120px solid red;
+    border-left : 120px solid transparent;
+}
+.corner.reverse>div:first-child { left: 0; top: 0; right: auto; border-right : 120px solid transparent; border-left: transparent; }
+
+.secondaryDarker+.corner>div:first-child { border-top-color: var(--secondary-color-darker); }
+.primaryDarker+.corner>div { border-top-color: var(--primary-color-darkest); }
+
+.corner.extend {
+    min-height: calc(100vh - var(--header-height) - 90px - 66px);
+}
+
+/* Responsive */
+
+@media all AND (max-width: 1200px) {
+
+    .strip.focus { align-items: flex-start; }
+    .strip { flex-direction: column; align-items: center; width: 100%; }
+    .strip.breath { padding: 15px; width: 100%; }
+    .strip.horizontalBreath { padding-left: 15px; padding-right: 15px; width: 100%; }
+    .corner>div:first-child { display: none; }
+    .strip.backgrounded.screenEmphasis { height: calc(100vh - var(--header-height)); }
+
+}

@@ -1,0 +1,105 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Current battle{% endblock %}
+{% block headerClass %}battle{% endblock %}
+{% block navClass %}battle{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_currentBattle_overview", {'game': game.id}) }}"><i class="fal fa-swords"></i>Battle {{ battle.name }}</a>
+        <span> > </span>
+        <a href="{{ path('gameBack_currentBattle_updateAction', {'game': game.id, 'action': action.id}) }}"><i class="fal fa-street-view"></i>Action {{ action.name }}</a>
+        <span> > </span>
+        <a href="{{ path('gameBack_currentBattle_selectTargets', {'game': game.id, 'action': action.id}) }} }}"><i class="fa fa-bullseye-arrow"></i>Select targets</a>
+        <span> > </span>
+        <span><i class="fas fa-clipboard-check"></i>Preview action</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="stickyPageHeader hard battle">
+        <div class="firstPart">
+            <h1>{{ battle.name }}</h1>
+            <p>Turn {{ battle.turnsNumber }}</p>
+        </div>
+        <div class="secondPart">
+            <a class="solidLink emphasis" href="{{ path('gameBack_currentBattle_launchAction', {'game': game.id, 'action': action.id}) }}">
+                <i class="fa fa-hourglass-end"></i>
+                <span>Launch action</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="strip column">
+        <div class="panels spacedChildren">
+
+            <div class="small">
+
+                {# LAUNCHER #}
+                <div class="card">
+                    <div class="body">
+                        <h2>{{ action.launcher.name }}</h2>
+                        <div class="object">
+                            <div class="header">
+                                <div class="graph">
+                                    <i class="fal fa-street-view"></i>
+                                </div>
+                                <div class="identity">
+                                    <h2>{{ action.name }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <h2>Following costs will be applied</h2>
+                        {% for log in logs.cost %}
+                            {% include "_common/entity-bodies/battle-log.html.twig" with {'log': log} %}
+                        {% endfor %}
+                        <h2>Following gains will be applied</h2>
+                        {% for log in logs.gain %}
+                            {% include "_common/entity-bodies/battle-log.html.twig" with {'log': log} %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+            <div>
+
+                {# TARGETS > DAMAGE #}
+                <div class="card">
+                    <div class="body">
+                        <h2>Following damage effects will be applied</h2>
+                        {% for log in logs.damage %}
+                            {% include "_common/entity-bodies/battle-log.html.twig" with {'log': log} %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {# TARGETS > HEAL #}
+                <div class="card">
+                    <div class="body">
+                        <h2>Following heal effects will be applied</h2>
+                        {% for log in logs.heal %}
+                            {% include "_common/entity-bodies/battle-log.html.twig" with {'log': log} %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {# TARGETS > STATUS #}
+                <div class="card">
+                    <div class="body">
+                        <h2>Following status effects will be applied</h2>
+                        {% for log in logs.status %}
+                            {% include "_common/entity-bodies/battle-log.html.twig" with {'log': log} %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

@@ -1,0 +1,20 @@
+<div class="resourceContainer">
+
+    {# Top: name and numeric values #}
+    <div>
+        <p class="abreviation" style="color:{{ characterResource.resource.getDarkColor }};">
+            {{ characterResource.resource.name }}
+        </p>
+        <p class="numericValues" style="color:{{ characterResource.resource.getDarkColor }};">
+            <span class="current">{{ characterResource.currentValue }}</span>
+            <span class="max">/ {{ characterResource.finalValue }}</span>
+        </p>
+    </div>
+
+    {# Bottom: bar #}
+    <div>
+        <div class="currentValueBar" style="width:{{ characterResource.percent }}%;background-color:{{ characterResource.resource.getDarkColor }};"></div>
+        <div></div>
+    </div>
+
+</div>

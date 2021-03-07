@@ -1,0 +1,252 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Current battle{% endblock %}
+{% block headerClass %}battle{% endblock %}
+{% block navClass %}battle{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <span><i class="fal fa-swords"></i>Battle {{ battle.name }}</span>
+    </div>
+    <a class="solidLink discreet" style="margin-left: auto;" href="{{ path('gameBack_currentBattle_endBattle', {'game': game.id}) }}" onclick="return confirm(`Do you confirm end of the battle?`)" >
+        <i class="fa fa-stop-circle"></i>
+        <span>End battle</span>
+    </a>
+{% endblock %}
+
+{% block body %}
+    <div class="stickyPageHeader hard battle">
+        <div class="firstPart">
+            <h1>{{ battle.name }}</h1>
+            <p>Turn {{ battle.turnsNumber }}</p>
+        </div>
+        <div class="secondPart">
+            <a class="solidLink emphasis" href="{{ path('gameBack_currentBattle_finishTurn', {'game': game.id}) }}" onclick="return confirm(`Do you confirm end of turn?`)" >
+                <i class="fa fa-hourglass-end"></i>
+                <span>Finish turn</span>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="strip">
+        <div class="panels spacedChildren">
+            {% for teamName, teamCharacters in teams %}
+                <div>
+                    {% for character in teamCharacters %}
+                        <div class="object smallObject">
+                            <div class="header {{ character.team }}">
+                                <div class="graph">
+                                    <i class="fal fa-user"></i>
+                                </div>
+                                <div class="identity">
+                                    <h2>{{ character.name }}</h2>
+                                </div>
+                                <div class="actions">
+                                    <div class="actionPointsContainer">
+                                        {% for characterResource in character.characterResources %}
+                                            {% if characterResource.resource.id == game.actionPointsResource.id %}
+                                                {% include '_common/entity-bodies/action-points-resource.html.twig' %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <a href="{{ path('gameBack_characterSheet', {'game': game.id, 'gameCharacter': character.id}) }}">
+                                        <span>Character sheet</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="body">
+                                <div class="panels spacedChildren">
+                                    <div class="spaceTopChildrenTitles">
+                                        <div class="narrow emphasis">
+                                            {% for characterResource in character.characterResources %}
+                                                {% if characterResource.resource.id != game.actionPointsResource.id %}
+                                                    {% include '_common/entity-bodies/character-resource.html.twig' %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="small spaceTopChildrenTitles">
+                                        <div class="actionLinksContainer">
+                                            <a class="launchAction" data-action-type="weapon" data-character-id="{{ character.id }}"><i class="fal fa-sword"></i><span>Weapon</span></a>
+                                            <a class="launchAction" data-action-type="skill" data-character-id="{{ character.id }}"><i class="fal fa-book-alt"></i><span>Skill</span></a>
+                                            <a class="launchAction" data-action-type="consumable" data-character-id="{{ character.id }}"><i class="fal fa-bomb"></i><span>Consumable</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {# Popin action selected #}
+                        <div class="popin" id="panel_{{ character.id }}">
+                            <div>
+                                <div class="header"><p><i class="fa fa-street-view"></i>{{ character.name }} > Choose skill</p></div>
+                                <div class="body">
+                                    <div class="panels spacedChildren">
+                                        <div class="small">
+                                            <h2>{{ character.name }}</h2>
+                                            <hr>
+                                            <div>
+                                                {% for characterResource in character.characterResources %}
+                                                    {% include '_common/entity-bodies/character-resource.html.twig' %}
+                                                {% endfor %}
+                                            </div>
+                                            <div>
+                                                {% for characterAttribute in character.characterAttributes %}
+                                                    {% include '_common/entity-bodies/character-attribute.html.twig' %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div>
+
+                                            {# Weapon #}
+                                            <div class="hidden weaponBlock">
+                                                <h2>Weapon</h2>
+                                                <hr>
+                                                {% if character.equippedWeapon is null %}
+                                                    <p>This character don't have an equipped weapon</p>
+                                                {% else %}
+                                                    <div class="object unfoldable">
+                                                        <div class="header">
+                                                            <div class="graph">
+                                                                <i class="fal fa-book-alt"></i>
+                                                            </div>
+                                                            <div class="identity">
+                                                                <h2>{{ character.equippedWeapon.weapon.name }}</h2>
+                                                                <p>{{ character.equippedWeapon.weapon.description }}</p>
+                                                            </div>
+                                                            <div class="actions">
+                                                                <a href="{{ path('gameBack_currentBattle_weaponToAction', {'game': game.id, 'inventoryWeapon': character.equippedWeapon.id, 'skipUpdate': 'false'}) }}">
+                                                                    <i class="fal fa-edit"></i>
+                                                                    <span>Modify and launch</span>
+                                                                </a>
+                                                                <a href="{{ path('gameBack_currentBattle_weaponToAction', {'game': game.id, 'inventoryWeapon': character.equippedWeapon.id, 'skipUpdate': 'true'}) }}">
+                                                                    <i class="fal fa-bullseye-arrow"></i>
+                                                                    <span>Launch</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="body">
+                                                            {% include "_common/entity-bodies/skill.html.twig" with {'skill': character.equippedWeapon.weapon} %}
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+
+                                            {# Skills #}
+                                            <div class="hidden skillBlock">
+                                                <h2>Skills</h2>
+                                                <hr>
+                                                {% for characterSkill in character.characterSkills %}
+                                                    <div class="object unfoldable">
+                                                        <div class="header">
+                                                            <div class="graph">
+                                                                <i class="fal fa-book-alt"></i>
+                                                            </div>
+                                                            <div class="identity">
+                                                                <h2>{{ characterSkill.skill.name }}</h2>
+                                                                <p>{{ characterSkill.skill.description }}</p>
+                                                            </div>
+                                                            <div class="actions">
+                                                                {% if characterSkill.launchRestrictions|length > 0 %}
+                                                                    <p class="labelRow damage">
+                                                                        <span class="ghost">Can't be used!</span>
+                                                                        {% for restriction in characterSkill.launchRestrictions %}
+                                                                            <span>{{ restriction }}</span>
+                                                                        {% endfor %}
+                                                                    </p>
+                                                                {% endif %}
+                                                                <a href="{{ path('gameBack_currentBattle_skillToAction', {'game': game.id, 'characterSkill': characterSkill.id, 'skipUpdate': 'false'}) }}">
+                                                                    <i class="fal fa-edit"></i>
+                                                                    <span>Modify and launch</span>
+                                                                </a>
+                                                                <a href="{{ path('gameBack_currentBattle_skillToAction', {'game': game.id, 'characterSkill': characterSkill.id, 'skipUpdate': 'true'}) }}">
+                                                                    <i class="fal fa-bullseye-arrow"></i>
+                                                                    <span>Launch</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="body">
+                                                            {% include "_common/entity-bodies/skill.html.twig" with {'skill': characterSkill.skill} %}
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+
+                                            {# Consumable #}
+                                            <div class="hidden consumableBlock">
+                                                <h2>Consumables</h2>
+                                                <hr>
+                                                {% for characterConsumable in character.inventoryConsumables %}
+                                                    <div class="object unfoldable">
+                                                        <div class="header">
+                                                            <div class="graph">
+                                                                <i class="fal fa-book-alt"></i>
+                                                            </div>
+                                                            <div class="identity">
+                                                                <h2>{{ characterConsumable.consumable.name }}</h2>
+                                                                <p>{{ characterConsumable.consumable.description }}</p>
+                                                            </div>
+                                                            <div class="actions">
+                                                                <a href="{{ path('gameBack_currentBattle_consumableToAction', {'game': game.id, 'inventoryConsumable': characterConsumable.id, 'skipUpdate': 'false'}) }}">
+                                                                    <i class="fal fa-edit"></i>
+                                                                    <span>Modify and launch</span>
+                                                                </a>
+                                                                <a href="{{ path('gameBack_currentBattle_consumableToAction', {'game': game.id, 'inventoryConsumable': characterConsumable.id, 'skipUpdate': 'true'}) }}">
+                                                                    <i class="fal fa-bullseye-arrow"></i>
+                                                                    <span>Launch</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="body">
+                                                            {% include "_common/entity-bodies/skill.html.twig" with {'skill': characterConsumable.consumable} %}
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $('.popin>div').on("click", function(e) {
+            e.stopPropagation();
+        });
+
+        $('.popin').on("click", function() {
+            $(this).removeClass("open");
+        });
+
+        $('.launchAction').on("click", function() {
+            let idPopin = "panel_" + this.getAttribute("data-character-id");
+            let actionType = this.getAttribute("data-action-type");
+            let popin = document.getElementById(idPopin);
+            popin.getElementsByClassName("weaponBlock")[0].classList.add("hidden");
+            popin.getElementsByClassName("skillBlock")[0].classList.add("hidden");
+            popin.getElementsByClassName("consumableBlock")[0].classList.add("hidden");
+            switch(actionType) {
+                case "weapon":
+                    popin.getElementsByClassName("weaponBlock")[0].classList.remove("hidden");
+                    break;
+                case "skill":
+                    popin.getElementsByClassName("skillBlock")[0].classList.remove("hidden");
+                    break;
+                case "consumable":
+                    popin.getElementsByClassName("consumableBlock")[0].classList.remove("hidden");
+                    break;
+            }
+            popin.classList.add("open");
+        });
+    </script>
+{% endblock %}

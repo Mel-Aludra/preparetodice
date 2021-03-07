@@ -1,0 +1,132 @@
+<div class="panels spacedChildren">
+
+    {% if battle is null or partOfBattle == false %}
+        <p>There is no current battle</p>
+    {% else %}
+        <div>
+            {% for ally in allies %}
+                <div class="object smallObject">
+                    <div class="header allies">
+                        <div class="graph">
+                            <i class="fal fa-user"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>{{ ally.name }}</h2>
+                        </div>
+                        <div class="actions">
+                            <div class="actionPointsContainer">
+                                {% for characterResource in ally.characterResources %}
+                                    {% if characterResource.resource.id == game.actionPointsResource.id %}
+                                        {% include '_common/entity-bodies/action-points-resource.html.twig' %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <div class="panels spacedChildren">
+                            <div class="spaceTopChildrenTitles">
+                                <div class="narrow emphasis">
+                                    {% for characterResource in ally.characterResources %}
+                                        {% if characterResource.resource.id != game.actionPointsResource.id %}
+                                            {% include '_common/entity-bodies/character-resource.html.twig' %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="small spaceTopChildrenTitles">
+                                {% for characterStatusEffect in ally.characterStatusEffects %}
+                                    <p class="labelRow">
+                                        <span class="ghost">{{ characterStatusEffect.statusEffect.name }}</span>
+                                        <span>{{ characterStatusEffect.remainingTurns }} turn(s)</span>
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% if ally.id == character.id %}
+                            <div class="panels spacedChildren">
+                                <div class="spaceTopChildrenTitles">
+                                    {% if ally.equippedWeapon is not null %}
+                                        <p class="labelRow"><span class="ghost">Weapon:</span><span>{{ ally.equippedWeapon.weapon.name }}</span></p>
+                                    {% endif %}
+                                    {% for characterSkill in ally.characterSkills %}
+                                        <p class="labelRow {% if characterSkill.launchRestrictions|length > 0 %} inactive{% endif %}">
+                                            <span>{{ characterSkill.skill.name }}</span>
+                                            {% for restriction in characterSkill.launchRestrictions %}
+                                                <span class="ghost">{{ restriction }}</span>
+                                            {% endfor %}
+                                        </p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div>
+            {% for foe in foes %}
+                <div class="object smallObject">
+                    <div class="header foes">
+                        <div class="graph">
+                            <i class="fal fa-user"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>{{ foe.name }}</h2>
+                        </div>
+                        <div class="actions">
+                            <div class="actionPointsContainer">
+                                {% for characterResource in foe.characterResources %}
+                                    {% if characterResource.resource.id == game.actionPointsResource.id %}
+                                        {% include '_common/entity-bodies/action-points-resource.html.twig' %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <div class="panels spacedChildren">
+                            <div class="spaceTopChildrenTitles">
+                                <div class="narrow emphasis">
+                                    {% for characterResource in foe.characterResources %}
+                                        {% if characterResource.resource.id != game.actionPointsResource.id %}
+                                            {% include '_common/entity-bodies/character-resource.html.twig' %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="small spaceTopChildrenTitles">
+                                {% for characterStatusEffect in foe.characterStatusEffects %}
+                                    <p class="labelRow">
+                                        <span class="ghost">{{ characterStatusEffect.statusEffect.name }}</span>
+                                        <span>{{ characterStatusEffect.remainingTurns }} turn(s)</span>
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% if foe.id == character.id %}
+                            <div class="panels spacedChildren">
+                                <div class="spaceTopChildrenTitles">
+                                    {% if foe.equippedWeapon is not null %}
+                                        <p class="labelRow"><span class="ghost">Weapon:</span><span>{{ foe.equippedWeapon.weapon.name }}</span></p>
+                                    {% endif %}
+                                    {% for characterSkill in ally.characterSkills %}
+                                        <p class="labelRow {% if characterSkill.launchRestrictions|length > 0 %} inactive{% endif %}">
+                                            <span>{{ characterSkill.skill.name }}</span>
+                                            {% for restriction in characterSkill.launchRestrictions %}
+                                                <span class="ghost">{{ restriction }}</span>
+                                            {% endfor %}
+                                        </p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+</div>
+

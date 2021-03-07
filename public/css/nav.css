@@ -1,0 +1,131 @@
+:root {
+    --nav-width: 230px;
+}
+
+nav {
+    height: 100vh;
+    width: var(--nav-width);
+    position: fixed;
+    background-color: var(--primary-color-darkest);
+    box-shadow: 2px 1px 3px rgba(0,0,0,0.12), 1px 1px 2px rgba(0,0,0,0.24);
+    top: 0;
+    overflow-y: auto;
+    z-index: 2;
+}
+
+nav .linksContainer {
+    display: flex; flex-direction: column;
+    transition: all 0.3s;
+}
+
+nav .linksContainer.alt {
+    background-color: var(--tertiary-color-darker);
+}
+
+nav.battle .linksContainer.alt {
+    background-color: var(--battle-context-darker);
+}
+
+nav .linksContainer>a {
+    cursor: pointer;
+    padding: 10px 22px;
+    color: white;
+    transition: all 0.3s;
+}
+
+nav .linksContainer>a>span {
+    font-size: 14px;
+}
+
+nav .linksContainer>a>i {
+    margin-right: 12px;
+    width: 15px;
+}
+
+nav .linksContainer>a:hover, nav .linksContainer>a.active {
+    background-color: var(--secondary-color-dark);
+    text-decoration: none;
+    color: white;
+}
+
+nav .linksContainer.alt a:hover, nav .linksContainer.alt a.active {
+    background-color: var(--tertiary-color-dark);
+}
+
+nav.battle .linksContainer.alt a:hover, nav.battle .linksContainer.alt a.active {
+    background-color: var(--battle-context-dark);
+}
+
+nav>.title {
+    color: var(--secondary-color-light);
+    height: var(--header-height);
+    background-color: var(--tertiary-color-darker);
+    display: flex; flex-direction: row; justify-content: flex-start; align-items: center;
+}
+
+nav>.title>p {
+    color: white;
+    font-size: 19px;
+    padding-left:6px;
+    margin-left: 3px;
+}
+
+nav.battle>.title {
+    background-color: var(--battle-context-darker);
+}
+
+nav .linksSeparator {
+    width: calc(100% - 50%);
+    margin: 4px auto;
+    height: 1px;
+    background-color: var(--primary-color-medium);
+}
+
+.burgerMenu {
+    display: none;
+}
+
+@media all AND (max-width: 1200px) {
+
+    nav {
+        width: 100%;
+        height: auto;
+        overflow: auto;
+        z-index: 9;
+    }
+
+    nav>.top { padding-top: 16px; padding-bottom: 16px; }
+
+    nav .linksContainer {
+        display: none;
+    }
+
+    nav.active .linksContainer {
+        display: flex;
+    }
+
+    nav .linksSeparator {
+        display: none;
+    }
+
+    .burgerMenu {
+        position: absolute;
+        top: 5px;
+        right: 8px;
+        width: 50px;
+        padding: 7px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 3px;
+    }
+
+    .burgerMenu>div {
+        margin: 3px 0 3px 0;
+        height: 3px;
+        width: 100%;
+        background-color: var(--primary-color-light);
+    }
+
+}

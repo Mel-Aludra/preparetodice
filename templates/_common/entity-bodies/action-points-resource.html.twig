@@ -1,0 +1,10 @@
+{% for i in 0..characterResource.finalValue %}
+    {% if i > 0 %}
+        <div
+            {% if characterResource.currentValue >= i  %}
+                class="active"
+                style="background-color: {{ characterResource.resource.darkColor }}"
+            {% endif %}
+        ></div>
+    {% endif %}
+{% endfor %}

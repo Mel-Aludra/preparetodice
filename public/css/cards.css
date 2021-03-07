@@ -1,0 +1,98 @@
+/* Cards */
+
+.card {
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    margin: 15px 0;
+    border: 1px solid black;
+}
+.card:first-child { margin-top: 0; }
+@media all AND (min-width: 1200px) {
+    .card:last-child { margin-bottom: 0; }
+}
+
+.card.focus {
+    width: 70%;
+    max-width: 800px;
+}
+
+.card.growth {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+}
+
+/* Card > Header */
+
+.card>.header {
+    color: white;
+    background-color: var(--secondary-color-dark);
+    padding: 13px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    display: flex; flex-direction: row; align-items: center; justify-content: space-between;
+}
+
+.card>.header>p {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card>.header>p>span {
+    font-size: 17px;
+}
+
+.card>.header>p>i {
+    font-size: 18px;
+    margin-right: 12px;
+}
+
+/* Card > Body */
+
+.card>.body {
+    background-color: var(--primary-color-darkest);
+    padding: 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/* Card > Title */
+
+.card .body>h2 {
+    color: var(--primary-color-light);
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--primary-color-light);
+    margin-top: 32px;
+    display: flex; flex-direction: row; justify-content: flex-start; align-items: center;
+}
+.card .body>h2>i { margin-right: 6px; color: var(--primary-color-light); }
+.card .body>h2:first-child { margin: 0; }
+
+/* Card > Separator */
+
+.card>.body .separator {
+    width: 80%;
+    margin: 28px auto;
+    height: 1px;
+    background-color: var(--primary-color-medium);
+}
+
+/* Colors */
+
+.card.allies>.header { background-color: var(--color-allies-dark); }
+.card.foes>.header { background-color: var(--color-foes-dark); }
+
+@media all AND (max-width: 1023px) {
+
+    .card.focus {
+        width: calc(100% - 20px);
+        max-width: 800px;
+    }
+
+    .card {
+        margin-left: 0; margin-right: 0;
+        width: 100%;
+    }
+
+}

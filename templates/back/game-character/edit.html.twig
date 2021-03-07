@@ -1,0 +1,259 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% set title = "Create character" %}
+{% set actionName = "Create character" %}
+{% if context is defined and context == "update" %}
+    {% set title = "Update character " ~ character.name %}
+    {% set actionName = "Update character" %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_character_list", {'game': game.id}) }}"><i class="fal fa-user"></i>Characters</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>{{ title }}</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form method="post" data-form-checker="true">
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>{{ title }}</h1>
+                <p>Define the properties of your character and click on the "{{ actionName }}" button at the top right.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-user-plus"></i>{{ actionName }}</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                {# PART 1 #}
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-book-alt"></i>Character properties</h2>
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.description) }}
+                        </div>
+                    </div>
+
+                    {# Story #}
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-scroll"></i>Character story</h2>
+                            <p class="spaceBefore">Define story of this character.</p>
+                            {{ form_row(form.characterStories) }}
+                            <div class="genericFlex right">
+                                <a data-collection-adder="characterStory"><i class="fas fa-plus-square"></i><span>Add element to story</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# PART 2 #}
+                <div>
+
+                    {# Resources and attributes #}
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Resources</h2>
+                            <p class="spaceBefore">You only can change current and base value of the resources. Final value is calculated with gear, status effect, passives, ...</p>
+                            {% include "back/_common/character-resources-form.html.twig" %}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Attributes</h2>
+                            <p class="spaceBefore">You only can change base value of the attributes. Final value is calculated with gear, status effect, passives, ...</p>
+                            {% include "back/_common/character-attributes-form.html.twig" %}
+                        </div>
+                    </div>
+
+                    {# Skills #}
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Character skills</h2>
+                            <p class="spaceBefore">Define which skills this character can use.</p>
+                            {% if game.skills|length == 0 %}
+                                <p class="alert">You cannot add a skill to this character because no skill exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.characterSkills) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="characterSkill"><i class="fas fa-plus-square"></i><span>Add skill to character</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {# Passives #}
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Character passives</h2>
+                            <p class="spaceBefore">Define which passives this character have.</p>
+                            {% if game.passives|length == 0 %}
+                                <p class="alert">You cannot add a passive to this character because no passive exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.characterPassives) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="characterPassive"><i class="fas fa-plus-square"></i><span>Add passive to character</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {# Jobs #}
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Character jobs</h2>
+                            <p class="spaceBefore">Define which jobs this character have.</p>
+                            {% if game.jobs|length == 0 %}
+                                <p class="alert">You cannot add a job to this character because no job exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.characterJobs) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="characterJob"><i class="fas fa-plus-square"></i><span>Add job to character</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {# Status effects #}
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Status effects</h2>
+                            <p class="spaceBefore">Define which status effects this character have.</p>
+                            {% if game.statusEffects|length == 0 %}
+                                <p class="alert">You cannot add a status effect because no status effect exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.characterStatusEffects) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="characterStatusEffect"><i class="fas fa-plus-square"></i><span>Add status effect</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+                {# PART 3 #}
+                <div>
+
+                    {# Inventory > Money #}
+                    <div>
+                        <div class="card">
+                            <div class="body">
+                                <h2><i class="fas fa-coins"></i>{{ game.moneyTerm }}</h2>
+                                {{ form_row(form.money) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Inventory > Items #}
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Inventory: items</h2>
+                            <p class="spaceBefore">Define which items the character has in his inventory.</p>
+                            {% if game.items|length == 0 %}
+                                <p class="alert small">You cannot add an item to this character because no item exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.inventoryItems) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="inventoryItem"><i class="fas fa-plus-square"></i><span>Add item to character</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {# Inventory > Consumables #}
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Inventory: consumables</h2>
+                            <p class="spaceBefore">Define which consumables the character has in his inventory.</p>
+                            {% if game.consumables|length == 0 %}
+                                <p class="alert">You cannot add a consumable to this character because no consumable exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.inventoryConsumables) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="inventoryConsumable"><i class="fas fa-plus-square"></i><span>Add consumable to character</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {# Inventory > Weapons #}
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Inventory: weapons</h2>
+                            <p class="spaceBefore">Define which weapons the character has in his inventory.</p>
+                            {% if game.weapons|length == 0 %}
+                                <p class="alert">You cannot add a weapon to this character because no weapon exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.inventoryWeapons) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="inventoryWeapon"><i class="fas fa-plus-square"></i><span>Add weapon to character</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {# Inventory > Gears #}
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Inventory: gears</h2>
+                            <p class="spaceBefore">Define which gears the character has in his inventory.</p>
+                            {% if game.gears|length == 0 %}
+                                <p class="alert">You cannot add a gear to this character because no gear exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.inventoryGears) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="inventoryGear"><i class="fas fa-plus-square"></i><span>Add gear to character</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let characterSkillsElementsManager = new FormCollectionManager($('#game_character_characterSkills'), {{ character.characterSkills|length }}, 'characterSkill');
+        characterSkillsElementsManager.init();
+
+        let characterPassivesElementsManager = new FormCollectionManager($('#game_character_characterPassives'), {{ character.characterPassives|length }}, 'characterPassive');
+        characterPassivesElementsManager.init();
+
+        let characterJobsElementsManager = new FormCollectionManager($('#game_character_characterJobs'), {{ character.characterJobs|length }}, 'characterJob');
+        characterJobsElementsManager.init();
+
+        let characterStatusEffectsElementsManager = new FormCollectionManager($('#game_character_characterStatusEffects'), {{ character.characterStatusEffects|length }}, 'characterStatusEffect');
+        characterStatusEffectsElementsManager.init();
+
+        let invItemsElementsManager = new FormCollectionManager($('#game_character_inventoryItems'), {{ character.inventoryItems|length }}, 'inventoryItem');
+        invItemsElementsManager.init();
+
+        let invConsumablesElementsManager = new FormCollectionManager($('#game_character_inventoryConsumables'), {{ character.inventoryConsumables|length }}, 'inventoryConsumable');
+        invConsumablesElementsManager.init();
+
+        let invWeaponsElementsManager = new FormCollectionManager($('#game_character_inventoryWeapons'), {{ character.inventoryWeapons|length }}, 'inventoryWeapon');
+        invWeaponsElementsManager.init();
+
+        let invGearsElementsManager = new FormCollectionManager($('#game_character_inventoryGears'), {{ character.inventoryGears|length }}, 'inventoryGear');
+        invGearsElementsManager.init();
+
+        let charStoriesElementsManager = new FormCollectionManager($('#game_character_characterStories'), {{ character.characterStories|length }}, 'characterStory');
+        charStoriesElementsManager.init();
+    </script>
+{% endblock %}

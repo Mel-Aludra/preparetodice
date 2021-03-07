@@ -1,0 +1,9 @@
+{% if loggedAction == false or app.user is not null %}
+    {% if hiddenIfLogged == false or app.user is null %}
+        {% set appRoute = app.request.attributes.get('_route') %}
+        <a href="{{ path(route) }}" class="delay {% if appRoute == route %}active{% endif %}">
+            <i class="{{ icon }}"></i>
+            <span>{{ name }}</span>
+        </a>
+    {% endif %}
+{% endif %}

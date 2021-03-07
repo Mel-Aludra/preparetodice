@@ -1,0 +1,93 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Potency augmentators{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-chart-line"></i>Potency augmentators</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    {% include "back/_common/list-page-header.html.twig" with {
+        'pageTitle': "Potency augmentators",
+        'pageDescription': "Manage potency of your game here.",
+        'addActionRoute': path('gameBack_potency_add', {'game': game.id}),
+        'addActionName': "Add potency augmentator"
+    } %}
+
+    <div class="stickyPageHeader">
+        <div>
+            <h1>Potency augmentators</h1>
+            <p>
+                Augments can be added on a skill effect. This increases the base value of the effect (example: increasing the effect of a black magic spell on intelligence).</p>
+        </div>
+        {% if game.attributes|length > 0 %}
+            <a class="solidLink" href="{{ path('gameBack_potency_add', {'game': game.id}) }}">
+                <i class="fas fa-plus"></i>
+                <span>Add potency augmentator</span>
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="strip column">
+        {% if potencyAugmentators|length == 0 %}
+            <p>You have no potency augmentator in your game. To add a potency augmentator, click on the top right button "Add potency augmentator".</p>
+        {% endif %}
+        {% if game.attributes|length == 0 %}
+            <p class="alert">You have no attribute in your game so you can't create potency augmentators.</p>
+        {% endif %}
+        {% for potencyAugmentator in potencyAugmentators %}
+            <div class="object unfoldable">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-user"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ potencyAugmentator.name }}</h2>
+                        <p>{{ potencyAugmentator.attribute.name }} - {{ potencyAugmentator.type }}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_potency_update', {'game': game.id, 'potencyAugmentator': potencyAugmentator.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_potency_delete', {'game': game.id, 'potencyAugmentator': potencyAugmentator.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="panels spacedChildren">
+                        <div>
+                            <h2 class="lined"><i class="fal fa-superscript"></i>Augmentator type</h2>
+                            <p class="labelRow">
+                                <span>{{ potencyAugmentator.typeDescription }}</span>
+                            </p>
+
+                            <h2 class="lined spaceBefore"><i class="fal fa-sort-numeric-up-alt"></i>Attribute</h2>
+                            <p class="labelRow">
+                                <span>Based on {{ potencyAugmentator.attribute.abreviation }}</span>
+                            </p>
+
+                        </div>
+                        <div class="small">
+                            <h2 class="lined"><i class="fal fa-border-center-h"></i>Ceiling</h2>
+                            <p class="labelRow">
+                                {% if potencyAugmentator.percentCeiling is null %}
+                                    <span>No ceiling is define</span>
+                                {% else %}
+                                    <span>Can't go further than {{ potencyAugmentator.percentCeiling }}% of initial value</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

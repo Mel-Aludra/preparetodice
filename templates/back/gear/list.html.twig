@@ -1,0 +1,53 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Gears{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-helmet-battle"></i>Gears</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    {% include "back/_common/list-page-header.html.twig" with {
+        'pageTitle': "Gears",
+        'pageDescription': "Gears can change the characteristics of the characters wearing it.",
+        'addActionRoute': path('gameBack_gear_add', {'game': game.id}),
+        'addActionName': "Add gear"
+    } %}
+
+    <div class="strip column">
+        {% if gears|length == 0 %}
+            <p>You have no gear in your game. To add a gear, click on the top right button "Add gear".</p>
+        {% endif %}
+        {% for gear in gears %}
+            <div class="object unfoldable">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-helmet-battle"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ gear.name }}</h2>
+                        <p>{{ gear.description }}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_gear_update', {'game': game.id, 'gear': gear.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_gear_delete', {'game': game.id, 'gear': gear.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="body">
+                    {% include "_common/entity-bodies/status-effect.html.twig" with {'statusEffect': gear} %}
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

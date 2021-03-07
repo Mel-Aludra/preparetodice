@@ -1,0 +1,10 @@
+{% extends 'mails/_base.html.twig' %}
+
+{% block title %}
+    <p>{{ invitation.game.name }} - Invitation</p>
+{% endblock %}
+
+{% block content %}
+    <p>You have been invited to the game {{ invitation.game.name }}.</p>
+    <p>You can accept this invitation on your Preparetodice account.</p>
+{% endblock %}

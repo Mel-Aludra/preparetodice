@@ -1,0 +1,68 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Characters{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-user"></i>Character sheet : {{ character.name }}</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="stickyPageHeader">
+        <div>
+            <h1>{{ character.name }}</h1>
+            <p>Explainations here</p>
+        </div>
+        <div class="genericFlex">
+            <div class="genericFlex">
+                <a class="solidLink backCharacterSheetActions" href="{{ path('gameBack_characterManager_identity', {'game': game.id, 'gameCharacter': character.id}) }}"><i class="fas fa-edit"></i>Identity and status</a>
+                <a class="solidLink backCharacterSheetActions" href="{{ path('gameBack_characterManager_characteristics', {'game': game.id, 'gameCharacter': character.id}) }}"><i class="fas fa-edit"></i>Characteristics</a>
+                <a class="solidLink backCharacterSheetActions" href="{{ path('gameBack_characterManager_skills', {'game': game.id, 'gameCharacter': character.id}) }}"><i class="fas fa-edit"></i>Skills</a>
+                <a class="solidLink backCharacterSheetActions" href="{{ path('gameBack_characterManager_inventory', {'game': game.id, 'gameCharacter': character.id}) }}"><i class="fas fa-edit"></i>Inventory</a>
+                <a class="solidLink backCharacterSheetActions" href="{{ path('gameBack_characterManager_equipment', {'game': game.id, 'gameCharacter': character.id}) }}"><i class="fas fa-edit"></i>Equipment</a>
+            </div>
+            <div class="genericFlex">
+                <a class="solidLink backCharacterSheetActions" href="{{ path('gameBack_character_update', {'game': game.id, 'gameCharacter': character.id}) }}"><i class="fas fa-edit"></i>All properties</a>
+            </div>
+            <div class="genericFlex">
+                <a class="solidLink backCharacterSheetActions" href="{{ path('gameFront_character', {'game': game.id, 'gameCharacter': character.id}) }}" target="_blank"><i class="fas fa-user"></i>Go to player mode</a>
+            </div>
+        </div>
+    </div>
+    <div class="characterTabs">
+        <a class="characterSheetTab active" data-tab="status"><i class="fal fa-user"></i><span>Status</span></a>
+        <a class="characterSheetTab" data-tab="skills"><i class="fal fa-book"></i><span>Skills</span></a>
+        <a class="characterSheetTab" data-tab="inventory"><i class="fal fa-sack"></i><span>Inventory</span></a>
+        <a class="characterSheetTab" data-tab="battle"><i class="fal fa-swords"></i><span>Battle</span></a>
+    </div>
+    <div id="content">
+        {% include "front/game-character/content-status.html.twig" %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(".characterSheetTab").on("click", function() {
+            $(".characterSheetTab").each(function() {
+                $(this).removeClass("active");
+            });
+            $(this).addClass("active");
+            const tab = this.getAttribute("data-tab");
+            $.ajax({
+                url: '{{ path('ajaxCharacter_content', {"game": game.id, "character": character.id}) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "tab": tab
+                },
+                async: true,
+                success: function (data) {
+                    $('#content').html(data.response);
+                }
+            })
+        });
+    </script>
+{% endblock %}

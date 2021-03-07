@@ -1,0 +1,22 @@
+{% extends 'front/_layout/_base.html.twig' %}
+
+{% block title %}Password reset{% endblock %}
+
+{% block body %}
+    <div class="strip backgrounded screenEmphasis">
+        <div class="widget">
+            <h1>Reset password</h1>
+            <form method="post" action="" data-form-checker="true">
+                {% if ask == true %}
+                    <p>For security purpose, we can't say if this user name exists. If user name exists, you'll receive an email to reset your password.</p>
+                {% else %}
+                    <p>Type your user name and we'll send a mail to reset your password.</p>
+                    <div class="formRow">
+                        <input type="text" name="username" placeholder="User name" />
+                    </div>
+                    <input type="submit" value="Reset password" />
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

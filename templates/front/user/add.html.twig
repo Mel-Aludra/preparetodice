@@ -1,0 +1,43 @@
+{% extends 'front/_layout/_base.html.twig' %}
+{% form_theme form 'front/_layout/form-theme.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="strip backgrounded screenEmphasis">
+        <div class="widget">
+            <h1>Register</h1>
+            <form method="post" id="accountForm" action="" data-form-checker="true">
+                {% if app.flashes is defined %}
+                    {% for type, typeMessages in app.flashes %}
+                        {% for message in typeMessages %}
+                            <p onclick="this.remove()" class="infoPlate {{ type }}">{{ message }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                {{ form_start(form) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.password) }}
+                <input
+                    class="g-recaptcha"
+                    data-sitekey="6LdiH3QaAAAAADIRMhQAXKH87wANrRlecEJJInTU"
+                    data-callback='onSubmit'
+                    data-action='submit'
+                    type="submit"
+                    value="Register"
+                />
+                {{ form_end(form) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit(token) {
+            document.getElementById("accountForm").submit();
+        }
+    </script>
+{% endblock %}

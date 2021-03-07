@@ -1,0 +1,108 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}{{ character.name }} | Equipment{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_characterSheet", {'game': game.id, 'gameCharacter': character.id}) }}"><i class="fal fa-user"></i>{{ character.name }}</a>
+        <span> > </span>
+        <span><i class="fal fa-sack"></i>Inventory</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <form method="post" data-form-checker="true">
+
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>Inventory - {{ character.name }}</h1>
+                <p>Update inventory of {{ character.name }}.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-book-alt"></i>Update inventory</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2>{{ game.moneyTerm }}</h2>
+                            {{ form_row(form.money) }}
+
+                            <div class="largeSeparator"></div>
+
+                            <h2>Items</h2>
+                            {{ form_row(form.inventoryItems) }}
+                            <div class="genericFlex right">
+                                <a data-collection-adder="inventoryItem"><i class="fas fa-plus-square"></i><span>Add item to character</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2>Consumables</h2>
+                            {{ form_row(form.inventoryConsumables) }}
+                            <div class="genericFlex right">
+                                <a data-collection-adder="inventoryConsumable"><i class="fas fa-plus-square"></i><span>Add consumable to character</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2>Weapons</h2>
+                            {{ form_row(form.inventoryWeapons) }}
+                            <div class="genericFlex right">
+                                <a data-collection-adder="inventoryWeapon"><i class="fas fa-plus-square"></i><span>Add weapon to character</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2>Gears</h2>
+                            {{ form_row(form.inventoryGears) }}
+                            <div class="genericFlex right">
+                                <a data-collection-adder="inventoryGear"><i class="fas fa-plus-square"></i><span>Add gear to character</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let invItemsElementsManager = new FormCollectionManager($('#character_inventory_inventoryItems'), {{ character.inventoryItems|length }}, 'inventoryItem');
+        invItemsElementsManager.init();
+
+        let invConsumablesElementsManager = new FormCollectionManager($('#character_inventory_inventoryConsumables'), {{ character.inventoryConsumables|length }}, 'inventoryConsumable');
+        invConsumablesElementsManager.init();
+
+        let invWeaponsElementsManager = new FormCollectionManager($('#character_inventory_inventoryWeapons'), {{ character.inventoryWeapons|length }}, 'inventoryWeapon');
+        invWeaponsElementsManager.init();
+
+        let invGearsElementsManager = new FormCollectionManager($('#character_inventory_inventoryGears'), {{ character.inventoryGears|length }}, 'inventoryGear');
+        invGearsElementsManager.init();
+    </script>
+{% endblock %}

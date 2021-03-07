@@ -1,0 +1,45 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Define action points resource{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_resource_list", {'game': game.id}) }}"><i class="fal fa-tasks-alt"></i>Resources</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>Define action points resource</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="stickyPageHeader">
+        <div>
+            <h1>Define resource as action points</h1>
+            <p>Action points are displayed with circles who represents it. Each skill can take one or more action points to get launch.</p>
+        </div>
+    </div>
+    <div class="strip focus">
+        <div class="card">
+            <div class="body">
+                <h2 style="margin-bottom: 8px;"><i class="fal fa-solar-system"></i>What resource represents action points in your game?</h2>
+                {% if game.actionPointsResource is not null %}
+                    <p><strong>{{ game.actionPointsResource.name }}</strong> is actually define as action points resource in your game.</p>
+                {% else %}
+                    <p>
+                        No resource is actually define as action points resource. Please choose a resource who will represents action points in your game.
+                    </p>
+                {% endif %}
+                {% for resource in resources %}
+                    {% if game.actionPointsResource is null or game.actionPointsResource.id != resource.id %}
+                        <div class="narrow">
+                            <a href="{{ path('gameBack_resource_defineAsActionSelected', {'game': game.id, 'resource': resource.id}) }}" class="solidLink">
+                                Define {{ resource.name }} as action points resource
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

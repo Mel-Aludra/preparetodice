@@ -1,0 +1,50 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Items{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-sack"></i>Items</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    {% include "back/_common/list-page-header.html.twig" with {
+        'pageTitle': "Items",
+        'pageDescription': "Items are items that can be put into character inventory.",
+        'addActionRoute': path('gameBack_item_add', {'game': game.id}),
+        'addActionName': "Add item"
+    } %}
+
+    <div class="strip column">
+        {% if items|length == 0 %}
+            <p>You have no item in your game. To add an item, click on the top right button "Add item".</p>
+        {% endif %}
+        {% for item in items %}
+            <div class="object">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-user"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ item.name }}</h2>
+                        <p>{{ item.description }}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_item_update', {'game': game.id, 'item': item.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_item_delete', {'game': game.id, 'item': item.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

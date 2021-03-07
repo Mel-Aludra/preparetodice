@@ -1,0 +1,132 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Lore{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-file-alt"></i>Game elements</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="stickyPageHeader">
+        <div>
+            <h1>Game elements</h1>
+            <p>Here, you can resume your story or rules. You can choose for each block if you want to give access to players or not.</p>
+        </div>
+        <a class="solidLink" href="{{ path('gameBack_lore_add', {'game': game.id}) }}">
+            <i class="fas fa-plus"></i>
+            <span>Add block</span>
+        </a>
+    </div>
+
+    <div class="strip column">
+        <div class="panels spacedChildren">
+
+            {# Global lore blocks #}
+            <div>
+                <h2>Global elements</h2>
+                <p>Global elements are displayed on your game's home page.</p>
+                {% if globalLoreBlocks|length == 0 %}
+                    <p>You can add an element from the "Add block" button in top right of the screen</p>
+                {% endif %}
+                {% for loreBlock in globalLoreBlocks %}
+                    <div class="object unfoldable">
+                        <div class="header">
+                            <div class="identity">
+                                <h2>{{ loreBlock.title }}</h2>
+                                <p>{{ loreBlock.loreBlockElements|length }} element(s)</p>
+                            </div>
+                            <div class="actions">
+                                <a href="{{ path('gameBack_lore_update', {'game': game.id, 'loreBlock': loreBlock.id}) }}">
+                                    <i class="fal fa-edit"></i>
+                                    <span>Update</span>
+                                </a>
+                                <a class="remove" href="" onclick="return confirm(`Do you confirm the deletion?`)">
+                                    <i class="fal fa-trash-alt"></i>
+                                    <span>Delete</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="body">
+                            {% for loreBlockElement in loreBlock.loreBlockElements %}
+                                <h3 class="spaceBefore">{{ loreBlockElement.title }}</h3>
+                                <p>{{ loreBlockElement.text }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {# Specific lore blocks #}
+            <div>
+                {% for specificLoreBlocks in specificLoreBlocksByTag %}
+                    <h2>{{ specificLoreBlocks.tag.name }}</h2>
+                    <p>Those elements will be displayed on the tag {{ specificLoreBlocks.tag.name }}.</p>
+                    {% for loreBlock in specificLoreBlocks.blocks %}
+                        <div class="object unfoldable">
+                            <div class="header">
+                                <div class="identity">
+                                    <h2>{{ loreBlock.title }}</h2>
+                                    <p>{{ loreBlock.loreBlockElements|length }} element(s)</p>
+                                </div>
+                                <div class="actions">
+                                    <a href="{{ path('gameBack_lore_update', {'game': game.id, 'loreBlock': loreBlock.id}) }}">
+                                        <i class="fal fa-edit"></i>
+                                        <span>Update</span>
+                                    </a>
+                                    <a class="remove" href="" onclick="return confirm(`Do you confirm the deletion?`)">
+                                        <i class="fal fa-trash-alt"></i>
+                                        <span>Delete</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="body">
+                                {% for loreBlockElement in loreBlock.loreBlockElements %}
+                                    <h3 class="spaceBefore">{{ loreBlockElement.title }}</h3>
+                                    <p>{{ loreBlockElement.text }}</p>
+                                {% endfor %}
+                            </div>
+                        </div><br />
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            {# Tags #}
+            <div class="small">
+                <h2>Tags</h2>
+                <p>For each tag, a new access will be displayed in your game's menu.</p>
+                {% for loreTag in game.loreTags %}
+                    <div class="object">
+                        <div class="header">
+                            <div class="graph">
+                                <i class="fal fa-bars"></i>
+                            </div>
+                            <div class="identity">
+                                <h2>{{ loreTag.name }}</h2>
+                            </div>
+                            <div class="actions">
+                                <a href="{{ path('gameBack_loreTag_update', {'game': game.id, 'loreTag': loreTag.id}) }}">
+                                    <i class="fal fa-edit"></i>
+                                    <span>Update</span>
+                                </a>
+                                <a class="remove" href="{{ path('gameBack_loreTag_delete', {'game': game.id, 'loreTag': loreTag.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                                    <i class="fal fa-trash-alt"></i>
+                                    <span>Delete</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <a class="solidLink" href="{{ path('gameBack_loreTag_add', {'game': game.id}) }}">
+                    <i class="fas fa-plus"></i>
+                    <span>Add tag</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

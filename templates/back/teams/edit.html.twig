@@ -1,0 +1,62 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Teams{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_teams_dashboard", {'game': game.id}) }}"><i class="fal fa-users-class"></i>Teams</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>Edit teams</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form method="post">
+
+        <div class="stickyPageHeader">
+            <div class="firstPart">
+                <h1>Edit teams</h1>
+                <p>Teams</p>
+            </div>
+            <div class="secondPart">
+                <button class="emphasis" type="submit"><i class="fa fa-edit"></i>Edit teams</button>
+            </div>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-user-minus"></i>Teams</h2>
+
+                            {% for character in characters %}
+                                <div class="object">
+                                    <div class="header hardLines">
+                                        <div class="graph {{ character.team }}">
+                                            <i class="fal fa-user"></i>
+                                        </div>
+                                        <div class="identity">
+                                            <h2>{{ character.name }}</h2>
+                                            <p>{{ character.description }}</p>
+                                        </div>
+                                        <div class="togglesContainer">
+                                            <p data-toggle="null" class="{% if character.team is null %}active{% endif %}"><i class="fal fa-user"></i><span>No team</span></p>
+                                            <p data-toggle="allies" class="allies {% if character.team == 'allies' %}active{% endif %}"><i class="fal fa-user"></i><span>Allies team</span></p>
+                                            <p data-toggle="foes" class="foes {% if character.team == 'foes' %}active{% endif %}"><i class="fal fa-user"></i><span>Foes team</span></p>
+                                            <input type="hidden" name="teams[{{ character.id }}]" value="{{ character.team }}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+{% endblock %}

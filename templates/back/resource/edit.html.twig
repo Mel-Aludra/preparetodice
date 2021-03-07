@@ -1,0 +1,61 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% set title = "Create resource" %}
+{% set actionName = "Create resource" %}
+{% if context is defined and context == "update" %}
+    {% set title = "Update resource" ~ resource.name %}
+    {% set actionName = "Update resource" %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_resource_list", {'game': game.id}) }}"><i class="fal fa-tasks-alt"></i>Resources</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>{{ title }}</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form method="post" data-form-checker="true">
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>{{ title }}</h1>
+                <p>Define the properties of your resource and click on the "{{ actionName }}" button at the top right.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fal fa-tasks-alt"></i>{{ actionName }}</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                <div class="card">
+                    <div class="body">
+                        <h2><i class="fal fa-tasks-alt"></i>Resource</h2>
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.abreviation) }}
+                        {{ form_row(form.description) }}
+                        {{ form_row(form.maximumValue) }}
+                        {{ form_row(form.isReversedDirection) }}
+                        {{ form_row(form.jobs) }}
+                        {% if game.jobs|length == 0 %}
+                            <p class="small">You don't have any job in your game, so you can't define this option</p>
+                        {% endif %}
+                        {{ form_row(form.color) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

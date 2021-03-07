@@ -1,0 +1,141 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Resources{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-tasks-alt"></i>Resources</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="stickyPageHeader">
+        <div>
+            <h1>Resources</h1>
+            <p>Resources are characteristics for which characters will have a current value, such as life or mana.</p>
+        </div>
+        <a class="solidLink" href="{{ path('gameBack_resource_add', {'game': game.id}) }}">
+            <i class="fas fa-plus"></i>
+            <span>Add resource</span>
+        </a>
+    </div>
+    <div class="strip column">
+        <div class="panels spacedChildren">
+            <div>
+                {% if resources|length == 0 %}
+                    <p>You have no resource in your game. To add a resource, click on the top right button "Add resource".</p>
+                {% endif %}
+                {% for resource in resources %}
+                    <div class="object unfoldable">
+                        <div class="header" style="background-color: {{ resource.getDarkColor }}">
+                            <div class="graph" style="background-color: {{ resource.getDarkColor }}">
+                                <i class="fal fa-user"></i>
+                            </div>
+                            <div class="identity">
+                                <h2>{{ resource.abreviation }} - {{ resource.name }}</h2>
+                                <p>{{ resource.description }}</p>
+                            </div>
+                            <div class="actions">
+                                <a href="{{ path('gameBack_resource_update', {'game': game.id, 'resource': resource.id}) }}">
+                                    <i class="fal fa-edit"></i>
+                                    <span>Update</span>
+                                </a>
+                                <a class="remove" href="{{ path('gameBack_resource_delete', {'game': game.id, 'resource': resource.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                                    <i class="fal fa-trash-alt"></i>
+                                    <span>Delete</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div class="panels spacedChildren">
+                                <div>
+                                    <h2 class="lined"><i class="fal fa-list"></i>Properties</h2>
+                                    {% if resource.maximumValue == null %}
+                                        <p class="labelRow">
+                                            <span>No maximum value</span>
+                                        </p>
+                                    {% else %}
+                                        <p class="labelRow">
+                                            <span>Maximum value: {{ resource.maximumValue }}</span>
+                                        </p>
+                                    {% endif %}
+                                    <p class="labelRow">
+                                        {% if resource.isReversedDirection %}
+                                            <span>Resource goes from max value to 0</span>
+                                        {% else %}
+                                            <span>Resource goes from 0 to max value</span>
+                                        {% endif %}
+                                    </p>
+                                    <p class="labelRow">
+                                        <span>Color: {{ resource.color.name }}</span>
+                                    </p>
+                                </div>
+                                <div>
+                                    <h2 class="lined"><i class="fal fa-user-ninja"></i>Limitations</h2>
+                                    {% if resource.jobs|length == 0 %}
+                                        <p class="small">No job limitation</p>
+                                    {% else %}
+                                        {% for job in resource.jobs %}
+                                            <p class="labelRow">
+                                                <span>Limited to <strong>{{ job.name }}</strong></span>
+                                            </p>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="small">
+                <div class="object">
+                    <div class="header">
+                        <div class="graph">
+                            <i class="fal fa-user"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>Life resource</h2>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <p>Life resource represents life of characters.</p>
+                        <p>You can define a resource who represents that life.</p>
+                        {% if game.lifeResource is not null %}
+                            <p>Life resource is actually <strong>{{ game.lifeResource.name }}</strong> in your game.</p>
+                        {% endif %}
+                        <br/>
+                        <a href="{{ path('gameBack_resource_defineAsLife', {'game': game.id}) }}" class="solidLink">
+                            Define life resource
+                        </a>
+                    </div>
+                </div>
+
+                <div class="object">
+                    <div class="header">
+                        <div class="graph">
+                            <i class="fal fa-user"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>Action points resource</h2>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <p>Action points resource represents actions of characters.</p>
+                        <p>You can define a resource who represents that action points.</p>
+                        {% if game.actionPointsResource is not null %}
+                            <p>Action points resource is actually <strong>{{ game.actionPointsResource.name }}</strong> in your game.</p>
+                        {% endif %}
+                        <br/>
+                        <a href="{{ path('gameBack_resource_defineAsAction', {'game': game.id}) }}" class="solidLink">
+                            Define actions points resource
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

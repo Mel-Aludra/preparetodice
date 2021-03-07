@@ -1,0 +1,53 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Status effects{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-flask-poison"></i>Status effects</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    {% include "back/_common/list-page-header.html.twig" with {
+        'pageTitle': "Status effects",
+        'pageDescription': "Status effects can affect characteristics or apply damage or healing over time.",
+        'addActionRoute': path('gameBack_statusEffect_add', {'game': game.id}),
+        'addActionName': "Add status effect"
+    } %}
+
+    <div class="strip column">
+        {% if statusEffects|length == 0 %}
+            <p>You have no status effect in your game. To add a status effect, click on the top right button "Add status effect".</p>
+        {% endif %}
+        {% for statusEffect in statusEffects %}
+            <div class="object unfoldable">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-flask-poison"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ statusEffect.name }}</h2>
+                        <p>{{ statusEffect.description }}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_statusEffect_update', {'game': game.id, 'statusEffect': statusEffect.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_statusEffect_delete', {'game': game.id, 'statusEffect': statusEffect.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="body">
+                    {% include "_common/entity-bodies/status-effect.html.twig" with {'statusEffect': statusEffect} %}
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

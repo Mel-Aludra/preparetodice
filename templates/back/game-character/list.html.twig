@@ -1,0 +1,59 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Characters{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-user"></i>Characters</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    {% include "back/_common/list-page-header.html.twig" with {
+        'pageTitle': "Characters",
+        'pageDescription': "All characters of your game are here: players, npcs and foes.",
+        'addActionRoute': path('gameBack_character_add', {'game': game.id}),
+        'addActionName': "Add character"
+    } %}
+
+    <div class="strip column">
+        {% if characters|length == 0 %}
+            <p>You have no character in your game. To add a character, click on the top right button "Add character".</p>
+        {% endif %}
+        {% for character in characters %}
+            <div class="object unfoldable">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-user"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ character.name }}</h2>
+                        <p>{{ character.description }}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_characterSheet', {'game': game.id, 'gameCharacter': character.id}) }}">
+                            <i class="fal fa-user"></i>
+                            <span>Character sheet</span>
+                        </a>
+                        <a href="{{ path('gameBack_character_update', {'game': game.id, 'gameCharacter': character.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_character_delete', {'game': game.id, 'gameCharacter': character.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="grid">
+                        {% include "_common/entity-bodies/character.html.twig" with {'character': character} %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

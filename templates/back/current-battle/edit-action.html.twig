@@ -1,0 +1,141 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% set title = "Create action" %}
+{% set actionName = "Create action" %}
+{% if context is defined and context == "update" %}
+    {% set title = "Update action " ~ action.name %}
+    {% set actionName = "Update action" %}
+{% endif %}
+{% block title %}{{ title }}{% endblock %}
+{% block headerClass %}battle{% endblock %}
+{% block navClass %}battle{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_currentBattle_overview", {'game': game.id}) }}"><i class="fal fa-swords"></i>Battle {{ battle.name }}</a>
+        <span> > </span>
+        <span><i class="fal fa-street-view"></i>Action {{ action.name }}</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <form method="post" data-form-checker="true">
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader hard battle">
+            <div>
+                <h1>Battle {{ battle.id }} > Update action {{ action.name }}</h1>
+                <p>Update action before select targets and launch it.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-book-alt"></i>Select targets</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                {# Left block #}
+                <div class="small">
+                    <div class="card">
+                        <div class="body">
+
+                            <h2><i class="fas fa-list-alt"></i>Action properties</h2>
+                            {{ form_row(form.name) }}
+
+                            <h2><i class="fas fa-user-minus"></i>Costs</h2>
+                            {{ form_row(form.skillCosts) }}
+                            {% if game.resources|length == 0 %}
+                                <p class="alert">You cannot add a cost because no resources exist in the game.</p>
+                            {% else %}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="skillCost"><i class="fas fa-plus-square"></i><span>Add a cost</span></a>
+                                </div>
+                            {% endif %}
+
+                            <h2><i class="fas fa-user-plus"></i>Gains</h2>
+                            {{ form_row(form.skillGains) }}
+                            {% if game.resources|length == 0 %}
+                                <p class="alert">You cannot add a gain because no resources exist in the game.</p>
+                            {% else %}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="skillGain"><i class="fas fa-plus-square"></i><span>Add a gain</span></a>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+
+                {# Right block #}
+                <div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Damage effects</h2>
+                            {{ form_row(form.skillDamageEffects) }}
+                            {% if game.resources|length == 0 or game.damageNatures|length == 0 %}
+                                <p class="alert">You cannot add a damage effect because no resources or no damage natures exist in the game.</p>
+                            {% else %}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="skillDamageEffect"><i class="fas fa-plus-square"></i><span>Add an effect (damage)</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-prescription-bottle-alt"></i>Heal effects</h2>
+                            {{ form_row(form.skillHealEffects) }}
+                            {% if game.resources|length == 0 %}
+                                <p class="alert">You cannot add a heal effect because no resources exist in the game.</p>
+                            {% else %}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="skillHealEffect"><i class="fas fa-plus-square"></i><span>Add an effect (heal)</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-flask-poison"></i>Status effects</h2>
+                            {{ form_row(form.skillStatusEffects) }}
+                            {% if game.statusEffects|length == 0 %}
+                                <p class="alert">You cannot add a status effect because no status effect exist in the game.</p>
+                            {% else %}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="skillStatusEffect"><i class="fas fa-plus-square"></i><span>Add a status effect</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let costsElementsManager = new FormCollectionManager($('#action_skillCosts'), {{ action.skillCosts|length }}, 'skillCost');
+        costsElementsManager.init();
+
+        let gainsElementsManager = new FormCollectionManager($('#action_skillGains'), {{ action.skillGains|length }}, 'skillGain');
+        gainsElementsManager.init();
+
+        let damagesElementsManager = new FormCollectionManager($('#action_skillDamageEffects'), {{ action.skillDamageEffects|length }}, 'skillDamageEffect');
+        damagesElementsManager.init();
+
+        let healsElementsManager = new FormCollectionManager($('#action_skillHealEffects'), {{ action.skillHealEffects|length }}, 'skillHealEffect');
+        healsElementsManager.init();
+
+        let statusEffectsElementsManager = new FormCollectionManager($('#action_skillStatusEffects'), {{ action.skillStatusEffects|length }}, 'skillStatusEffect');
+        statusEffectsElementsManager.init();
+    </script>
+{% endblock %}

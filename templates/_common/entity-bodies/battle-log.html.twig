@@ -1,0 +1,28 @@
+<div class="object unfoldable {% if log.isApplied == true %}fade{% endif %}">
+    <div class="header">
+        <div class="graph {{ log.type }}">
+            <i class="{{ log.iconName }}"></i>
+        </div>
+        <div class="identity">
+            <h2>
+                {% if log.isApplied == true %}
+                    <span class="badge">Already applied</span>
+                {% endif %}
+                {% if log.type == constant('App\\Entity\\BattleLog::TYPE_DAMAGE') or log.type == constant('App\\Entity\\BattleLog::TYPE_HEAL') %}
+                    {{ log.type|capitalize }} - {{ log.target.name }}
+                    - <span class="badge {{ log.type }}">
+                    {{ log.sigle }}{{ log.finalValue }} {{ log.targetedResource.abreviation }}
+                    </span>
+                {% elseif log.type == constant('App\\Entity\\BattleLog::TYPE_STATUS_EFFECT') %}
+                    {{ log.type|capitalize }} - {{ log.target.name }}
+                    - <span class="badge {{ log.type }}">{{ log.statusEffect.name }} - {{ log.statusEffectTurns }} turn(s)</span>
+                {% elseif log.type == constant('App\\Entity\\BattleLog::TYPE_COST') or log.type == constant('App\\Entity\\BattleLog::TYPE_GAIN') %}
+                    {{ log.type|capitalize }} - {{ log.target.name }} - <span class="badge {{ log.type }}">{{ log.sigle }}{{ log.finalValue }} {{ log.targetedResource.abreviation }}</span>
+                {% endif %}
+            </h2>
+        </div>
+    </div>
+    <div class="body">
+        <p>Details here</p>
+    </div>
+</div>

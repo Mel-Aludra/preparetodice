@@ -1,0 +1,12 @@
+<h2>{{ loreBlock.title }}</h2>
+
+{% for loreBlockElement in loreBlock.loreBlockElements %}
+    {% if loreBlockElement.accessType == "public" or isGameMaster %}
+        <div class="{% if loreBlockElement.accessType != "public" %}special{% endif %}">
+
+        </div>
+        <h3>{{ loreBlockElement.title }}</h3>
+        <p>{{ loreBlockElement.text }}</p>
+        <p class="small">{% if loreBlockElement.accessType != "public" %}As a game master, you can see this{% endif %}</p>
+    {% endif %}
+{% endfor %}

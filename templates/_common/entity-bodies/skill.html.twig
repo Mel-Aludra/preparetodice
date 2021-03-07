@@ -1,0 +1,67 @@
+<div class="panels spacedChildren">
+
+    {# Costs and gains (only for skills and weapons) #}
+    {% if skill.className != "consumable" %}
+    <div class="small">
+
+        <h2 class="lined"><i class="fal fa-street-view"></i>Caster effects</h2>
+        {% if skill.skillCosts|length == 0 and skill.skillGains|length == 0 %}
+            <p class="small">No effect on caster</p>
+        {% endif %}
+
+        {% for cost in skill.skillCosts %}
+            <p class="labelRow damage">
+                <span>{{ cost }}</span>
+            </p>
+        {% endfor %}
+
+        {% for gain in skill.skillGains %}
+            <p class="labelRow heal">
+                <span>{{ gain }}</span>
+            </p>
+        {% endfor %}
+
+    </div>
+    {% endif %}
+
+    {# Effects (damage, heal and se) #}
+    <div>
+
+        <h2 class="lined"><i class="fal fa-bullseye-arrow"></i>Target(s) effects</h2>
+
+        {% for effect in skill.skillDamageEffects %}
+            <p class="labelRow damage">
+                <span>{{ effect }}</span>
+                <span>(type: {{ effect.damageNature.abreviation }})</span>
+            </p>
+        {% endfor %}
+
+        {% for effect in skill.skillHealEffects %}
+            <p class="labelRow heal">
+                <span>{{ effect }}</span>
+            </p>
+        {% endfor %}
+
+        {% for effect in skill.skillStatusEffects %}
+            <p class="labelRow">
+                <span>{{ effect }}</span>
+            </p>
+        {% endfor %}
+
+    </div>
+
+    {# Jobs requirements (only for skills and weapons) #}
+    {% if skill.className != "consumable" %}
+        <div class="small">
+            <h2 class="lined"><i class="fal fa-bullseye-arrow"></i>Jobs</h2>
+            {% if skill.jobs|length == 0 %}
+                <p class="small">Can be used by any character.</p>
+            {% else %}
+                {% for job in skill.jobs %}
+                    <p class="labelRow"><span class="ghost">Limited to</span><span>{{ job.name }}</span></p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+</div>

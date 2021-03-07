@@ -1,0 +1,142 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <div class="stickyPageHeader">
+        <div>
+            <h1>{{ game.name }}</h1>
+            <p>Game master administration</p>
+        </div>
+        <a class="solidLink emphasis" target="_blank" href="{{ path('gameFront_home', {'game': game.id}) }}">
+            <span>Access {{ game.name }} dashboard</span>
+        </a>
+    </div>
+
+    <div class="strip column">
+        <div class="object">
+            <div class="body">
+                <h2>Welcome to {{ game.name }} dashboard</h2>
+                <p>Here, you can see allies and foes and use global functions.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="strip column">
+        <div class="panels spacedChildren">
+
+            <div class="small">
+                <h2>Allies team</h2>
+                {% for gameCharacter in allies %}
+                    <p>{{ gameCharacter.name }}</p>
+                {% endfor %}
+
+                <h2 class="spaceBefore">Foes team</h2>
+                {% for gameCharacter in foes %}
+                    <p>{{ gameCharacter.name }}</p>
+                {% endfor %}
+
+                <p class="spaceBefore">Current battle :</p>
+                {% if game.currentBattle != null %}
+                    <h2>{{ game.currentBattle.name }}</h2>
+                {% else %}
+                    <p>No current battle</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <h2>Global functions</h2>
+
+                {# Heal active characters #}
+                <div class="object">
+                    <div class="header">
+                        <div class="graph">
+                            <i class="fal fa-prescription-bottle-alt"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>Heal characters</h2>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <div class="genericFlex">
+                            <a href="{{ path('gameBack_heal', {'game': game.id, 'typeOfHealing': 'allies'}) }}" class="solidLink" style="margin: 0 6px">Heal allies</a>
+                            <a href="{{ path('gameBack_heal', {'game': game.id, 'typeOfHealing': 'foes'}) }}" class="solidLink" style="margin: 0 6px">Heal foes</a>
+                            <a href="{{ path('gameBack_heal', {'game': game.id, 'typeOfHealing': 'all'}) }}" class="solidLink" style="margin: 0 6px">Heal all characters</a>
+                        </div>
+                    </div>
+                </div>
+
+                {# Swap item #}
+                <div class="object">
+                    <div class="header">
+                        <div class="graph">
+                            <i class="fal fa-sack"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>Swap items between characters</h2>
+                        </div>
+                        <div class="actions">
+
+                        </div>
+                    </div>
+                    <div class="body">
+                        {% for character in activeCharacters %}
+                            <form method="post" action="">
+                                <div class="collectionContainer">
+                                    <div class="body">
+                                        <div>
+                                            <div class="formRow">
+                                                <label for="swapFromCharacter{{ character.id }}_item">From <strong>{{ character.name }}</strong> inventory</label>
+                                                <select id="swapFromCharacter{{ character.id }}_item" name="swapItem[itemData]">
+                                                    <optgroup label="Items">Items</optgroup>
+                                                    {% for inventoryItem in character.inventoryItems %}
+                                                        <option value="item_{{ inventoryItem.id }}">{{ inventoryItem.item.name }} (qty: {{ inventoryItem.quantity }})</option>
+                                                    {% endfor %}
+                                                    <optgroup label="Consumables">Consumables</optgroup>
+                                                    {% for inventoryItem in character.inventoryConsumables %}
+                                                        <option value="consumable_{{ inventoryItem.id }}">{{ inventoryItem.consumable.name }} (qty: {{ inventoryItem.quantity }})</option>
+                                                    {% endfor %}
+                                                    <optgroup label="Weapons">Weapons</optgroup>
+                                                    {% for inventoryItem in character.inventoryWeapons %}
+                                                        <option value="weapon_{{ inventoryItem.id }}">{{ inventoryItem.weapon.name }} (qty: {{ inventoryItem.quantity }})</option>
+                                                    {% endfor %}
+                                                    <optgroup label="Gears">Gears</optgroup>
+                                                    {% for inventoryItem in character.inventoryGears %}
+                                                        <option value="gear_{{ inventoryItem.id }}">{{ inventoryItem.gear.name }} (qty: {{ inventoryItem.quantity }})</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="formRow">
+                                                <label for="swapFromCharacter{{ character.id }}_qty">Quantity</label>
+                                                <input id="swapFromCharacter{{ character.id }}_qty" name="swapItem[quantity]" type="text" value="" placeholder="Quantity" />
+                                            </div>
+                                            <div class="formRow">
+                                                <label for="swapFromCharacter{{ character.id }}_to">To another character inventory</label>
+                                                <select id="swapFromCharacter{{ character.id }}_to" name="swapItem[to]">
+                                                    <optgroup label="Active teams">Active teams</optgroup>
+                                                    {% for toCharacter in activeCharacters %}
+                                                        <option value="{{ toCharacter.id }}">{{ toCharacter.name }}</option>
+                                                    {% endfor %}
+                                                    <optgroup label="All characters">All characters</optgroup>
+                                                    {% for toCharacter in game.gameCharacters %}
+                                                        <option value="{{ toCharacter.id }}">{{ toCharacter.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="swapItem[from]" value="{{ character.id }}" />
+                                <button type="submit">Swap item</button>
+                            </form>
+                            {% if loop.last == false %}
+                                <div class="largeSeparator"></div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

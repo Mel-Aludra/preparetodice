@@ -1,0 +1,86 @@
+<div class="panels spacedChildren">
+
+    <div>
+        <div class="card">
+            <div class="body">
+                <p><strong>{{ character.name }}</strong></p>
+                <p>{{ character.description }}</p>
+                {% if character.characterStories|length > 0 %}
+                    {% set first = true %}
+                    {% set isGm = app.user.isGameMaster(game.id) %}
+                    {% for characterStory in character.characterStories %}
+                        {% if isGm or characterStory.isHidden == false %}
+                            {% if first %}
+                                <div class="separator"></div>
+                                {% set first = false %}
+                            {% endif %}
+                            <p class="labelRow"><span class="ghost">{{ characterStory.text }}</span></p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="body">
+            {% for characterResource in character.characterResources %}
+                {% if characterResource.resource.id == game.lifeResource.id %}
+                    {% include '_common/entity-bodies/character-resource.html.twig' %}
+                {% endif %}
+            {% endfor %}
+            {% for characterResource in character.characterResources %}
+                {% if characterResource.resource.id != game.lifeResource.id %}
+                    {% include '_common/entity-bodies/character-resource.html.twig' %}
+                {% endif %}
+            {% endfor %}
+            <div class="separator"></div>
+            {% for characterAttribute in character.characterAttributes %}
+                {% include '_common/entity-bodies/character-attribute.html.twig' %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="body">
+            {% if character.characterPassives|length == 0 %}
+                <p class="small">You have no passive</p>
+            {% endif %}
+            {% for characterPassive in character.characterPassives %}
+                <div class="object unfoldable">
+                    <div class="header" onclick="unfold(this)">
+                        <div class="graph">
+                            <i class="fal fa-book-alt"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>{{ characterPassive.passive.name }}</h2>
+                            <p>{{ characterPassive.passive.description }}</p>
+                        </div>
+                        <div class="actions"></div>
+                    </div>
+                    <div class="body">
+                        {% include "_common/entity-bodies/passive.html.twig" with {'passive': characterPassive.passive} %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if character.characteristicCalculations|length > 0 %}
+                <div class="separator"></div>
+                {% for characteristicCalculation in character.characteristicCalculations %}
+                    <p class="labelRow {% if characteristicCalculation.isNegative == true %}damage{% else %}heal{% endif %}">
+                        <span class="ghost">{{ characteristicCalculation.source }}</span>
+                        <span>{{ characteristicCalculation.characteristic }} :</span>
+                        {% if characteristicCalculation.isNegative == true %}
+                            <span>-{{ characteristicCalculation.value }}</span>
+                        {% else %}
+                            <span>+{{ characteristicCalculation.value }}</span>
+                        {% endif %}
+                        <span>{{ characteristicCalculation.calculation }}</span>
+                    </p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+

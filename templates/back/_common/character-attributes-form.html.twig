@@ -1,0 +1,24 @@
+{% for characterAttribute in character.characterAttributes %}
+    <div class="collectionContainer" style="background-color:{{ characterAttribute.attribute.darkColor }}">
+        <div class="header">
+            <p>{{ characterAttribute.attribute.name }}</p>
+        </div>
+        <div class="body">
+            <div>
+                {% set characterAttributeId = characterAttribute.id %}
+                {% if characterAttribute.id is null %}
+                    {% set characterAttributeId = characterAttribute.attribute.id %}
+                    <input type="hidden" name="character_attributes[{{ characterAttributeId }}][attributeId]" value="{{ characterAttribute.attribute.id }}" />
+                {% endif %}
+                <div class="formRow">
+                    <label for="ca_{{ characterAttributeId }}_current">Base value</label>
+                    <input name="character_attributes[{{ characterAttributeId }}][base]" id="ca_{{ characterAttributeId }}_current" type="number" value="{{ characterAttribute.value }}" />
+                </div>
+                <div class="formRow">
+                    <label for="ca_{{ characterAttributeId }}_final">Final value</label>
+                    <input id="ca_{{ characterAttributeId }}_final" class="ghost" disabled="disabled" type="number" value="{{ characterAttribute.finalValue }}" />
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

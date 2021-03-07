@@ -1,0 +1,68 @@
+/* Generic flex */
+
+.genericFlex { display: flex; flex-direction: row; justify-content: center; align-items: center; }
+.genericFlex.spacedChildren { justify-content: space-between; }
+.genericFlex.right { justify-content: flex-end; }
+
+/* Spaced title children except last */
+
+.spaceTopChildrenTitles>h2, .spaceTopChildrenTitles>h3 { margin-top: 15px; }
+.spaceTopChildrenTitles>h2:first-child, .spaceTopChildrenTitles>h3:first-child { margin-top: 0; }
+
+/* Narrotize elements */
+
+.narrow { padding: 8px; }
+
+/* Targets */
+
+p.target {
+    background-color: var(--primary-color-dark);
+    opacity: 0.4;
+    border: 2px solid transparent;
+    margin: 8px;
+    padding: 4px;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+p.target:hover { opacity: 0.8; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+p.target.allies { background-color: var(--color-allies-dark); }
+p.target.foes { background-color: var(--color-foes-dark); }
+p.target.active {
+    opacity: 1; border-color: black;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+/* Texts */
+
+h1, h2 {
+    color: var(--tertiary-color-light);
+}
+
+h2.allies, h2.allies>i, h2.allies>span { color: var(--color-allies-dark); }
+h2.foes, h2.foes>i, h2.foes>span { color: var(--color-foes-dark); }
+
+p.alert { color: var(--color-error-light); font-family: "PtdBold", sans-serif; }
+
+/* Badges */
+
+span.badge {
+    padding: 3px;
+    border-radius: 3px;
+    background-color: var(--primary-color-dark);
+    color: white;
+    font-family: "PtdBold", sans-serif;
+}
+span.badge.damage { background-color: var(--color-error-dark); }
+span.badge.heal { background-color: var(--color-success-dark); }
+
+/* Misc */
+
+@media all AND (max-width: 1200px) {
+
+    .narrow {
+        padding: 2px;
+    }
+
+}

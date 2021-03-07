@@ -1,0 +1,64 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}{{ character.name }} | Equipment{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_characterSheet", {'game': game.id, 'gameCharacter': character.id}) }}"><i class="fal fa-user"></i>{{ character.name }}</a>
+        <span> > </span>
+        <span><i class="fal fa-female"></i>Equipment</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <form method="post" data-form-checker="true">
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>Equipment - {{ character.name }}</h1>
+                <p>Change equipment of {{ character.name }}.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-female"></i>Update equipment</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+                <div class="card">
+                    <div class="body">
+                        <label for="weapon">Weapon</label>
+                        <select name="weapon" id="weapon">
+                            <option value="null">No weapon</option>
+                            {% set equippedWeaponId = null %}
+                            {% if character.equippedWeapon is not null %}
+                                {% set equippedWeaponId = character.equippedWeapon.id %}
+                            {% endif %}
+                            {% for inventoryWeapon in character.inventoryWeapons %}
+                                <option value="{{ inventoryWeapon.id }}" {% if inventoryWeapon.id == equippedWeaponId %}selected="selected"{% endif %}>{{ inventoryWeapon.weapon.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        {% for equipmentSlot in equipmentSlots %}
+                            <label for="slot_{{ equipmentSlot.id }}" class="spaceBefore">{{ equipmentSlot.name }}</label>
+                            <select name="slots[{{ equipmentSlot.id }}]" id="slot_{{ equipmentSlot.id }}">
+                                <option value="null">No gear</option>
+                                {% for inventoryGear in character.inventoryGears %}
+                                    <option {% if inventoryGear.isEquippedToSlot(equipmentSlot) %}selected="selected"{% endif %} value="{{ inventoryGear.id }}">{{ inventoryGear.gear.name }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+    </script>
+{% endblock %}

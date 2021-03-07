@@ -1,0 +1,52 @@
+<div class="stickyPageHeader">
+
+    {# Name and description #}
+    <div class="firstPart">
+        <h1>{{ pageTitle }}</h1>
+        <p>{{ pageDescription }}</p>
+    </div>
+
+    <div class="secondPart">
+
+        <div>
+
+            {# Filtering / Ordering #}
+            <form method="post" class="filteringContainer">
+                {% if entitiesFiltersService is defined and entitiesFiltersService.filters is null %}
+                    {{ form_start(entitiesFiltersService.searchForm) }}
+                    {{ form_end(entitiesFiltersService.searchForm) }}
+                {% else %}
+                    <input type="hidden" name="cancelPagingValues" value="true" />
+                    <button class="deleteFilters" type="submit"><span>{{ entitiesFiltersService.filters }}</span><i class="fas fa-times"></i></button>
+                {% endif %}
+            </form>
+
+            {# Paging #}
+            {% if entitiesFiltersService is defined %}
+                <div class="paging">
+                    {% if entitiesFiltersService.totalPages == 0 %}
+                        <p>No result</p>
+                    {% else %}
+                        <a {% if entitiesFiltersService.previousPage is not null %}href="{{ path(entitiesFiltersService.route, {'page': entitiesFiltersService.previousPage, 'game': game.id}) }}" {% else %} class="inactive" {% endif %}>Previous</a>
+                        {% for i in 1..entitiesFiltersService.totalPages %}
+                            <a {% if entitiesFiltersService.currentPage == i %}class="active"{% endif%} href="{{ path(entitiesFiltersService.route, {'page': i, 'game': game.id}) }}">
+                                <strong>{{ i }}</strong>
+                            </a>
+                        {% endfor %}
+                        <a {% if entitiesFiltersService.nextPage is not null %}href="{{ path(entitiesFiltersService.route, {'page': entitiesFiltersService.nextPage, 'game': game.id}) }}" {% else %} class="inactive" {% endif %}>Next</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+        </div>
+
+        {# Create new #}
+        {% if addActionRoute is defined and addActionName is defined %}
+        <a class="solidLink emphasis" href="{{ addActionRoute }}">
+            <i class="fas fa-plus"></i>
+            <span>{{ addActionName }}</span>
+        </a>
+        {% endif %}
+    </div>
+
+</div>

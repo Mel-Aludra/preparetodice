@@ -1,0 +1,30 @@
+.genericFlex {
+    display: flex; flex-direction: row; justify-content: center; align-items: center;
+}
+.genericFlex.spacedChildren {
+    justify-content: space-between;
+}
+
+.spaceBefore {
+    margin-top: 18px;
+}
+
+.spaceAfter {
+    margin-bottom: 18px;
+}
+
+@media all AND (min-width: 1024px) {
+
+    .genericFlex.spacedChildren>div, .genericFlex.spacedChildren>p { margin: 15px; }
+    .genericFlex.spacedChildren>div:first-child, .genericFlex.spacedChildren>p:first-child { margin-left: 0; }
+    .genericFlex.spacedChildren>div:last-child, .genericFlex.spacedChildren>p:last-child { margin-right: 0; }
+
+}
+
+@media all AND (max-width: 1023px) {
+
+    .genericFlex {
+        flex-direction: column;
+    }
+
+}

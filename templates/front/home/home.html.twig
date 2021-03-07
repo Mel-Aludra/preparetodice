@@ -1,0 +1,174 @@
+{% extends 'front/_layout/_base.html.twig' %}
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+    <div class="strip backgrounded screenEmphasis focus">
+        <div>
+            <h1>Prepare to dice</h1>
+            <p>Create your own rules, manage your game with character sheets, complex skills, items, equipment and everything you need. Define custom resources, attributes and defenses. Build your RPG, launch turn-based battles and let Prepare to dice do the rest.</p>
+            <div class="linksEmphasisContainer">
+                <a href="{{ path("login") }}"><i class="fas fa-sign-in-alt"></i>Login</a>
+                <a href="{{ path("front_user_add") }}"><i class="fas fa-user-plus"></i>Register</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="strip column horizontalBreath secondaryDarker">
+        <h2>Your rules in your world</h2>
+        <p>Futuristic game? Classical rpg? Shape your game the way you want.</p>
+    </div>
+
+    <div class="strip backgrounded img_modernLandscape breath corner">
+        <div></div>
+        <div class="presentationPanelsContainer">
+            <div class="extend">
+                <h2><i class="fal fa-globe-stand"></i><span>What's Prepare to dice? Who is Prepare to dice for?</span></h2>
+                <p>
+                    The app has been designed for game masters who want to create their own rules in their own world.
+                    Prepare to dice is only data-oriented: the application manages all the game elements without ever offering any graphics asset.
+                    The goal is to simplify the creation of your own role-playing game with your own personalized ones.
+                </p>
+            </div>
+            <div>
+                <h2><i class="fal fa-book"></i><span>Define your rules</span></h2>
+                <p>
+                    Resources, attributes, defenses, jobs: define all the systems in your game.
+                    Name all the elements however you want to make the terms and the system fit your world.
+                </p>
+            </div>
+            <div>
+                <h2><i class="fal fa-sliders-h"></i><span>Shape your game</span></h2>
+                <p>
+                    Skills, weapons and consumables can have one or multiple effects. Effects can be scaled on specifics attributes.
+                    Status effects and equipment can alter characteristics. Characteristics can be linked to specifics jobs.
+                </p>
+            </div>
+            <div>
+                <h2><i class="fal fa-users"></i><span>Invite your players</span></h2>
+                <p>
+                    Ask your players to create a Prepare to dice account and invite them.
+                    Once accepted, you can link each player to one or multiple characters and give them access to a read-only character sheet.
+                </p>
+            </div>
+            <div>
+                <h2><i class="fal fa-pen-square"></i><span>Don't write, erase, write again...</span></h2>
+                <p>
+                    As a game master, you can update your players' character sheets so they always have all the information they need.
+                    Players have access to their character files which is updated live.
+                    The character sheet is responsive so that players can simply use it on their phone.
+                </p>
+            </div>
+            <div>
+                <h2><i class="fal fa-dice-five"></i><span>Turn-based battle system</span></h2>
+                <p>
+                    Use the built-in turn-based system for the battles in your game. You can active or not the action points system.
+                    From the battles manager, you can start and end turns, use skills, consumables or weapon attacks, choose targets and adjust effects on the fly.
+                </p>
+            </div>
+            <div>
+                <h2><i class="fal fa-map-signs"></i><span>Focus on the adventure</span></h2>
+                <p>
+                    The application allows you to create skills with deep effects and complex mechanics.
+                    For example, you created a skill with three effects: it inflicts fire damage on a targeted foe, heals your team but poisons the character who used the skill.
+                    The application handles all the math needed.
+                    It calculates the damage against the foe's fire resistance, heals the party, applies the poison and inflicts its damage each turn.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="strip column horizontalBreath primaryDarker">
+        <h2>Prepare to dice features</h2>
+        <p>Manager all data of your game and give access to your players.</p>
+    </div>
+
+    <div class="strip backgrounded column corner reverse img_forest breath">
+        <div></div>
+        <div class="listPresentationContainer">
+            <div>
+                <h2>Characteristics</h2>
+                <ul>
+                    <li>Define your game's resources. Resources are characteristics with a current and maximum points, like life points, mana or action points.</li>
+                    <li>Define your game's attributes. Attributes can affect skills power potency and alter other characteristics.</li>
+                    <li>Define your game's defenses and choose which damage types are blocked by them. Defenses are linked to attributes.</li>
+                    <li>Resources and attributes can be specifics to jobs.</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Skills, items and equipment</h2>
+                <ul>
+                    <li>Create complex skills by defining one or more effects (heal, damage, status effect, scaling on specific characteristics), costs, gains and cooldown.</li>
+                    <li>Create weapons with multiple effects. Weapons effects can be deeper than a skill.</li>
+                    <li>Define your own equipment slots and create equipment that alters characteristics.</li>
+                    <li>Create consumables who can be launched as a skill.</li>
+                    <li>Define passives who can be linked to characters to alter their characteristics.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="listPresentationContainer">
+            <div>
+                <h2>Characters</h2>
+                <ul>
+                    <li>Create characters with a name, a description, a story with elements visible for players or only for game masters.</li>
+                    <li>Add skills, status effects, passives, items, weapons and equipment to your characters.</li>
+                    <li>Give to your players a complete read-only character sheet for each of their characters.</li>
+                    <li>You can add a job system to restrict characters' access to skills, weapons and equipment.</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Battles</h2>
+                <ul>
+                    <li>Define allies and foes amongst your characters and launch a battle.</li>
+                    <li>Start turn: if characters have status effects and passives who inflict damage or heal, they'll be automatically triggered.</li>
+                    <li>Launch actions: skills, consumables, weapon or custom effects. For any chosen action you can modify effects before launch the action.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="listPresentationContainer">
+            <div>
+                <h2>Lore and game elements</h2>
+                <ul>
+                    <li>Explain game rules and write them.</li>
+                    <li>Describe your universe and write lore.</li>
+                    <li>For each element, you can define if it's visible for players or only for game masters.</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Game dashboard</h2>
+                <ul>
+                    <li>Each game have a unique section, named the game dashboard.</li>
+                    <li>Game dashboard is accessible for every player and game master of your game.</li>
+                    <li>You can see from the game dashboard rules, lore, description of the game and access all characters linked to the user.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="strip column secondarySpecial breath">
+        <h2>The story behind Prepare to dice</h2><br />
+        <p>Hello, I'm Mel Aludra!</p><br />
+        <p>
+            As a game master for several years, I was using some shared spreadsheets for character sheets, effects and turn-based battles calculation.
+            Obviously I was limited by the nature of those hand-made tools, so I decided to code something that allowed me to push my RPG concepts further and ease my work as a game master.
+            That's how Prepare to dice was born, first as an application for my personal use. Finally, games are customizable enough for me to share my work with other game masters, so here we are with a Prepare to dice online application.
+        </p><br />
+        <p>
+            First version was released in 2015 on a custom php framework. In 2020, I've decided to create a new version with Symfony framework, in order to have a more stable and maintainable application.
+        </p>
+    </div>
+
+    <div class="strip column primaryDarker breath">
+        <h2>Open source app</h2><br />
+        <p>
+            Prepare to dice is now a PHP application who use Symfony 5 framework. Code source is avaiable here: <a>Github link</a>.
+            You want take source code and build your own application? No problem!
+        </p><br />
+        <p>If you have any question or suggestion, you can ask <a>here</a>.</p><br />
+        <p>
+            The application is still in beta version. When it is stable enough, a donation system will be proposed to support me.
+            However, the application will never become paid because it was first and foremost created for my needs, and if it can be of use to others, so much the better.
+        </p>
+    </div>
+
+{% endblock %}

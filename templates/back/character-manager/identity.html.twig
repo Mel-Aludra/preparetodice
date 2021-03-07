@@ -1,0 +1,109 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}{{ character.name }} | Equipment{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_characterSheet", {'game': game.id, 'gameCharacter': character.id}) }}"><i class="fal fa-user"></i>{{ character.name }}</a>
+        <span> > </span>
+        <span><i class="fal fa-user"></i>Identity and status</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <form method="post" data-form-checker="true">
+
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>Identity and status - {{ character.name }}</h1>
+                <p>Update identity, passives, jobs and status effects of {{ character.name }}.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-book-alt"></i>Update character</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2>Identity</h2>
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.description) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2>Passives</h2>
+                            {% if game.passives|length == 0 %}
+                                <p class="alert">You cannot add a passive to this character because no passive exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.characterPassives) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="characterPassive"><i class="fas fa-plus-square"></i><span>Add passive to character</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2>Jobs</h2>
+                            {% if game.jobs|length == 0 %}
+                                <p class="alert">You cannot add a job to this character because no job exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.characterJobs) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="characterJob"><i class="fas fa-plus-square"></i><span>Add job to character</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="body">
+                            <h2>Status effects</h2>
+                            {% if game.statusEffects|length == 0 %}
+                                <p class="alert">You cannot add a status effect because no status effect exist in the game.</p>
+                            {% else %}
+                                {{ form_row(form.characterStatusEffects) }}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="characterStatusEffect"><i class="fas fa-plus-square"></i><span>Add status effect</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let characterPassivesElementsManager = new FormCollectionManager($('#character_identity_characterPassives'), {{ character.characterPassives|length }}, 'characterPassive');
+        characterPassivesElementsManager.init();
+
+        let characterJobsElementsManager = new FormCollectionManager($('#character_identity_characterJobs'), {{ character.characterJobs|length }}, 'characterJob');
+        characterJobsElementsManager.init();
+
+        let characterStatusEffectsElementsManager = new FormCollectionManager($('#character_identity_characterStatusEffects'), {{ character.characterStatusEffects|length }}, 'characterStatusEffect');
+        characterStatusEffectsElementsManager.init();
+    </script>
+{% endblock %}

@@ -1,0 +1,96 @@
+/* -------------------------- */
+/* ---- LIST PAGE HEADER ---- */
+/* -------------------------- */
+
+.stickyPageHeader {
+    position: fixed;
+    width: calc(100% - 260px);
+    height: 48px;
+    z-index: 8;
+    border-bottom: 1px solid black;
+    padding: 15px;
+    background-color: var(--primary-color-darker);
+    display: flex; flex-direction: row; justify-content: space-between; align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.stickyPageHeader>.secondPart { display: flex; flex-direction: row; justify-content: flex-end; align-items: center; }
+.stickyPageHeader>.secondPart>div { border-right: 1px solid var(--primary-color-dark); padding-right: 20px; margin-right: 20px;  }
+.stickyPageHeader button[type="submit"] { margin-left: 2px; margin-right: 0; }
+
+.stickyPageHeader div.paging {
+    margin-top: 5px;
+    display: flex; flex-direction: row; justify-content: flex-end; align-items: center;
+    border-radius: 3px;
+}
+.stickyPageHeader div.paging>a {
+    border: 1px solid var(--primary-color-dark);
+    border-right: none;
+    text-align: center;
+    display: block;
+    font-size: 14px;
+    width: 22px;
+    height: 18px;
+    padding: 2px;
+    background-color: white;
+    color: black;
+}
+.stickyPageHeader div.paging>a:first-child, .stickyPageHeader div.paging>a:last-child { min-width: 80px; width: auto; }
+.stickyPageHeader div.paging>a:first-child { border-top-left-radius: 3px; border-bottom-left-radius: 3px; }
+.stickyPageHeader div.paging>a:last-child { min-width: 80px; width: auto; border-right: 1px solid var(--primary-color-dark); border-top-right-radius: 3px; border-bottom-right-radius: 3px; }
+.stickyPageHeader div.paging>a.active { background-color: var(--primary-color-dark); color: white; }
+.stickyPageHeader div.paging>a.inactive { opacity: 0.4; }
+.stickyPageHeader + .strip { margin-top: 72px; }
+.stickyPageHeader + .strip>.panels { margin-top: 8px; }
+.stickyPageHeader div.paging>a:hover { text-decoration: underline; }
+
+.stickyPageHeader.hard { background-color: var(--secondary-color-dark); }
+.stickyPageHeader.hard>.firstPart>h1, .stickyPageHeader.hard>div>h1, .stickyPageHeader.hard>.firstPart>p, .stickyPageHeader.hard>div>p { color: white; }
+.stickyPageHeader.battle { background-color: var(--battle-context-dark); }
+.stickyPageHeader.hard button, .stickyPageHeader.hard a.solidLink { background-color: var(--primary-color-light); color: black; }
+.stickyPageHeader.hard button:hover, .stickyPageHeader.hard a.solidLink:hover { background-color: var(--primary-color-darker); color: white; }
+
+
+@media all AND (max-width: 1200px) {
+    .stickyPageHeader { width: calc(100% - 30px); height: auto; position: relative; z-index: 0; }
+    .stickyPageHeader h1+p { display: none; }
+    .stickyPageHeader { flex-direction: column; }
+    .stickyPageHeader>.secondPart { flex-direction: column; justify-content: center; align-items: center;  }
+    .stickyPageHeader>.secondPart>div { border: none; margin: 0; padding: 0; }
+    .stickyPageHeader div.paging { justify-content: center; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--primary-color-dark); }
+    .stickyPageHeader + .strip { margin-top: 0; }
+}
+
+/* -------------------------- */
+/* ---- POP-IN  ------------- */
+/* -------------------------- */
+
+.popin {
+    z-index: 99;
+    top: 0; left: 0;
+    background-color: rgba(0,0,0,0.6);
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    display: none;
+}
+
+.popin.open {
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+}
+
+.popin>div {
+    width: 80%;
+}
+
+.popin>div>.header {
+    background-color: var(--primary-color-darkest);
+    padding: 20px;
+    color: white;
+}
+
+.popin>div>.body {
+    padding: 20px;
+    background-color: var(--primary-color-darker);
+    height: 650px;
+    overflow: auto;
+}

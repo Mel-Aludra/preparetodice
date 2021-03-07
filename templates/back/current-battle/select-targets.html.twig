@@ -1,0 +1,132 @@
+{% extends 'back/_layout/_base.html.twig' %}
+{% block title %}Current battle{% endblock %}
+{% block headerClass %}battle{% endblock %}
+{% block navClass %}battle{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_currentBattle_overview", {'game': game.id}) }}"><i class="fal fa-swords"></i>Battle {{ battle.name }}</a>
+        <span> > </span>
+        <a href="{{ path('gameBack_currentBattle_updateAction', {'game': game.id, 'action': action.id}) }}"><i class="fal fa-street-view"></i>Action {{ action.name }}</a>
+        <span> > </span>
+        <span><i class="fa fa-bullseye-arrow"></i>Select targets</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form method="post">
+
+        <div class="stickyPageHeader hard battle">
+            <div>
+                <h1>Battle {{ battle.id }} > Update action {{ action.name }} > Choose targets</h1>
+                <p>Select targets and launch the action.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-book-alt"></i>Launch action</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                <div>
+                    {% if action.skillDamageEffects|length == 0 %}<div class="card"><div class="body"><p>There is no damage effect</p></div></div>{% endif %}
+                    {% set counter = 0 %}
+                    {% for skillDamageEffect in action.skillDamageEffects %}
+                        {% set counter = counter + 1 %}
+                        <div class="card">
+                            <div class="body">
+                                <h2><i class="fas fa-bullseye-arrow"></i>Damage effect #{{ counter }} - Select targets</h2>
+                                <div class="panels spacedChildren">
+                                    {% for teamName, team in teams %}
+                                        <div>
+                                            {% for character in team %}
+                                                <p class="target {{ teamName }} {% if skillDamageEffect.isTargetingCharacter(character) %}active{% endif %}">{{ character.name }}</p>
+                                                <input
+                                                        type="hidden"
+                                                        name="selectTargets[damageEffects][{{ skillDamageEffect.id }}][{{ character.id }}]"
+                                                        value="{% if skillDamageEffect.isTargetingCharacter(character) %}true{% else %}false{% endif %}"
+                                                />
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {% if action.skillHealEffects|length == 0 %}<div class="card"><div class="body"><p>There is no heal effect</p></div></div>{% endif %}
+                    {% set counter = 0 %}
+                    {% for skillHealEffect in action.skillHealEffects %}
+                        {% set counter = counter + 1 %}
+                        <div class="card">
+                            <div class="body">
+                                <h2><i class="fas fa-bullseye-arrow"></i>Heal effect #{{ counter }} - Select targets</h2>
+                                <div class="panels spacedChildren">
+                                    {% for teamName, team in teams %}
+                                        <div>
+                                            {% for character in team %}
+                                                <p class="target {{ teamName }} {% if skillHealEffect.isTargetingCharacter(character) %}active{% endif %}">{{ character.name }}</p>
+                                                <input
+                                                        type="hidden"
+                                                        name="selectTargets[healEffects][{{ skillHealEffect.id }}][{{ character.id }}]"
+                                                        value="{% if skillHealEffect.isTargetingCharacter(character) %}true{% else %}false{% endif %}"
+                                                />
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {% if action.skillStatusEffects|length == 0 %}<div class="card"><div class="body"><p>There is no status effect</p></div></div>{% endif %}
+                    {% set counter = 0 %}
+                    {% for skillStatusEffect in action.skillStatusEffects %}
+                        {% set counter = counter + 1 %}
+                        <div class="card">
+                            <div class="body">
+                                <h2><i class="fas fa-bullseye-arrow"></i>Status effect #{{ counter }} - Select targets</h2>
+                                <div class="panels spacedChildren">
+                                    {% for teamName, team in teams %}
+                                        <div>
+                                            {% for character in team %}
+                                                <p class="target {{ teamName }} {% if skillStatusEffect.isTargetingCharacter(character) %}active{% endif %}">{{ character.name }}</p>
+                                                <input
+                                                        type="hidden"
+                                                        name="selectTargets[statusEffects][{{ skillStatusEffect.id }}][{{ character.id }}]"
+                                                        value="{% if skillStatusEffect.isTargetingCharacter(character) %}true{% else %}false{% endif %}"
+                                                />
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(".target").each(function() {
+            $(this).on("click", function() {
+                let input = this.nextElementSibling;
+                if(input.value === "false") {
+                    input.value = "true";
+                    this.classList.add("active");
+                } else {
+                    input.value = "false";
+                    this.classList.remove("active");
+                }
+            })
+        });
+    </script>
+{% endblock %}

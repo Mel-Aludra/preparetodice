@@ -1,0 +1,55 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Passives{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-fingerprint"></i>Passives</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    {% include "back/_common/list-page-header.html.twig" with {
+        'pageTitle': "Passives",
+        'pageDescription': "Passive can affect characteristics, apply damage or healing over time and be added to characters.",
+        'addActionRoute': path('gameBack_passive_add', {'game': game.id}),
+        'addActionName': "Add passive"
+    } %}
+
+    <div class="strip column">
+        {% if passives|length == 0 %}
+            <p>You have no passive in your game. To add a passive, click on the top right button "Add passive".</p>
+        {% endif %}
+        {% for passive in passives %}
+            <div class="object unfoldable">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-fingerprint"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ passive.name }}</h2>
+                        <p>{{ passive.description }}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('gameBack_passive_update', {'game': game.id, 'passive': passive.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_passive_delete', {'game': game.id, 'passive': passive.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="panels spacedChildren">
+                        {% include "_common/entity-bodies/passive.html.twig" with {'passive': passive} %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

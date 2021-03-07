@@ -1,0 +1,61 @@
+{% extends 'front/_layout/_base.html.twig' %}
+{% block title %}{{ game.name }} | Home{% endblock %}
+
+{% block body %}
+    <div class="strip column horizontalBreath secondaryDarker">
+        <h2>{{ game.name }}</h2>
+        <p>{{ game.description }}</p>
+    </div>
+    <div class="strip backgrounded focus column corner {{ game.background }} breath">
+        <div></div>
+
+        {# Admin access #}
+        {% if app.user.isGameMaster(game.id) %}
+            <div class="widget alt spaceAfter">
+                <h1 class="spaceAfter">Admin access</h1>
+                <p>You are a game master and can manage your game here:</p>
+                <div class="linksEmphasisContainer">
+                    <a href="{{ path('gameBack_home', {'game':game.id}) }}">Access admin</a>
+                </div>
+            </div>
+        {% endif %}
+
+        {# Characters #}
+        <div class="widget alt spaceAfter">
+            <h1 class="spaceAfter">Characters sheets</h1>
+            {% if app.user.gameCharacters(game)|length == 0 %}
+                <p>You have no character in this game. Ask to your game master if you are supposed to have one.</p>
+            {% else %}
+                <p>You can go to character sheet of all your characters:</p>
+            {% endif %}
+            {% for character in app.user.gameCharacters(game) %}
+                <div class="linksEmphasisContainer">
+                    <a class="" href="{{ path('gameFront_character', {'gameCharacter': character.id, 'game': game.id}) }}">
+                        <i class="fas fa-user"></i>
+                        <span>{{ character.name }}</span>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+        {# Lore #}
+        <div class="widget alt">
+            <h1 class="spaceAfter">Game elements</h1>
+            {% for tag in game.loreTags  %}
+                <div class="linksEmphasisContainer">
+                    <a class="" href="{{ path('gameFront_lore_tag', {'game': game.id, 'loreTag': tag.id}) }}">
+                        <i class="fas fa-file-alt"></i>
+                        <span>{{ tag.name }}</span>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    {% for loreBlock in publicGameLoreBlocks %}
+        <div class="strip column {% if loop.index is not odd %}secondaryDarker{% else %}primaryDarker{% endif %}">
+            {% include '_common/entity-bodies/lore-block.html.twig' with {'loreBlock': loreBlock} %}
+        </div>
+    {% endfor %}
+{% endblock %}

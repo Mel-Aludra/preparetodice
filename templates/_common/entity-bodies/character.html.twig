@@ -1,0 +1,111 @@
+{% block character %}
+    <div class="panels spacedChildren">
+
+        <div>
+            <h2 class="lined"><i class="fal fa-tasks-alt"></i>Resources</h2>
+            {% for characterResource in character.characterResources %}
+                {% include '_common/entity-bodies/character-resource.html.twig' %}
+            {% endfor %}
+        </div>
+
+        <div>
+            <h2 class="lined"><i class="fal fa-sort-numeric-up-alt"></i>Attributes</h2>
+            {% for characterAttribute in character.characterAttributes %}
+                {% include '_common/entity-bodies/character-attribute.html.twig' %}
+            {% endfor %}
+        </div>
+
+        <div>
+            <h2 class="lined"><i class="fal fa-flask-poison"></i>Status effects</h2>
+            {% if character.characterStatusEffects|length == 0 %}
+                <p class="small">This character have no status effect</p>
+            {% endif %}
+            {% for characterStatusEffect in character.characterStatusEffects %}
+                <p class="labelRow">{{ characterStatusEffect.statusEffect.name }} ({{ characterStatusEffect.remainingTurns }} turn(s))</p>
+            {% endfor %}
+        </div>
+
+        <div class="panels spacedChildren">
+            <div>
+                <h2 class="lined"><i class="fal fa-book-alt"></i>Skills</h2>
+                {% if character.characterSkills|length == 0 %}
+                    <p class="small">This character have no skill</p>
+                {% endif %}
+                {% for characterSkill in character.characterSkills %}
+                    <p class="labelRow">{{ characterSkill.skill.name }}</p>
+                {% endfor %}
+            </div>
+            <div>
+                <h2 class="lined"><i class="fal fa-fingerprint"></i>Passives</h2>
+                {% if character.characterPassives|length == 0 %}
+                    <p class="small">This character have no skill</p>
+                {% endif %}
+                {% for characterPassive in character.characterPassives %}
+                    <p class="labelRow">{{ characterPassive.passive.name }}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="panels spacedChildren">
+
+        <div>
+            <h2 class="lined"><i class="fal fa-sack"></i>Items</h2>
+            <p class="labelRow"><span>{{ character.money }}</span><span class="ghost">{{ game.moneyTerm }}</span></p>
+            {% for inventoryItem in character.inventoryItems %}
+                <p class="labelRow">
+                    <span class="ghost">{{ inventoryItem.item.name }}</span>
+                    <span>{{ inventoryItem.quantity }}</span>
+                </p>
+            {% endfor %}
+        </div>
+
+        <div>
+            <h2 class="lined"><i class="fal fa-bomb"></i>Consumables</h2>
+            {% if character.inventoryConsumables|length == 0 %}<p class="small">This character have no consumable</p>{% endif %}
+            {% for inventoryConsumable in character.inventoryConsumables %}
+                <p class="labelRow">
+                    <span class="ghost">{{ inventoryConsumable.consumable.name }}</span>
+                    <span>{{ inventoryConsumable.quantity }}</span>
+                </p>
+            {% endfor %}
+        </div>
+
+        <div>
+            <h2 class="lined"><i class="fal fa-sword"></i>Weapons</h2>
+            {% if character.inventoryWeapons|length == 0 %}<p class="small">This character have no weapon</p>{% endif %}
+            {% for inventoryWeapon in character.inventoryWeapons %}
+                <p class="labelRow">
+                    <span class="ghost">{{ inventoryWeapon.weapon.name }}</span>
+                    <span>{{ inventoryWeapon.quantity }}</span>
+                </p>
+            {% endfor %}
+        </div>
+
+        <div>
+            <h2 class="lined"><i class="fal fa-helmet-battle"></i>Gears</h2>
+            {% if character.inventoryGears|length == 0 %}<p class="small">This character have no gear</p>{% endif %}
+            {% for inventoryGear in character.inventoryGears %}
+                <p class="labelRow">
+                    <span class="ghost">{{ inventoryGear.gear.name }}</span>
+                    <span>{{ inventoryGear.quantity }}</span>
+                </p>
+            {% endfor %}
+        </div>
+
+        <div>
+            <h2 class="lined"><i class="fal fa-helmet-battle"></i>Story</h2>
+            {% if character.characterStories|length == 0 %}<p class="small">This character have no story</p>{% endif %}
+            {% for characterStory in character.characterStories %}
+                <p class="labelRow">
+                    {% if characterStory.isHidden %}
+                        <span class="ghost">Visible only for GM</span>
+                    {% endif %}
+                    <span>{{ characterStory.text }}</span>
+                </p>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}

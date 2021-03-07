@@ -1,0 +1,19 @@
+{% extends 'front/_layout/_base.html.twig' %}
+{% block title %}{{ game.name }} | Lore{% endblock %}
+
+{% block body %}
+
+    <div class="strip column primaryDarker">
+        <h1>{{ loreTag.name }}</h1>
+        {% if publicGameLoreBlocks|length == 0 %}
+            <p>There is no data in this part</p>
+        {% endif %}
+    </div>
+
+    {% for loreBlock in publicGameLoreBlocks %}
+        <div class="strip column {% if loop.index is not odd %}secondaryDarker{% endif %}">
+            {% include '_common/entity-bodies/lore-block.html.twig' with {'loreBlock': loreBlock} %}
+        </div>
+    {% endfor %}
+
+{% endblock %}

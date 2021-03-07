@@ -1,0 +1,94 @@
+form {
+    padding: 40px;
+}
+
+.formRow {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+label {
+    font-family: "PtdMedium", sans-serif;
+    color: white;
+    display: block;
+    font-size: 15px;
+    margin: 0 8px;
+}
+
+input, select, textarea {
+    background-color: var(--primary-color-dark);
+    border: 1px solid var(--primary-color-dark);
+    border-radius: 3px;
+    padding: 8px;
+    font-size: 18px;
+    height: 34px;
+    outline: none;
+    color: white;
+    margin: 15px 8px 0 8px;
+    width: calc(100% - 16px - 16px);
+    transition: all var(--anim-duration-default) var(--anim-default);
+}
+select {
+    width: calc(100% - 16px);
+    height: 52px;
+}
+
+label+input, label+select, label+textarea {
+    margin-top: 2px;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--secondary-color-dark);
+    background-color: var(--secondary-color-dark);
+}
+
+input[type=submit] {
+    display: block;
+    color: var(--secondary-color-lighter);
+    background-color: var(--secondary-color-dark);
+    border: 1px solid var(--secondary-color-darker);
+    border-radius: 5px;
+    margin: 16px auto 8px auto;
+    padding: 12px;
+    width: calc(100% - 16px);
+    height: auto;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: all var(--anim-duration-default) var(--anim-default);
+}
+
+input[type=submit]:hover {
+    background-color: var(--secondary-color-darker);
+    color: white;
+}
+
+/* Forms > Inputs in error */
+
+input.error, select.error, textarea.error {
+    background-color: var(--color-error-light);
+    color: var(--color-error-dark);
+}
+
+p.inputError { color: var(--color-error-light); padding-left: 8px; }
+p.inputError>i { font-size: 14px; margin-right: 6px; }
+p.inputError>span { font-size: 13px; }
+p.inputError>span.system { margin-left: -6px; }
+
+.inputError {
+    display: none;
+    font-size: 13px;
+    color: var(--color-error-dark);
+    padding-top: 4px;
+}
+
+input.error+p.inputError, .postErrors>.inputError { display: block; }
+textarea.error+label+p.inputError, textarea.error+p.inputError, textarea.error+div+p.inputError, .inputError.forceDisplay { display: block; }
+
+@media all AND (max-width: 1200px) {
+
+    form {
+        padding: 10px;
+        margin-top: 15px;
+    }
+
+}

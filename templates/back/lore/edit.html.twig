@@ -1,0 +1,62 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% set title = "Create block" %}
+{% set actionName = "Create block" %}
+{% if context is defined and context == "update" %}
+    {% set title = "Update block " ~ loreBlock.title %}
+    {% set actionName = "Update block" %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_lore_list", {'game': game.id}) }}"><i class="fal fa-file-alt"></i>Game elements</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>{{ title }}</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form method="post" data-form-checker="true">
+        {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>{{ title }}</h1>
+                <p>Define your block of lore</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fal fa-tasks-alt"></i>{{ actionName }}</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                <div class="card">
+                    <div class="body">
+                        <h2><i class="fal fa-tasks-alt"></i>Lore block</h2>
+                        {{ form_row(form.title) }}
+                        {{ form_row(form.accessType) }}
+                        {{ form_row(form.tag) }}
+                        {{ form_row(form.loreBlockElements) }}
+                        <div class="genericFlex right">
+                            <a class="" data-collection-adder="loreBlockElement">Add an element</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let eltManager = new FormCollectionManager($('#lore_block_loreBlockElements'), {{ loreBlock.loreBlockElements|length }}, 'loreBlockElement');
+        eltManager.init();
+    </script>
+{% endblock %}

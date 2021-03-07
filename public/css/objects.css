@@ -1,0 +1,160 @@
+/* ------------------------- */
+/* -------- OBJECT --------- */
+/* ------------------------- */
+
+div.object {
+    width: 100%;
+    margin: 8px 0;
+    background-color: var(--primary-color-darkest);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border: 1px solid black;
+}
+
+div.object.fade {
+    opacity: 0.4;
+    box-shadow: none;
+}
+
+/* ------------------------- */
+/* -------- HEADER --------- */
+/* ------------------------- */
+
+div.object>.header {
+    display: flex; flex-direction: row; justify-content: space-between; align-items: center;
+}
+div.object>.header.hardLines { border: 1px solid var(--primary-color-medium); }
+
+/* Header > Graph (just for graphic purpose) */
+
+div.object>.header>.graph {
+    padding: 8px;
+    background-color: var(--tertiary-color-darker);
+    color: white;
+    height: calc(50px - 16px);
+    width: calc(50px - 16px);
+    border-right: 1px solid black;
+    display: flex; flex-direction: row; justify-content: center; align-items: center;
+}
+div.object>.header.allies>.graph { background-color: var(--color-allies-dark); }
+div.object>.header.foes>.graph { background-color: var(--color-foes-dark); }
+div.object>.header>.graph.damage { background-color: var(--color-error-dark); }
+div.object>.header>.graph.heal { background-color: var(--color-success-dark); }
+div.object>.header>.graph.status { background-color: var(--primary-color-dark); }
+
+/* Header > Identity : title, labels and description */
+
+div.object>.header>.identity {
+    flex-grow: 1;
+    padding: 4px 10px;
+}
+
+div.object>.header>.identity>h2 {
+    color: var(--primary-color-lighter);
+    font-family: "PtdBold", sans-serif;
+    font-size: 15px;
+    margin: 0;
+}
+
+div.object>.header>.identity>p {
+    color: var(--primary-color-light);
+    font-size: 14px;
+}
+
+/* Header > Actions */
+
+div.object>.header>.actions {
+    display: flex; flex-direction: row; justify-content: flex-end; align-items: center;
+    padding-right: 8px;
+}
+
+div.object>.header>.actions>a {
+    padding: 4px 8px;
+    text-align: center;
+    display: block;
+    background-color: var(--secondary-color-dark);
+    color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    margin: 0 4px;
+    min-width: 85px;
+}
+div.object>.header>.actions>a:last-child { margin-right: 0; }
+div.object>.header>.actions>a:hover { background-color: var(--secondary-color-darker); }
+
+/* Header > Actions > Delete */
+div.object>.header>.actions>a.remove { background-color: var(--color-error-dark); }
+div.object>.header>.actions>a.remove:hover { background-color: var(--color-error-darker); }
+div.object>.header>.actions>a.special { background-color: var(--secondary-color-dark); }
+div.object>.header>.actions>a.special:hover { background-color: var(--secondary-color-darker); }
+
+/* Body */
+
+div.object>.body {
+    padding: 8px;
+    border-top: 1px solid black;
+    background-color: var(--primary-color-darker);
+}
+
+/* ----------------------------- */
+/* -------- UNFOLDABLE --------- */
+/* ----------------------------- */
+
+div.object.unfoldable>.body { display: none; }
+div.object.unfoldable>.header { cursor: pointer; transition: all 0.3s; }
+div.object.unfoldable>.header:hover, div.object.unfoldable.unfold>.header { background-color: var(--tertiary-color-darker); }
+div.object.unfoldable.unfold>.body { display: block; }
+
+div.object.unfoldable>.header.allies:hover, div.object.unfoldable.unfold>.header.allies { background-color: var(--color-allies-dark); }
+div.object.unfoldable>.header.foes:hover, div.object.unfoldable.unfold>.header.foes { background-color: var(--color-foes-dark); }
+
+/* ------------------------- */
+/* -------- TITLES --------- */
+/* ------------------------- */
+
+div.object h3 {
+    padding-bottom: 4px;
+    font-size: 13px;
+    color: var(--tertiary-color-light);
+}
+
+@media all AND (max-width: 1200px) {
+
+    div.object>.header>.identity>p { display: none; }
+    div.object>.header>.actions>a { min-width: auto; width: 25px; }
+    div.object>.header>.actions>a>span { display: none; }
+    div.object>.body { padding: 4px; }
+
+}
+
+/* -------------------------- */
+/* -------- TOGGLES --------- */
+/* -------------------------- */
+
+.togglesContainer {
+    display: flex; flex-direction: row; justify-content: flex-end; align-items: center;
+}
+
+.togglesContainer>p {
+    height: calc(50px - 16px);
+    padding: 8px;
+    background-color: var(--primary-color-dark);
+    color: white;
+    display: flex; flex-direction: row; justify-content: center; align-items: center;
+    border-right: 1px solid black;
+    transition: all 0.3s;
+    cursor: pointer;
+    opacity: 0.4;
+}
+.togglesContainer>p.active, .togglesContainer>p:hover { opacity: 1; }
+.togglesContainer>p>i { margin-right: 6px; }
+
+.togglesContainer>p.allies { background-color: var(--color-allies-dark); }
+.togglesContainer>p.foes { background-color: var(--color-foes-dark); }
+
+/* ------------------------------- */
+/* -------- SMALL OBJECT --------- */
+/* ------------------------------- */
+
+div.object.smallObject>.body { padding: 2px; }
+div.object.smallObject>.header>.graph { padding: 2px; }
+div.object.smallObject>.header>.graph { padding: 2px; }

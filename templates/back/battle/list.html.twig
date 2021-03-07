@@ -1,0 +1,50 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% block title %}Battles{% endblock %}
+
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <span><i class="fal fa-swords"></i>Battles</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    {% include "back/_common/list-page-header.html.twig" with {
+        'pageTitle': "Battles",
+        'pageDescription': "Manage battles of your game here.",
+        'addActionRoute': path('gameBack_battle_add', {'game': game.id}),
+        'addActionName': "Add battle"
+    } %}
+
+    <div class="strip column">
+        {% for battle in battles %}
+            <div class="object">
+                <div class="header">
+                    <div class="graph">
+                        <i class="fal fa-user"></i>
+                    </div>
+                    <div class="identity">
+                        <h2>{{ battle.name }}</h2>
+                    </div>
+                    <div class="actions">
+                        <a class="special" href="{{ path('gameBack_battle_define', {'game': game.id, 'battle': battle.id}) }}">
+                            <i class="fal fa-swords"></i>
+                            <span>Launch battle</span>
+                        </a>
+                        <a href="{{ path('gameBack_battle_update', {'game': game.id, 'battle': battle.id}) }}">
+                            <i class="fal fa-edit"></i>
+                            <span>Update</span>
+                        </a>
+                        <a class="remove" href="{{ path('gameBack_battle_delete', {'game': game.id, 'battle': battle.id}) }}" onclick="return confirm(`Do you confirm the deletion?`)">
+                            <i class="fal fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

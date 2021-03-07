@@ -1,0 +1,158 @@
+{% extends 'back/_layout/_base.html.twig' %}
+
+{% set title = "Create skill" %}
+{% set actionName = "Create skill" %}
+{% if context is defined and context == "update" %}
+    {% set title = "Update skill " ~ skill.name %}
+    {% set actionName = "Update skill" %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="{{ path("gameBack_home", {'game': game.id}) }}"><i class="fal fa-home"></i>Home</a>
+        <span> > </span>
+        <a href="{{ path("gameBack_skill_list", {'game': game.id}) }}"><i class="fal fa-book-alt"></i>Skills</a>
+        <span> > </span>
+        <span><i class="fal fa-edit"></i>{{ title }}</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <form method="post" data-form-checker="true">
+    {{ form_start(form) }}
+
+        <div class="stickyPageHeader">
+            <div>
+                <h1>{{ title }}</h1>
+                <p>Define the properties of your skill and click on the "{{ actionName }}" button at the top right.</p>
+            </div>
+            <button class="emphasis" type="submit"><i class="fas fa-book-alt"></i>{{ actionName }}</button>
+        </div>
+
+        <div class="strip">
+            <div class="panels">
+
+                {# Left block #}
+                <div class="small">
+                    <div class="card">
+                        <div class="body">
+
+                            <h2><i class="fas fa-list-alt"></i>Skill properties</h2>
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.description) }}
+                            {{ form_row(form.cooldown) }}
+
+                            <h2><i class="fas fa-user-minus"></i>Costs</h2>
+                            <p class="spaceBefore">Costs are substract to the caster's resources when the skill is launched.</p>
+                            {{ form_row(form.skillCosts) }}
+                            {% if game.resources|length == 0 %}
+                                <p class="alert">You cannot add a cost because no resources exist in the game.</p>
+                            {% else %}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="skillCost"><i class="fas fa-plus-square"></i><span>Add a cost</span></a>
+                                </div>
+                            {% endif %}
+
+                            <h2><i class="fas fa-user-plus"></i>Gains</h2>
+                            <p class="spaceBefore">Gains are add to the caster's resources when the skill is launched.</p>
+                            {{ form_row(form.skillGains) }}
+                            {% if game.resources|length == 0 %}
+                                <p class="alert">You cannot add a gain because no resources exist in the game.</p>
+                            {% else %}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="skillGain"><i class="fas fa-plus-square"></i><span>Add a gain</span></a>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-lock-alt"></i>Reserved to jobs</h2>
+                            {{ form_row(form.jobs) }}
+                            {% if game.jobs|length == 0 %}
+                                <p class="alert">You cannot add a job because no job exist in the game.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                {# Right block #}
+                <div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-sword"></i>Damage effects</h2>
+                            <p class="spaceBefore">Damage effects define how this skill will make damages to target(s).</p>
+                            {{ form_row(form.skillDamageEffects) }}
+                            {% if game.resources|length == 0 or game.damageNatures|length == 0 %}
+                                <p class="alert">You cannot add a damage effect because no resources or no damage natures exist in the game.</p>
+                            {% else %}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="skillDamageEffect"><i class="fas fa-plus-square"></i><span>Add an effect (damage)</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-prescription-bottle-alt"></i>Heal effects</h2>
+                            <p class="spaceBefore">Heal effects define how this skill will heal target(s).</p>
+                            {{ form_row(form.skillHealEffects) }}
+                            {% if game.resources|length == 0 %}
+                                <p class="alert">You cannot add a heal effect because no resources exist in the game.</p>
+                            {% else %}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="skillHealEffect"><i class="fas fa-plus-square"></i><span>Add an effect (heal)</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <h2><i class="fas fa-flask-poison"></i>Status effects</h2>
+                            <p class="spaceBefore">Status effects define which alteration(s) will affect target(s).</p>
+                            {{ form_row(form.skillStatusEffects) }}
+                            {% if game.statusEffects|length == 0 %}
+                                <p class="alert">You cannot add a heal effect because no status effect exist in the game.</p>
+                            {% else %}
+                                <div class="genericFlex right">
+                                    <a data-collection-adder="skillStatusEffect"><i class="fas fa-plus-square"></i><span>Add a status effect</span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    {{ form_end(form) }}
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let costsElementsManager = new FormCollectionManager($('#skill_skillCosts'), {{ skill.skillCosts|length }}, 'skillCost');
+        costsElementsManager.init();
+
+        let gainsElementsManager = new FormCollectionManager($('#skill_skillGains'), {{ skill.skillGains|length }}, 'skillGain');
+        gainsElementsManager.init();
+
+        let damagesElementsManager = new FormCollectionManager($('#skill_skillDamageEffects'), {{ skill.skillDamageEffects|length }}, 'skillDamageEffect');
+        damagesElementsManager.init();
+
+        let healsElementsManager = new FormCollectionManager($('#skill_skillHealEffects'), {{ skill.skillHealEffects|length }}, 'skillHealEffect');
+        healsElementsManager.init();
+
+        let statusEffectsElementsManager = new FormCollectionManager($('#skill_skillStatusEffects'), {{ skill.skillStatusEffects|length }}, 'skillStatusEffect');
+        statusEffectsElementsManager.init();
+    </script>
+{% endblock %}
