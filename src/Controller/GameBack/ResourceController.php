@@ -146,6 +146,11 @@ class ResourceController extends Controller
     public function delete(Resource $resource, EntityManagerInterface $manager, CharacteristicsManager $characteristicsManager)
     {
         //Remove from game
+        if($this->getGame()->getActionPointsResource() === $resource || $this->getGame()->getLifeResource() === $resource) {
+            $this->addFlash("error", "You can't delete a resource that represents life or action points.");
+            return $this->redirectToRoute('gameBack_resource_list', ['game' => $this->getGame()->getId()]);
+        }
+
         $manager->remove($resource);
         $this->getGame()->removeResource($resource);
 
@@ -155,6 +160,6 @@ class ResourceController extends Controller
         //Flush and flash
         $manager->flush();
         $this->addFlash("success", "Resource " . $resource->getName() . " have been deleted.");
-        return $this->redirectToRoute('gameBack_character_list', ['game' => $this->getGame()->getId()]);
+        return $this->redirectToRoute('gameBack_resource_list', ['game' => $this->getGame()->getId()]);
     }
 }
