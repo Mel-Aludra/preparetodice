@@ -45,7 +45,10 @@ class GameCharacterType extends AbstractType
             ])
             ->add('description', TextType::class, [
                 'label' => 'Description',
-                'attr' => ['placeholder' => 'Describe the character']
+                'attr' => [
+                    'placeholder' => 'Describe the character',
+                    'dataFormChecker' => "notEmpty"
+                ]
             ]);
 
         //Characteristics, skills, jobs and passives
@@ -83,6 +86,7 @@ class GameCharacterType extends AbstractType
         //Inventory
         $builder->add('money', IntegerType::class, [
             'label' => 'Money',
+            'required' => false,
             'attr' => [
                 'placeholder' => 'Amount of money owned by character',
                 'dataFormChecker' => "positiveInt"

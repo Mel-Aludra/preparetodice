@@ -30,6 +30,7 @@ class CharacterInventoryType extends AbstractType
         //Inventory
         $builder->add('money', IntegerType::class, [
             'label' => 'Money',
+            'required' => false,
             'attr' => [
                 'placeholder' => 'Amount of money owned by character',
                 'dataFormChecker' => "positiveInt"
