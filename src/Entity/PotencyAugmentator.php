@@ -15,12 +15,14 @@ class PotencyAugmentator
 
     const TYPE_ADD = "add";
     const TYPE_ADD_SOOTHE = "add_soothe";
+    const TYPE_ADD_DIVIDED_TEN = "add_divided_ten";
     const TYPE_MULTIPLY = "multiply";
     const TYPE_MULTIPLY_SOOTHE = "multiply_soothe";
 
     const TYPES_CHOICE = [
         "Adds the attribute of the caster to the effect potency." => self::TYPE_ADD,
         "Adds the attribute of the caster divided by 3 to the effect potency." => self::TYPE_ADD_SOOTHE,
+        "Adds the attribute of the caster divided by 10 to the effect potency." => self::TYPE_ADD_DIVIDED_TEN,
         "Modifies the effect potency by multiplying it by the attribute of the caster. Cannot go below base potency." => self::TYPE_MULTIPLY,
         "Modifies the effect potency by multiplying it by the attribute of the caster divided by 3. Cannot go below base potency." => self::TYPE_MULTIPLY_SOOTHE
     ];

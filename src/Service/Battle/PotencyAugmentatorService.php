@@ -46,12 +46,16 @@ class PotencyAugmentatorService
                 //---------- ADD TO POTENCY -------------
                 //---------------------------------------
 
-                if($augmentator->getType() === PotencyAugmentator::TYPE_ADD || $augmentator->getType() === PotencyAugmentator::TYPE_ADD_SOOTHE) {
+                if($augmentator->getType() === PotencyAugmentator::TYPE_ADD || $augmentator->getType() === PotencyAugmentator::TYPE_ADD_SOOTHE || $augmentator->getType() === PotencyAugmentator::TYPE_ADD_DIVIDED_TEN) {
 
                     //We get attribute value
                     $attributeValue = $launcherAttribute->getFinalValue();
-                    if($augmentator->getType() === PotencyAugmentator::TYPE_ADD_SOOTHE)
+                    if($augmentator->getType() === PotencyAugmentator::TYPE_ADD_SOOTHE) {
                         $attributeValue = $attributeValue / 3;
+                    }
+                    else if($augmentator->getType() === PotencyAugmentator::TYPE_ADD_DIVIDED_TEN) {
+                        $attributeValue = $attributeValue / 10;
+                    }
 
                     //We check if it's > to ceiling
                     if($augmentator->getPercentCeiling() !== null && $attributeValue > ($baseValue * $augmentator->getPercentCeiling() / 100))
