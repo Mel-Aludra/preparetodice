@@ -79,8 +79,8 @@ class CurrentBattleController extends Controller
     }
 
     /**
-     * @Route("/weapon-to-action/{inventoryConsumable}/{skipUpdate}", name="gameBack_currentBattle_weaponToAction")
-     * @param InventoryWeapon $inventoryWeapon
+     * @Route("/weapon-to-action/{inventoryWeapon}/{skipUpdate}", name="gameBack_currentBattle_weaponToAction")
+     * @param inventoryWeapon $inventoryWeapon
      * @param string $skipUpdate
      * @param EntityManagerInterface $manager
      * @param ActionService $actionService

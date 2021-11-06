@@ -352,4 +352,16 @@ class Skill extends Entity
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasEffect() :bool
+    {
+        $effects = count($this->getSkillHealEffects()) + count($this->getSkillDamageEffects()) + count($this->getSkillStatusEffects());
+        if($effects > 0) {
+            return true;
+        }
+        return false;
+    }
 }

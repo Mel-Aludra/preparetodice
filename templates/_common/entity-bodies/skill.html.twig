@@ -25,6 +25,7 @@
     {% endif %}
 
     {# Effects (damage, heal and se) #}
+    {% if skill.hasEffect %}
     <div>
 
         <h2 class="lined"><i class="fal fa-bullseye-arrow"></i>Target(s) effects</h2>
@@ -49,6 +50,7 @@
         {% endfor %}
 
     </div>
+    {% endif %}
 
     {# Jobs requirements (only for skills and weapons) #}
     {% if skill.className != "consumable" %}
