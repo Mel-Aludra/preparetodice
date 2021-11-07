@@ -4,7 +4,7 @@
     {% if skill.className != "consumable" %}
     <div class="small">
 
-        <h2 class="lined"><i class="fal fa-street-view"></i>Caster effects</h2>
+        <h2 class="lined"><i class="fal fa-street-view"></i>Launcher</h2>
         {% if skill.skillCosts|length == 0 and skill.skillGains|length == 0 %}
             <p class="small">No effect on caster</p>
         {% endif %}
@@ -33,13 +33,19 @@
         {% for effect in skill.skillDamageEffects %}
             <p class="labelRow damage">
                 <span>{{ effect }}</span>
-                <span>(type: {{ effect.damageNature.abreviation }})</span>
+                <span>{{ effect.damageNature.name }}</span>
+                {% for potencyAugmentator in effect.getPotencyAugmentator %}
+                    <span>{{ potencyAugmentator.name }}</span>
+                {% endfor %}
             </p>
         {% endfor %}
 
         {% for effect in skill.skillHealEffects %}
             <p class="labelRow heal">
                 <span>{{ effect }}</span>
+                {% for potencyAugmentator in effect.getPotencyAugmentator %}
+                    <span>{{ potencyAugmentator.name }}</span>
+                {% endfor %}
             </p>
         {% endfor %}
 
@@ -53,7 +59,7 @@
     {% endif %}
 
     {# Jobs requirements (only for skills and weapons) #}
-    {% if skill.className != "consumable" %}
+    {% if skill.className != "consumable" and skill.jobs|length > 0 %}
         <div class="small">
             <h2 class="lined"><i class="fal fa-bullseye-arrow"></i>Jobs</h2>
             {% if skill.jobs|length == 0 %}

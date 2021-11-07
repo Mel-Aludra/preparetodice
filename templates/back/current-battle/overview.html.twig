@@ -34,7 +34,7 @@
             {% for teamName, teamCharacters in teams %}
                 <div>
                     {% for character in teamCharacters %}
-                        <div class="object smallObject">
+                        <div class="object unfoldable unfold smallObject">
                             <div class="header {{ character.team }}">
                                 <div class="graph">
                                     <i class="fal fa-user"></i>
@@ -51,7 +51,7 @@
                                         {% endfor %}
                                     </div>
                                     <a href="{{ path('gameBack_characterSheet', {'game': game.id, 'gameCharacter': character.id}) }}">
-                                        <span>Character sheet</span>
+                                        <span class="medium">Character sheet</span>
                                     </a>
                                 </div>
                             </div>
@@ -59,18 +59,40 @@
                                 <div class="panels spacedChildren">
                                     <div class="spaceTopChildrenTitles">
                                         <div class="narrow emphasis">
+
+                                            {# Resources #}
                                             {% for characterResource in character.characterResources %}
                                                 {% if characterResource.resource.id != game.actionPointsResource.id %}
                                                     {% include '_common/entity-bodies/character-resource.html.twig' %}
                                                 {% endif %}
                                             {% endfor %}
+
+                                            {# Status effects #}
+                                            {% if character.characterStatusEffects|length > 0 %}
+                                                {% for characterStatusEffect in character.characterStatusEffects %}
+                                                    {% if characterStatusEffect.remainingTurns is not null %}
+                                                        <p class="labelRow">
+                                                            <span class="ghost">{{ characterStatusEffect.statusEffect.name }}</span>
+                                                            <span>{{ characterStatusEffect.remainingTurns }} turn(s)</span>
+                                                        </p>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% for characterStatusEffect in character.characterStatusEffects %}
+                                                    {% if characterStatusEffect.remainingTurns is null %}
+                                                        <p class="labelRow">
+                                                            <span class="ghost">{{ characterStatusEffect.statusEffect.name }}</span>
+                                                        </p>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+
                                         </div>
                                     </div>
                                     <div class="small spaceTopChildrenTitles">
                                         <div class="actionLinksContainer">
-                                            <a class="launchAction" data-action-type="weapon" data-character-id="{{ character.id }}"><i class="fal fa-sword"></i><span>Weapon</span></a>
-                                            <a class="launchAction" data-action-type="skill" data-character-id="{{ character.id }}"><i class="fal fa-book-alt"></i><span>Skill</span></a>
-                                            <a class="launchAction" data-action-type="consumable" data-character-id="{{ character.id }}"><i class="fal fa-bomb"></i><span>Consumable</span></a>
+                                            <a class="launchAction" data-action-type="weapon" data-character-id="{{ character.id }}"><i class="fal fa-sword"></i><span class="medium">Weapon</span></a>
+                                            <a class="launchAction" data-action-type="skill" data-character-id="{{ character.id }}"><i class="fal fa-book-alt"></i><span class="medium">Skill</span></a>
+                                            <a class="launchAction" data-action-type="consumable" data-character-id="{{ character.id }}"><i class="fal fa-toolbox"></i><span class="medium">Consumable</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -80,13 +102,13 @@
                         {# Popin action selected #}
                         <div class="popin" id="panel_{{ character.id }}">
                             <div>
-                                <div class="header"><p><i class="fa fa-street-view"></i>{{ character.name }} > Choose skill</p></div>
+                                <div class="header"><p>{{ character.name }} > Choose skill</p></div>
                                 <div class="body">
                                     <div class="panels spacedChildren">
                                         <div class="small">
                                             <h2>{{ character.name }}</h2>
                                             <hr>
-                                            <div>
+                                            <div class="spaceAfter spaceBefore">
                                                 {% for characterResource in character.characterResources %}
                                                     {% include '_common/entity-bodies/character-resource.html.twig' %}
                                                 {% endfor %}
@@ -113,20 +135,27 @@
                                                             </div>
                                                             <div class="identity">
                                                                 <h2>{{ character.equippedWeapon.weapon.name }}</h2>
-                                                                <p>{{ character.equippedWeapon.weapon.description }}</p>
                                                             </div>
                                                             <div class="actions">
                                                                 <a href="{{ path('gameBack_currentBattle_weaponToAction', {'game': game.id, 'inventoryWeapon': character.equippedWeapon.id, 'skipUpdate': 'false'}) }}">
                                                                     <i class="fal fa-edit"></i>
-                                                                    <span>Modify and launch</span>
+                                                                    <span class="small">Modify and launch</span>
                                                                 </a>
                                                                 <a href="{{ path('gameBack_currentBattle_weaponToAction', {'game': game.id, 'inventoryWeapon': character.equippedWeapon.id, 'skipUpdate': 'true'}) }}">
                                                                     <i class="fal fa-bullseye-arrow"></i>
-                                                                    <span>Launch</span>
+                                                                    <span class="small">Launch</span>
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <div class="body">
+                                                            {% if character.equippedWeapon.weapon.description != '' %}
+                                                                <div class="panels spacedChildren">
+                                                                    <div>
+                                                                        <h2 class="lined"><i class="fal fa-align-justify"></i>Description</h2>
+                                                                        <p class="medium">{{ character.equippedWeapon.weapon.description }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
                                                             {% include "_common/entity-bodies/skill.html.twig" with {'skill': character.equippedWeapon.weapon} %}
                                                         </div>
                                                     </div>
@@ -145,7 +174,6 @@
                                                             </div>
                                                             <div class="identity">
                                                                 <h2>{{ characterSkill.skill.name }}</h2>
-                                                                <p>{{ characterSkill.skill.description }}</p>
                                                             </div>
                                                             <div class="actions">
                                                                 {% if characterSkill.launchRestrictions|length > 0 %}
@@ -158,15 +186,23 @@
                                                                 {% endif %}
                                                                 <a href="{{ path('gameBack_currentBattle_skillToAction', {'game': game.id, 'characterSkill': characterSkill.id, 'skipUpdate': 'false'}) }}">
                                                                     <i class="fal fa-edit"></i>
-                                                                    <span>Modify and launch</span>
+                                                                    <span class="small">Modify and launch</span>
                                                                 </a>
                                                                 <a href="{{ path('gameBack_currentBattle_skillToAction', {'game': game.id, 'characterSkill': characterSkill.id, 'skipUpdate': 'true'}) }}">
                                                                     <i class="fal fa-bullseye-arrow"></i>
-                                                                    <span>Launch</span>
+                                                                    <span class="small">Launch</span>
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <div class="body">
+                                                            {% if characterSkill.skill.description != '' %}
+                                                                <div class="panels spacedChildren">
+                                                                    <div>
+                                                                        <h2 class="lined"><i class="fal fa-align-justify"></i>Description</h2>
+                                                                        <p class="medium">{{ characterSkill.skill.description }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
                                                             {% include "_common/entity-bodies/skill.html.twig" with {'skill': characterSkill.skill} %}
                                                         </div>
                                                     </div>
@@ -185,20 +221,27 @@
                                                             </div>
                                                             <div class="identity">
                                                                 <h2>{{ characterConsumable.consumable.name }}</h2>
-                                                                <p>{{ characterConsumable.consumable.description }}</p>
                                                             </div>
                                                             <div class="actions">
                                                                 <a href="{{ path('gameBack_currentBattle_consumableToAction', {'game': game.id, 'inventoryConsumable': characterConsumable.id, 'skipUpdate': 'false'}) }}">
                                                                     <i class="fal fa-edit"></i>
-                                                                    <span>Modify and launch</span>
+                                                                    <span class="small">Modify and launch</span>
                                                                 </a>
                                                                 <a href="{{ path('gameBack_currentBattle_consumableToAction', {'game': game.id, 'inventoryConsumable': characterConsumable.id, 'skipUpdate': 'true'}) }}">
                                                                     <i class="fal fa-bullseye-arrow"></i>
-                                                                    <span>Launch</span>
+                                                                    <span class="small">Launch</span>
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <div class="body">
+                                                            {% if characterConsumable.consumable.description != '' %}
+                                                                <div class="panels spacedChildren">
+                                                                    <div>
+                                                                        <h2 class="lined"><i class="fal fa-align-justify"></i>Description</h2>
+                                                                        <p class="medium">{{ characterConsumable.consumable.description }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
                                                             {% include "_common/entity-bodies/skill.html.twig" with {'skill': characterConsumable.consumable} %}
                                                         </div>
                                                     </div>

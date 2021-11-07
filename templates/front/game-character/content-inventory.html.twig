@@ -1,90 +1,129 @@
 <div class="panels spacedChildren">
 
-    <div>
-        <h2 class="lined"><i class="fal fa-sack"></i>Items</h2>
-        <p class="labelRow"><span>{{ character.money }}</span><span class="ghost">{{ game.moneyTerm }}</span></p>
-        {% for inventoryItem in character.inventoryItems %}
-            <div class="object">
-                <div class="header" onclick="unfold(this)">
-                    <div class="graph">
-                        <i class="fal fa-book-alt"></i>
+    {% if character.inventoryItems|length > 0 or character.money > 0 %}
+        <div>
+            <h2 class="lined"><i class="fal fa-sack"></i>Items</h2>
+            {% if character.money > 0 %}
+                <p class="labelRow"><span>{{ character.money }}</span><span class="ghost">{{ game.moneyTerm }}</span></p>
+            {% endif %}
+            {% for inventoryItem in character.inventoryItems %}
+                <div class="object">
+                    <div class="header" onclick="unfold(this)">
+                        <div class="graph">
+                            <i class="fal fa-book-alt"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>{{ inventoryItem.item.name }}</h2>
+                        </div>
+                        <div class="actions">
+                            <p class="labelRow">{{ inventoryItem.quantity }}</p>
+                        </div>
                     </div>
-                    <div class="identity">
-                        <h2>{{ inventoryItem.item.name }}</h2>
-                        <p>{{ inventoryItem.item.description }}</p>
+                    <div class="body">
+                        {% if inventoryItem.item.description != '' %}
+                        <div class="panels spacedChildren">
+                            <div>
+                                <h2 class="lined"><i class="fal fa-align-justify"></i>Description</h2>
+                                <p class="medium">{{ inventoryItem.item.description }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="actions"></div>
                 </div>
-                <div class="body">
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    <div>
-        <h2 class="lined"><i class="fal fa-bomb"></i>Consumables</h2>
-        {% if character.inventoryConsumables|length == 0 %}<p class="small">You have no consumable</p>{% endif %}
-        {% for inventoryConsumable in character.inventoryConsumables %}
-            <div class="object">
-                <div class="header" onclick="unfold(this)">
-                    <div class="graph">
-                        <i class="fal fa-bomb"></i>
+    {% if character.inventoryConsumables|length > 0 %}
+        <div>
+            <h2 class="lined"><i class="fal fa-toolbox"></i>Consumables</h2>
+            {% for inventoryConsumable in character.inventoryConsumables %}
+                <div class="object">
+                    <div class="header" onclick="unfold(this)">
+                        <div class="graph">
+                            <i class="fal fa-toolbox"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>{{ inventoryConsumable.consumable.name }}</h2>
+                        </div>
+                        <div class="actions">
+                            <p class="labelRow">{{ inventoryConsumable.quantity }}</p>
+                        </div>
                     </div>
-                    <div class="identity">
-                        <h2>{{ inventoryConsumable.consumable.name }}</h2>
-                        <p>{{ inventoryConsumable.consumable.description }}</p>
+                    <div class="body">
+                        {% if inventoryConsumable.consumable.description != '' %}
+                        <div class="panels spacedChildren">
+                            <div>
+                                <h2 class="lined"><i class="fal fa-align-justify"></i>Description</h2>
+                                <p class="medium">{{ inventoryConsumable.consumable.description }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% include "_common/entity-bodies/skill.html.twig" with {'skill': inventoryConsumable.consumable, 'noCost': true} %}
                     </div>
-                    <div class="actions"></div>
                 </div>
-                <div class="body">
-                    {% include "_common/entity-bodies/skill.html.twig" with {'skill': inventoryConsumable.consumable, 'noCost': true} %}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    <div>
-        <h2 class="lined"><i class="fal fa-sword"></i>Weapons</h2>
-        {% if character.inventoryWeapons|length == 0 %}<p class="small">You have no weapon</p>{% endif %}
-        {% for inventoryWeapon in character.inventoryWeapons %}
-            <div class="object">
-                <div class="header" onclick="unfold(this)">
-                    <div class="graph">
-                        <i class="fal fa-sword"></i>
+    {% if character.inventoryWeapons|length > 0 %}
+        <div>
+            <h2 class="lined"><i class="fal fa-sword"></i>Weapons</h2>
+            {% for inventoryWeapon in character.inventoryWeapons %}
+                <div class="object">
+                    <div class="header" onclick="unfold(this)">
+                        <div class="graph">
+                            <i class="fal fa-sword"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>{{ inventoryWeapon.weapon.name }}</h2>
+                        </div>
+                        <div class="actions"></div>
                     </div>
-                    <div class="identity">
-                        <h2>{{ inventoryWeapon.weapon.name }}</h2>
-                        <p>{{ inventoryWeapon.weapon.description }}</p>
+                    <div class="body">
+                        {% if inventoryWeapon.weapon.description != '' %}
+                            <div class="panels spacedChildren">
+                                <div>
+                                    <h2 class="lined"><i class="fal fa-align-justify"></i>Description</h2>
+                                    <p class="medium">{{ inventoryWeapon.weapon.description }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% include "_common/entity-bodies/skill.html.twig" with {'skill': inventoryWeapon.weapon} %}
                     </div>
-                    <div class="actions"></div>
                 </div>
-                <div class="body">
-                    {% include "_common/entity-bodies/skill.html.twig" with {'skill': inventoryWeapon.weapon} %}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    <div>
-        <h2 class="lined"><i class="fal fa-helmet-battle"></i>Gears</h2>
-        {% if character.inventoryGears|length == 0 %}<p class="small">You have no gear</p>{% endif %}
-        {% for inventoryGear in character.inventoryGears %}
-            <div class="object">
-                <div class="header" onclick="unfold(this)">
-                    <div class="graph">
-                        <i class="fal fa-helmet-battle"></i>
+    {% if character.inventoryGears|length > 0 %}
+        <div>
+            <h2 class="lined"><i class="fal fa-helmet-battle"></i>Gears</h2>
+            {% for inventoryGear in character.inventoryGears %}
+                <div class="object">
+                    <div class="header" onclick="unfold(this)">
+                        <div class="graph">
+                            <i class="fal fa-helmet-battle"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>{{ inventoryGear.gear.name }}</h2>
+                        </div>
+                        <div class="actions"></div>
                     </div>
-                    <div class="identity">
-                        <h2>{{ inventoryGear.gear.name }}</h2>
-                        <p>{{ inventoryGear.gear.description }}</p>
+                    <div class="body">
+                        {% if inventoryGear.gear.description != '' %}
+                            <div class="panels spacedChildren">
+                                <div>
+                                    <h2 class="lined"><i class="fal fa-align-justify"></i>Description</h2>
+                                    <p class="medium">{{ inventoryGear.gear.description }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% include "_common/entity-bodies/status-effect.html.twig" with {'statusEffect': inventoryGear.gear} %}
                     </div>
-                    <div class="actions"></div>
                 </div>
-                <div class="body">
-                    {% include "_common/entity-bodies/status-effect.html.twig" with {'statusEffect': inventoryGear.gear} %}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
 </div>

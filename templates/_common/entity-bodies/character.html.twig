@@ -16,7 +16,7 @@
         </div>
 
         <div>
-            <h2 class="lined"><i class="fal fa-flask-poison"></i>Status effects</h2>
+            <h2 class="lined"><i class="fal fa-file-medical-alt"></i>Status effects</h2>
             {% if character.characterStatusEffects|length == 0 %}
                 <p class="small">This character have no status effect</p>
             {% endif %}
@@ -50,6 +50,7 @@
 
     <div class="panels spacedChildren">
 
+        {% if character.inventoryItems|length > 0 and character.money == 0 %}
         <div>
             <h2 class="lined"><i class="fal fa-sack"></i>Items</h2>
             <p class="labelRow"><span>{{ character.money }}</span><span class="ghost">{{ game.moneyTerm }}</span></p>
@@ -60,43 +61,47 @@
                 </p>
             {% endfor %}
         </div>
+        {% endif %}
 
-        <div>
-            <h2 class="lined"><i class="fal fa-bomb"></i>Consumables</h2>
-            {% if character.inventoryConsumables|length == 0 %}<p class="small">This character have no consumable</p>{% endif %}
-            {% for inventoryConsumable in character.inventoryConsumables %}
-                <p class="labelRow">
-                    <span class="ghost">{{ inventoryConsumable.consumable.name }}</span>
-                    <span>{{ inventoryConsumable.quantity }}</span>
-                </p>
-            {% endfor %}
-        </div>
+        {% if character.inventoryConsumables|length > 0 %}
+            <div>
+                <h2 class="lined"><i class="fal fa-toolbox"></i>Consumables</h2>
+                {% for inventoryConsumable in character.inventoryConsumables %}
+                    <p class="labelRow">
+                        <span class="ghost">{{ inventoryConsumable.consumable.name }}</span>
+                        <span>{{ inventoryConsumable.quantity }}</span>
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-        <div>
-            <h2 class="lined"><i class="fal fa-sword"></i>Weapons</h2>
-            {% if character.inventoryWeapons|length == 0 %}<p class="small">This character have no weapon</p>{% endif %}
-            {% for inventoryWeapon in character.inventoryWeapons %}
-                <p class="labelRow">
-                    <span class="ghost">{{ inventoryWeapon.weapon.name }}</span>
-                    <span>{{ inventoryWeapon.quantity }}</span>
-                </p>
-            {% endfor %}
-        </div>
+        {% if character.inventoryWeapons|length > 0 %}
+            <div>
+                <h2 class="lined"><i class="fal fa-sword"></i>Weapons</h2>
+                {% for inventoryWeapon in character.inventoryWeapons %}
+                    <p class="labelRow">
+                        <span class="ghost">{{ inventoryWeapon.weapon.name }}</span>
+                        <span>{{ inventoryWeapon.quantity }}</span>
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-        <div>
-            <h2 class="lined"><i class="fal fa-helmet-battle"></i>Gears</h2>
-            {% if character.inventoryGears|length == 0 %}<p class="small">This character have no gear</p>{% endif %}
-            {% for inventoryGear in character.inventoryGears %}
-                <p class="labelRow">
-                    <span class="ghost">{{ inventoryGear.gear.name }}</span>
-                    <span>{{ inventoryGear.quantity }}</span>
-                </p>
-            {% endfor %}
-        </div>
+        {% if character.inventoryGears|length > 0 %}
+            <div>
+                <h2 class="lined"><i class="fal fa-helmet-battle"></i>Gears</h2>
+                {% for inventoryGear in character.inventoryGears %}
+                    <p class="labelRow">
+                        <span class="ghost">{{ inventoryGear.gear.name }}</span>
+                        <span>{{ inventoryGear.quantity }}</span>
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
 
+        {% if character.characterStories|length > 0 %}
         <div>
             <h2 class="lined"><i class="fal fa-helmet-battle"></i>Story</h2>
-            {% if character.characterStories|length == 0 %}<p class="small">This character have no story</p>{% endif %}
             {% for characterStory in character.characterStories %}
                 <p class="labelRow">
                     {% if characterStory.isHidden %}
@@ -106,6 +111,7 @@
                 </p>
             {% endfor %}
         </div>
+        {% endif %}
 
     </div>
 {% endblock %}

@@ -134,6 +134,10 @@ p.labelRow>a:hover {
 
 /* Texts */
 
+.medium {
+    font-size: 13px;
+}
+
 .small {
     font-size: 12px;
 }

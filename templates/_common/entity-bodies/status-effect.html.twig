@@ -1,13 +1,10 @@
 <div class="panels spacedChildren">
 
-    {# Costs and gains #}
-    <div class="small spaceTopChildrenTitles">
+    {# Attributes and resources alterations #}
+    {% if statusEffect.attributeAlterations|length > 0 or statusEffect.resourceAlterations|length > 0 %}
+    <div class="spaceTopChildrenTitles">
 
         <h2 class="lined"><i class="fal fa-street-view"></i>Characteristics alterations</h2>
-
-        {% if statusEffect.attributeAlterations|length == 0 and statusEffect.resourceAlterations|length == 0 %}
-            <p class="small">No characteristics alterations</p>
-        {% endif %}
 
         {% for attributeAlteration in statusEffect.attributeAlterations %}
             <p class="labelRow {% if attributeAlteration.isNegative %}damage{% else %}heal{% endif %}">
@@ -22,25 +19,28 @@
         {% endfor %}
 
     </div>
+    {% endif %}
 
     {# Effects (damage, heal and se) #}
-    <div class="spaceTopChildrenTitles">
+    {% if statusEffect.damageOverTimes|length > 0 or statusEffect.healOverTimes|length > 0 %}
+        <div class="spaceTopChildrenTitles">
 
-        <h2 class="lined"><i class="fal fa-street-view"></i>Damage and heal over time</h2>
+            <h2 class="lined"><i class="fal fa-street-view"></i>Damage and heal over time</h2>
 
-        {% for damageOverTime in statusEffect.damageOverTimes %}
-            <p class="labelRow damage">
-                <span>{{ damageOverTime }}</span>
-                <span>(type: {{ damageOverTime.damageNature.abreviation }})</span>
-            </p>
-        {% endfor %}
+            {% for damageOverTime in statusEffect.damageOverTimes %}
+                <p class="labelRow damage">
+                    <span>{{ damageOverTime }}</span>
+                    <span>(type: {{ damageOverTime.damageNature.abreviation }})</span>
+                </p>
+            {% endfor %}
 
-        {% for healOverTime in statusEffect.healOverTimes %}
-            <p class="labelRow damage">
-                <span>{{ healOverTime }}</span>
-            </p>
-        {% endfor %}
+            {% for healOverTime in statusEffect.healOverTimes %}
+                <p class="labelRow damage">
+                    <span>{{ healOverTime }}</span>
+                </p>
+            {% endfor %}
 
-    </div>
+        </div>
+    {% endif %}
 
 </div>

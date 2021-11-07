@@ -58,8 +58,10 @@ class AttributeType extends AbstractType
             ])
             ->add('maximumValue', IntegerType::class, [
                 'label' => 'Attribute maximum value',
-                'required' => false,
-                'attr' => ['placeholder' => 'Attribute will not be able to be higher than this value (example: 99)']
+                'attr' => [
+                    'placeholder' => 'Attribute will not be able to be higher than this value (example: 99)',
+                    'dataFormChecker' => "notEmpty"
+                ]
             ])
             ->add('defenses', CollectionType::class, [
                 'label' => "Defenses",

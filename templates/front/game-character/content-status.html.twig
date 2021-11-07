@@ -3,8 +3,8 @@
     <div>
         <div class="card">
             <div class="body">
-                <p><strong>{{ character.name }}</strong></p>
-                <p>{{ character.description }}</p>
+                <p class="medium"><strong>{{ character.name }}</strong></p>
+                <p class="medium">{{ character.description }}</p>
                 {% if character.characterStories|length > 0 %}
                     {% set first = true %}
                     {% set isGm = app.user.isGameMaster(game.id) %}
@@ -41,46 +41,82 @@
         </div>
     </div>
 
+    {% if character.characterPassives|length > 0 or character.characterStatusEffects|length > 0 %}
     <div class="card">
         <div class="body">
-            {% if character.characterPassives|length == 0 %}
-                <p class="small">You have no passive</p>
-            {% endif %}
+
             {% for characterPassive in character.characterPassives %}
-                <div class="object unfoldable">
+                <div class="object">
                     <div class="header" onclick="unfold(this)">
                         <div class="graph">
                             <i class="fal fa-book-alt"></i>
                         </div>
                         <div class="identity">
                             <h2>{{ characterPassive.passive.name }}</h2>
-                            <p>{{ characterPassive.passive.description }}</p>
                         </div>
                         <div class="actions"></div>
                     </div>
                     <div class="body">
+                        {% if characterPassive.passive.description != '' %}
+                            <div class="panels spacedChildren">
+                                <div>
+                                    <h2 class="lined"><i class="fal fa-align-justify"></i>Description</h2>
+                                    <p class="medium">{{ characterPassive.passive.description }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
                         {% include "_common/entity-bodies/passive.html.twig" with {'passive': characterPassive.passive} %}
                     </div>
                 </div>
             {% endfor %}
 
-            {% if character.characteristicCalculations|length > 0 %}
+            {% if character.characterPassives|length > 0 and character.characterStatusEffects|length > 0 %}
                 <div class="separator"></div>
-                {% for characteristicCalculation in character.characteristicCalculations %}
-                    <p class="labelRow {% if characteristicCalculation.isNegative == true %}damage{% else %}heal{% endif %}">
-                        <span class="ghost">{{ characteristicCalculation.source }}</span>
-                        <span>{{ characteristicCalculation.characteristic }} :</span>
-                        {% if characteristicCalculation.isNegative == true %}
-                            <span>-{{ characteristicCalculation.value }}</span>
-                        {% else %}
-                            <span>+{{ characteristicCalculation.value }}</span>
-                        {% endif %}
-                        <span>{{ characteristicCalculation.calculation }}</span>
-                    </p>
-                {% endfor %}
             {% endif %}
+
+            {% for characterStatusEffect in character.characterStatusEffects %}
+                <div class="object">
+                    <div class="header" onclick="unfold(this)">
+                        <div class="graph">
+                            <i class="fal fa-file-medical-alt"></i>
+                        </div>
+                        <div class="identity">
+                            <h2>{{ characterStatusEffect.statusEffect.name }}</h2>
+                        </div>
+                        <div class="actions"></div>
+                    </div>
+                    <div class="body">
+                        {% if characterStatusEffect.statusEffect.description != '' %}
+                        <div class="panels spacedChildren">
+                            <div>
+                                <h2 class="lined"><i class="fal fa-align-justify"></i>Description</h2>
+                                <p class="medium">{{ characterStatusEffect.statusEffect.description }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% include "_common/entity-bodies/status-effect.html.twig" with {'statusEffect': characterStatusEffect.statusEffect} %}
+                    </div>
+                </div>
+            {% endfor %}
+
+{#            {% if character.characteristicCalculations|length > 0 %}#}
+{#                <div class="separator"></div>#}
+{#                {% for characteristicCalculation in character.characteristicCalculations %}#}
+{#                    <p class="labelRow {% if characteristicCalculation.isNegative == true %}damage{% else %}heal{% endif %}">#}
+{#                        <span class="ghost">{{ characteristicCalculation.source }}</span>#}
+{#                        <span>{{ characteristicCalculation.characteristic }} :</span>#}
+{#                        {% if characteristicCalculation.isNegative == true %}#}
+{#                            <span>-{{ characteristicCalculation.value }}</span>#}
+{#                        {% else %}#}
+{#                            <span>+{{ characteristicCalculation.value }}</span>#}
+{#                        {% endif %}#}
+{#                        <span>{{ characteristicCalculation.calculation }}</span>#}
+{#                    </p>#}
+{#                {% endfor %}#}
+{#            {% endif %}#}
         </div>
     </div>
+    {% endif %}
 
 </div>
 

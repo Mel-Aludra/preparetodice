@@ -132,6 +132,12 @@ class ActionController extends Controller
             return $this->redirectToRoute('gameBack_currentBattle_previewAction', ['game' => $this->getGame()->getId(), 'action' => $action->getId()]);
         }
 
+        //If there is no effect, we pass to next action
+        if(count($action->getSkillDamageEffects()) == 0 && count($action->getSkillHealEffects()) == 0 && count($action->getSkillStatusEffects()) == 0) {
+            $this->addFlash("neutral", "There is no effects in this skill. You can launch it.!");
+            return $this->redirectToRoute('gameBack_currentBattle_previewAction', ['game' => $this->getGame()->getId(), 'action' => $action->getId()]);
+        }
+
         //Return view
         return $this->render('back/current-battle/select-targets.html.twig', [
             'battle' => $this->getGame()->getCurrentBattle(),

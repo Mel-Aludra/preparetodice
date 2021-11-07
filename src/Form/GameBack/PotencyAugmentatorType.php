@@ -48,9 +48,9 @@ class PotencyAugmentatorType extends AbstractType
             ])
             ->add('percentCeiling', IntegerType::class, [
                 'label' => "Percent ceiling",
+                'required' => false,
                 'attr' => [
-                    'placeholder' => "Maximum base percent of value (example: if 100 is indicated, it means that the effect will not be able to exceed double its initial damage)",
-                    'dataFormChecker' => "positiveInt"
+                    'placeholder' => "Maximum base percent of value (example: if 100 is indicated, it means that the effect will not be able to exceed double its initial damage)"
                 ]
             ])
         ;

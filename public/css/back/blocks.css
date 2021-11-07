@@ -80,6 +80,7 @@
 
 .popin>div {
     width: 80%;
+    height: calc(90% - 80px);
 }
 
 .popin>div>.header {
@@ -90,7 +91,7 @@
 
 .popin>div>.body {
     padding: 20px;
+    height: calc(100% - 90px);
     background-color: var(--primary-color-darker);
-    height: 650px;
     overflow: auto;
 }

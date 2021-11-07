@@ -7,11 +7,18 @@
                         <i class="fal fa-book-alt"></i>
                     </div>
                     <div class="identity">
-                        <p><strong>{{ characterSkill.skill.name }}</strong></p>
-                        <p>{{ characterSkill.skill.description }}</p>
+                        <h2>{{ characterSkill.skill.name }}</h2>
                     </div>
                 </div>
                 <div class="body">
+                    {% if characterSkill.skill.description != '' %}
+                        <div class="panels spacedChildren">
+                            <div>
+                                <h2 class="lined"><i class="fal fa-align-justify"></i>Description</h2>
+                                <p class="medium">{{ characterSkill.skill.description }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
                     {% include "_common/entity-bodies/skill.html.twig" with {'skill': characterSkill.skill} %}
                 </div>
             </div>
