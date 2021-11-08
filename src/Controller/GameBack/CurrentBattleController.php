@@ -104,7 +104,11 @@ class CurrentBattleController extends Controller
     public function finishTurn(EntityManagerInterface $manager, StatusEffectApplierService $statusEffectApplierService)
     {
         $this->getGame()->getCurrentBattle()->setTurnsNumber($this->getGame()->getCurrentBattle()->getTurnsNumber() + 1);
+
+        //CAREFUL, WE GET ALL ACTION POINTS RESTORED HERE
         $statusEffectApplierService->finishTurnStatusEffectsApplier();
+        //TO MOVE ELSEWHERE, IN APPROPRIATE SERVICE
+
         $manager->persist($this->getGame()->getCurrentBattle());
         $manager->flush();
         $this->addFlash("success", "Turn " . $this->getGame()->getCurrentBattle()->getTurnsNumber() . " start!");

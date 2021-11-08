@@ -48,9 +48,15 @@ class StatusEffectApplierService
         foreach($foes as $foe)
             $characters[] = $foe;
 
-
         /** @var GameCharacter $gameCharacter */
         foreach($characters as $gameCharacter) {
+
+            //For each character, we restore all action points
+            if($this->gameEnv->getGame()->getActionPointsResource() != null) {
+                $actionPoints = $gameCharacter->seekCharacterResource($this->gameEnv->getGame()->getActionPointsResource());
+                $actionPoints->setCurrentValue($actionPoints->getFinalValue());
+                $this->manager->persist($actionPoints);
+            }
 
             $passivesDots = [];
             $passivesHots = [];
@@ -145,10 +151,27 @@ class StatusEffectApplierService
 
         }
 
+
+        //Each limited in turns status effect decreases by 1
+        foreach($characters as $gameCharacter) {
+            foreach($gameCharacter->getCharacterStatusEffects() as $characterStatusEffect) {
+                if($characterStatusEffect->getRemainingTurns() != null) {
+                    $characterStatusEffect->setRemainingTurns($characterStatusEffect->getRemainingTurns() - 1);
+                    $this->manager->persist($characterStatusEffect);
+                    if($characterStatusEffect->getRemainingTurns() <= 0) {
+                        $this->manager->remove($characterStatusEffect);
+                    }
+                }
+            }
+        }
+        $this->manager->flush();
+
         //For each character touch, we calculate stats and flush all
         foreach($charactersToCheck as $gameCharacter) {
             $this->characteristicsManager->calculateCharacteristics($gameCharacter);
         }
+
+
 
     }
 

@@ -123,13 +123,12 @@ class CharacterSkill extends Entity
 
         }
 
-        //Checker
         foreach($resourcesNeeded as $resourceNeeded) {
 
             //Total amount
             $required = 0;
             foreach($resourceNeeded["Costs"] as $amount) {
-                $required = $amount + $amount;
+                $required = $amount;
             }
 
             //Looking for resource

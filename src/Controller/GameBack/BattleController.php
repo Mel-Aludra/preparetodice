@@ -67,7 +67,7 @@ class BattleController extends Controller
         //Check entity / create if null / check if from this game
         if($context === "add") {
             $battle = new Battle();
-            $battle->setTurnsNumber(0);
+            $battle->setTurnsNumber(1);
         }
         else {
             $this->checkEntityGameContext($battle);
@@ -107,6 +107,9 @@ class BattleController extends Controller
      */
     public function delete(Battle $battle, EntityManagerInterface $manager)
     {
+        foreach($battle->getBattleLogs() as $log) {
+            $manager->remove($log);
+        }
         $manager->remove($battle);
         $manager->flush();
         $this->addFlash("success", "Battle " . $battle->getName() . " have been deleted.");
