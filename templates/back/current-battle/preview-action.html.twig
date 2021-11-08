@@ -8,7 +8,7 @@
     <div class="breadcrumb">
         <a href="{{ path("gameBack_currentBattle_overview", {'game': game.id}) }}"><i class="fal fa-swords"></i>Battle {{ battle.name }}</a>
         <span> > </span>
-        <a href="{{ path('gameBack_currentBattle_updateAction', {'game': game.id, 'action': action.id}) }}"><i class="fal fa-street-view"></i>Action {{ action.name }}</a>
+        <a href="{{ path('gameBack_currentBattle_updateAction', {'game': game.id, 'action': action.id}) }}"><i class="fal fa-street-view"></i>{{ action.launcher.name }} : {{ action.name }}</a>
         <span> > </span>
         <a href="{{ path('gameBack_currentBattle_selectTargets', {'game': game.id, 'action': action.id}) }} }}"><i class="fa fa-bullseye-arrow"></i>Select targets</a>
         <span> > </span>
