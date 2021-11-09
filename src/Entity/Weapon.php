@@ -36,27 +36,27 @@ class Weapon extends Entity
     private ?string $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=SkillHealEffect::class, mappedBy="weapon")
+     * @ORM\OneToMany(targetEntity=SkillHealEffect::class, mappedBy="weapon", orphanRemoval=true)
      */
     private ?Collection $skillHealEffects;
 
     /**
-     * @ORM\OneToMany(targetEntity=SkillDamageEffect::class, mappedBy="weapon")
+     * @ORM\OneToMany(targetEntity=SkillDamageEffect::class, mappedBy="weapon", orphanRemoval=true)
      */
     private ?Collection $skillDamageEffects;
 
     /**
-     * @ORM\OneToMany(targetEntity=SkillCost::class, mappedBy="weapon")
+     * @ORM\OneToMany(targetEntity=SkillCost::class, mappedBy="weapon", orphanRemoval=true)
      */
     private ?Collection $skillCosts;
 
     /**
-     * @ORM\OneToMany(targetEntity=SkillGain::class, mappedBy="weapon")
+     * @ORM\OneToMany(targetEntity=SkillGain::class, mappedBy="weapon", orphanRemoval=true)
      */
     private ?Collection $skillGains;
 
     /**
-     * @ORM\OneToMany(targetEntity=SkillStatusEffect::class, mappedBy="weapon")
+     * @ORM\OneToMany(targetEntity=SkillStatusEffect::class, mappedBy="weapon", orphanRemoval=true)
      */
     private $skillStatusEffects;
 
