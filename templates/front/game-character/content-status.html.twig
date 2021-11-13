@@ -18,6 +18,23 @@
                         {% endif %}
                     {% endfor %}
                 {% endif %}
+                {% if character.equippedGears|length > 0 or character.equippedWeapon is not null %}
+                    <div class="separator"></div>
+                    <div>
+                        {% if character.equippedWeapon is not null %}
+                            <p class="labelRow">
+                                <span class="ghost">Weapon</span>
+                                <span>{{ character.equippedWeapon.weapon.name }}</span>
+                            </p>
+                        {% endif %}
+                        {% for equippedGear in character.equippedGears %}
+                            <p class="labelRow">
+                                <span class="ghost">{{ equippedGear.equipmentSlot.name }}</span>
+                                <span>{{ equippedGear.inventoryGear.gear.name }}</span>
+                            </p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -80,6 +80,7 @@ body.noHeader .characterTabs {
 body.noHeader .characterTabs + #content {
     margin-top: 25px;
     min-height: calc(100vh - 44px);
+    padding-bottom: 65px;
 }
 
 /* Mangement for back display */
@@ -98,10 +99,14 @@ body.noHeader .characterTabs + #content {
 @media all AND (max-width: 1200px) {
 
     .characterTabs {
-        top: auto;
         bottom: 0;
+        top: auto;
         left: 0;
         width: 100%;
+    }
+
+    body.noHeader .characterTabs {
+        top: auto;
     }
 
     .characterTabs + #content {
@@ -111,6 +116,19 @@ body.noHeader .characterTabs + #content {
 
     .characterTabs>a {
         flex-direction: column;
+        border: none;
+        border-top: 2px solid black;
+        padding-top: 4px;
+    }
+
+    .characterTabs>a>span, .characterTabs>a>i {
+        font-size: 15px;
+        justify-content: flex-start;
+    }
+
+    .characterTabs>a>i {
+        margin-right: 0;
+        margin-bottom: 2px;
     }
 
     nav + .content {

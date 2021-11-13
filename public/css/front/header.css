@@ -86,6 +86,7 @@ header .menuContainer>a:hover, header .menuContainer>a.active {
         align-items: center;
         justify-content: center;
         border-radius: 3px;
+        z-index: 100;
     }
 
     .burgerMenu>div {

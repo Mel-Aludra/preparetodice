@@ -40,7 +40,6 @@ class LoreBlockType extends AbstractType
             ->add('accessType', ChoiceType::class, [
                 'choices' => [
                     "Only visible for game masters" => LoreBlock::HIDDEN_ACCESS,
-                    "Visible to those who are related to the element" => LoreBlock::RELATED_ACCESS,
                     "Visible for everyone" => LoreBlock::PUBLIC_ACCESS
                 ]
             ])

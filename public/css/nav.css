@@ -109,7 +109,7 @@ nav .linksSeparator {
     }
 
     .burgerMenu {
-        position: absolute;
+        position: fixed;
         top: 5px;
         right: 8px;
         width: 50px;

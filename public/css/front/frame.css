@@ -34,4 +34,8 @@ footer>div:last-child {
         width: 100%;
     }
 
+    body.noHeader {
+        padding-top: 30px;
+    }
+
 }
