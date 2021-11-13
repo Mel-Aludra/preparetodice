@@ -111,6 +111,32 @@
             </div>
         </div>
 
+        {% if action.launcher is not null %}
+            <div class="strip">
+                <div class="panels spacedChildren">
+                    <div>
+                        <p>Launcher resources</p>
+                        {% for characterResource in action.launcher.characterResources %}
+                            {% if characterResource.resource.id == game.lifeResource.id %}
+                                {% include '_common/entity-bodies/character-resource.html.twig' %}
+                            {% endif %}
+                        {% endfor %}
+                        {% for characterResource in action.launcher.characterResources %}
+                            {% if characterResource.resource.id != game.lifeResource.id %}
+                                {% include '_common/entity-bodies/character-resource.html.twig' %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div>
+                       <p>Launcher attributes</p>
+                        {% for characterAttribute in action.launcher.characterAttributes %}
+                            {% include '_common/entity-bodies/character-attribute.html.twig' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
     </form>
 {% endblock %}
 
