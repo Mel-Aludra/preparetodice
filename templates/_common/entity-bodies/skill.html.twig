@@ -33,7 +33,6 @@
         {% for effect in skill.skillDamageEffects %}
             <p class="labelRow damage">
                 <span>{{ effect }}</span>
-                <span>{{ effect.damageNature.name }}</span>
                 {% for potencyAugmentator in effect.getPotencyAugmentator %}
                     <span>{{ potencyAugmentator.name }}</span>
                 {% endfor %}
