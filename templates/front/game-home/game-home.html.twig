@@ -39,17 +39,19 @@
         </div>
 
         {# Lore #}
-        <div class="widget alt">
-            <h1 class="spaceAfter">Game elements</h1>
-            {% for tag in game.loreTags  %}
-                <div class="linksEmphasisContainer">
-                    <a class="" href="{{ path('gameFront_lore_tag', {'game': game.id, 'loreTag': tag.id}) }}">
-                        <i class="fas fa-file-alt"></i>
-                        <span>{{ tag.name }}</span>
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
+        {% if game.loreTags|length > 0 %}
+            <div class="widget alt">
+                <h1 class="spaceAfter">Game elements</h1>
+                {% for tag in game.loreTags  %}
+                    <div class="linksEmphasisContainer">
+                        <a class="" href="{{ path('gameFront_lore_tag', {'game': game.id, 'loreTag': tag.id}) }}">
+                            <i class="fas fa-file-alt"></i>
+                            <span>{{ tag.name }}</span>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
     </div>
 
