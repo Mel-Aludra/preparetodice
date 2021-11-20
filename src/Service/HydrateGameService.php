@@ -6,6 +6,7 @@ use App\Entity\Attribute;
 use App\Entity\CharacterAttribute;
 use App\Entity\CharacterPassive;
 use App\Entity\CharacterResource;
+use App\Entity\CharacterSkill;
 use App\Entity\Consumable;
 use App\Entity\DamageNature;
 use App\Entity\Defense;
@@ -298,6 +299,7 @@ class HydrateGameService
 
         //System
         $game->setActionPointsResource($ap);
+        $game->setLifeResource($vig);
         $game->setMoneyTerm("Argent");
         $game->setName("Deemed Unfit");
         $game->setDescription("Comme les autres personnes qui vous accompagnent dans ce voyage, vous venez d'être condamné·e à un exil sur la planète Narayan.");
@@ -364,6 +366,7 @@ class HydrateGameService
         $character = new GameCharacter();
         $character->setName("Najma");
         $character->setDescription("Accès document personnage : https://tinyurl.com/26k7p5t2");
+        $character->setTeam(GameCharacter::TEAM_ALLIES);
         $characterPassive = new CharacterPassive();
         $characterPassive->setGameCharacter($character); $characterPassive->setPassive($najmaPassive); $character->addCharacterPassive($characterPassive);
         $this->manager->persist($characterPassive);
@@ -374,6 +377,7 @@ class HydrateGameService
         $character = new GameCharacter();
         $character->setName("Caleb");
         $character->setDescription("Accès document personnage : https://tinyurl.com/mrc86nya");
+        $character->setTeam(GameCharacter::TEAM_ALLIES);
         $characterPassive->setGameCharacter($character); $characterPassive->setPassive($calebPassive); $character->addCharacterPassive($characterPassive);
         $this->manager->persist($characterPassive);
         $this->persistCharacter($game, $character, ["FOR" => 20, "DEX" => 50, "OBS" => 20, "LOG" => 40]);
@@ -383,6 +387,7 @@ class HydrateGameService
         $character = new GameCharacter();
         $character->setName("Willow");
         $character->setDescription("Accès document personnage : https://tinyurl.com/2haapuzx");
+        $character->setTeam(GameCharacter::TEAM_ALLIES);
         $this->persistCharacter($game, $character, ["FOR" => 40, "DEX" => 30, "OBS" => 30, "LOG" => 30]);
         $willow = $character;
 
@@ -411,6 +416,9 @@ class HydrateGameService
         $character = new GameCharacter();
         $character->setName("L'Origine");
         $character->setDescription("Une sphère formée de matière volatile excessivement sombre. Des éclats noirs se détachent de la sphère pour former un anneau qui tournoie rapidement autour.");
+        $characterPassive = new CharacterPassive();
+        $characterPassive->setGameCharacter($character); $characterPassive->setPassive($autoRegenPassive); $character->addCharacterPassive($characterPassive);
+        $this->manager->persist($characterPassive);
         $this->persistCharacter($game, $character);
         $sphere = $character;
 
@@ -524,6 +532,11 @@ class HydrateGameService
         //Skills
         //0 => name / 1 => description / 2 => cost pa / 3 => cost vi / 4 => vi damage / 5 => vi heal / 6 => se 1 / 7 => se 2
         $skillsData = [];
+        $skillsData[] = [
+            "Attaque sans arme", "Action principale. Condition de réussite sur Vigueur. En cas d'arme équipée, se reporter à la section 'weapons'.",
+            1, 4, 0, null,
+            null, null
+        ];
         $skillsData[] = [
             "Défense", "Action principale. Actif jusqu'au prochain tour. En cas d'attaque ennemie, un jet sur la vigueur permettra d'éviter une blessure.",
             1, 3, null, null,
@@ -649,6 +662,9 @@ class HydrateGameService
             }
             if($datum[4] !== null) {
                 $skillDamage = new SkillDamageEffect(); $skillDamage->setSkill($skill); $skill->addSkillDamageEffect($skillDamage);
+                if($skill->getName() == "Attaque sans arme") {
+                    $skillDamage->addPotencyAugmentator($phyPotency);
+                }
                 $skillDamage->setValue($datum[4])->setCalculationType("points")->setDamageNature($physicalNature)->setResource($vig)->setIgnoreDefense(0);
                 $this->manager->persist($skillDamage);
             }
@@ -670,7 +686,72 @@ class HydrateGameService
             $this->manager->persist($skill);
         }
 
-        //!!!!! A finir : skills to characters
+        //Characters skills
+        $players = [$najma, $caleb, $willow];
+        $skills = ["Attaque sans arme", "Défense", "Changement d'arme", "Analyse", "Protection allié·e", "Attaque létale (action spéciale de groupe)", "Récupération (action spéciale de groupe)", "Fuite (action spéciale de groupe)", "Action contextuelle (action spéciale de groupe)"];
+        foreach($players as $player) {
+            foreach($skills as $skillName) {
+                foreach($game->getSkills() as $skill) {
+                    if($skill->getName() == $skillName) {
+                        $characterSkill = new CharacterSkill();
+                        $characterSkill->setSkill($skill); $player->addCharacterSkill($characterSkill); $characterSkill->setGameCharacter($player);
+                        $this->manager->persist($characterSkill);
+                    }
+                }
+            }
+        }
+
+        //Etre sans visage
+        $treatedCharacter = $etreSansVisage;
+        $skills = ["Coup", "Lame éphémère", "Massue éphémère", "Régénération"];
+        foreach($skills as $skillName) {
+            foreach($game->getSkills() as $skill) {
+                if($skill->getName() == $skillName) {
+                    $characterSkill = new CharacterSkill();
+                    $characterSkill->setSkill($skill); $treatedCharacter->addCharacterSkill($characterSkill); $characterSkill->setGameCharacter($treatedCharacter);
+                    $this->manager->persist($characterSkill);
+                }
+            }
+        }
+
+        //Rodeur sans visage
+        $treatedCharacter = $rodeurSansVisage;
+        $skills = ["Rugissement matérialisé", "Plaquage", "Férocité", "Lacération", "Régénération"];
+        foreach($skills as $skillName) {
+            foreach($game->getSkills() as $skill) {
+                if($skill->getName() == $skillName) {
+                    $characterSkill = new CharacterSkill();
+                    $characterSkill->setSkill($skill); $treatedCharacter->addCharacterSkill($characterSkill); $characterSkill->setGameCharacter($treatedCharacter);
+                    $this->manager->persist($characterSkill);
+                }
+            }
+        }
+
+        //Traqueur
+        $treatedCharacter = $traqueur;
+        $skills = ["Observation", "Lance colossale", "Régénération"];
+        foreach($skills as $skillName) {
+            foreach($game->getSkills() as $skill) {
+                if($skill->getName() == $skillName) {
+                    $characterSkill = new CharacterSkill();
+                    $characterSkill->setSkill($skill); $treatedCharacter->addCharacterSkill($characterSkill); $characterSkill->setGameCharacter($treatedCharacter);
+                    $this->manager->persist($characterSkill);
+                }
+            }
+        }
+
+        //Traqueur
+        $treatedCharacter = $sphere;
+        $skills = ["Tornade", "Éclats lacérants", "Lame noire", "Absorption vitale", "Régénération"];
+        foreach($skills as $skillName) {
+            foreach($game->getSkills() as $skill) {
+                if($skill->getName() == $skillName) {
+                    $characterSkill = new CharacterSkill();
+                    $characterSkill->setSkill($skill); $treatedCharacter->addCharacterSkill($characterSkill); $characterSkill->setGameCharacter($treatedCharacter);
+                    $this->manager->persist($characterSkill);
+                }
+            }
+        }
 
         //Items
         $itemsData = [];
