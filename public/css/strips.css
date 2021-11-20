@@ -34,6 +34,10 @@
     background-size: cover;
 }
 
+.strip.backgrounded.deemed-unfit {
+    background-image: url("../resources/images/du-16-9.jpg");
+}
+
 /* Strip backgrounded > Home page first block */
 
 .strip.backgrounded.screenEmphasis {
@@ -48,6 +52,7 @@
 .strip.backgrounded.img_neutral { background-image: url("../resources/images/neutral.jpeg"); }
 .strip.backgrounded.img_flashingSpace { background-image: url("../resources/images/flashingSpace.jpeg"); }
 .strip.backgrounded.img_cosmos { background-image: url("../resources/images/cosmos.jpeg"); }
+.strip.backgrounded.img_darkCosmos { background-image: url("../resources/images/dark-cosmos.jpeg"); }
 .strip.backgrounded.img_nightLake { background-image: url("../resources/images/nightLake.jpeg"); }
 
 /* Strip backgrounded > Titled background */
@@ -58,6 +63,10 @@
     align-items: flex-end;
     padding: 0 90px 12px 90px;
     width: calc(100% - 180px);
+}
+
+.strip.backgrounded.titled.adaptative {
+    height: calc(100vh - var(--header-height) - 55px);
 }
 
 /* Strip backgrounded expand */

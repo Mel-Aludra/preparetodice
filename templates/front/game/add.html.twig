@@ -6,7 +6,7 @@
 {% block body %}
     <div class="strip backgrounded img_forest screenEmphasis">
         <div class="widget">
-            <h1>Create a game</h1>
+            <h1>Create an empty game</h1>
             <form method="post" action="" data-form-checker="true">
                 {{ form_start(form) }}
                 {{ form_row(form.name) }}
@@ -16,6 +16,25 @@
                 <input type="submit" value="Create game" />
                 {{ form_end(form) }}
             </form>
+        </div>
+    </div>
+    <div class="strip column horizontalBreath secondaryDarker">
+        <h2>Create a game from a template</h2>
+    </div>
+    <div class="strip backgrounded expand img_cosmos breath corner">
+        <div></div>
+        <div class="presentationPanelsContainer">
+            <div class="extend">
+                <h2><span>[FR] - Template Deemed Unfit</span></h2>
+                <p>
+                    Vous pouvez créer un jeu à partir du template de Deemed Unfit afin de retrouver tous les éléments
+                    de jeu nécessaires à sa gestion.
+                </p>
+                <div class="linksEmphasisContainer spaceBefore">
+                    <a href="{{ path('front_deemedUnfit_add') }}">Créer un jeu sur le template Deemed Unfit</a>
+                    <a href="{{ path('front_deemedUnfit') }}">En savoir plus sur Deemed Unfit</a>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

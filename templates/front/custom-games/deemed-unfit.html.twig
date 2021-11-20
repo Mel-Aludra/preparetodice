@@ -1,0 +1,93 @@
+{% extends 'front/_layout/_base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <div class="strip backgrounded deemed-unfit adaptative titled">
+        <div>
+            <h1>Deemed Unfit</h1>
+            <p>[FR] - Si vous êtes MJ, retrouvez ici tous les éléments nécessaires à la gestion du jeu Deemed Unfit</p>
+        </div>
+    </div>
+
+    <div class="strip column horizontalBreath secondaryDarker">
+    </div>
+
+    <div class="strip primaryDarker expand img_forest breath corner">
+        <div></div>
+        <div class="presentationPanelsContainer">
+            <div>
+                <h2><span>La bible de Deemed Unfit</span></h2>
+                <p>
+                    La bible est réservée au meneur ou à la meneuse de jeu. Elle comprend toutes les informations nécessaires pour comprendre
+                    l'univers, le scénario, les personnages, les règles, les éléments de jeu, etc.
+                </p>
+                <p class="spaceBefore">
+                    Si vous souhaitez proposer le jeu de rôle à votre entourage, la lecture de cette bible est nécessaire.
+                </p>
+                <p class="spaceBefore">
+                    La carte permet d'avoir une vision d'ensemble des lieux. Le level design, quant à lui, permet de savoir
+                    comment les éléments du jeu sont placés (ennemis, objets, etc.).
+                </p>
+                <div class="linksEmphasisContainer spaceBefore"><a href="">Bible de Deemed Unfit (MJ)</a></div>
+                <div class="linksEmphasisContainer"><a href="">Carte avec les noms des lieux)</a></div>
+                <div class="linksEmphasisContainer"><a href="">Level design complet (PDF)</a></div>
+                <div class="linksEmphasisContainer"><a href="">Level design complet (Illustrator)</a></div>
+            </div>
+            <div>
+                <h2><span>Documents joueurs et joueuses</span></h2>
+                <p>
+                    Pour accéder aux documents que vous pourrez donner à vos joueurs et vos joueuses, cliquez sur le personnage concerné :
+                </p>
+                <div class="linksEmphasisContainer spaceBefore"><a href="">Document sur Najma</a></div>
+                <div class="linksEmphasisContainer"><a href="">Document sur Caleb</a></div>
+                <div class="linksEmphasisContainer"><a href="">Document sur Willow</a></div>
+                <div class="linksEmphasisContainer"><a href="">Carte sans les noms des lieux</a></div>
+            </div>
+            <div>
+                <h2><span>Musiques de Deemed Unfit</span></h2>
+                <p>
+                    Les musiques bla bla
+                </p>
+                <div class="linksEmphasisContainer spaceBefore"><a href="">Lien 1</a></div>
+                <div class="linksEmphasisContainer"><a href="">Lien 2</a></div>
+            </div>
+            <div class="extend">
+                <h2><span>Créer le jeu de rôle Deemed Unfit sur Prepare to dice</span></h2>
+                <p>
+                    Cher MJ, chère MJ, si vous souhaitez proposer le jeu de rôle Deemed Unfit à votre entourage, vous n'avez qu'à cliquer sur
+                    le bouton "Créer le jeu Deemed Unfit" pour créer un jeu avec tous les éléments nécessaires pour y jouer (personnages, compétences,
+                    objets, etc.). Vous le retrouverez après dans la section "My games" et serez automatiquement MJ. Vous n'aurez plus qu'à inviter
+                    vos joueurs et joueuses (dans l'admin, rubrique "Game settings" > "Invitation"). Une fois l'invitation acceptée, vous pourrez leur
+                    attribuer leur personnage (dans l'admin, rubrique "Game settings" > "Player(s)" > "Update user characters").
+                </p>
+                {% if app.user is not null %}
+                    <div class="linksEmphasisContainer">
+                        <a href="{{ path('front_deemedUnfit_add') }}">Créer un jeu sur le template Deemed Unfit</a>
+                    </div>
+                {% else %}
+                    <br />
+                    <p class="labelRow damage">Vous devez avoir un compte et être loggé pour pouvoir créer un jeu sur le template de Deemed Unfit</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="strip column secondaryDarker breath">
+        <p>Le jeu et les musiques ont été créés par <strong>Mel Aludra</strong> et les illustrations par <strong>Chlowski</strong> :</p>
+        <div class="spaceBefore">
+            <a class="solidLink" href="https://twitter.com/MelAludra" target="_blank">Twitter Mel Aludra</a>
+        </div>
+        <div class="spaceBefore">
+            <a class="solidLink" href="https://mel-aludra.com" target="_blank">Musiques Mel Aludra</a>
+        </div>
+        <div class="spaceBefore">
+            <a class="solidLink" href="https://twitter.com/Chlowski" target="_blank">Twitter Chlowski</a>
+        </div>
+        <div class="spaceBefore">
+            <a class="solidLink" href="https://chlowski.artstation.com/" target="_blank">Artstation Chlowski</a>
+        </div>
+    </div>
+
+{% endblock %}
