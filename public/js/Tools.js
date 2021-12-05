@@ -69,3 +69,8 @@ $(".togglesContainer>p").each(function() {
         this.classList.add("active");
     })
 });
+
+/* Smooth scrolling */
+function scrollToElement(elt) {
+    document.getElementById(elt).scrollIntoView({behavior: "smooth"});
+}

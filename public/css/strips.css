@@ -18,6 +18,7 @@
 .strip.secondaryDarker { background-color: var(--secondary-color-darker); }
 .strip.primaryDark { background-color: var(--primary-color-dark); }
 .strip.primaryDarker { background-color: var(--primary-color-darkest); }
+.strip.primaryDarkest { background-color: black; }
 
 /* Strips > large padding */
 

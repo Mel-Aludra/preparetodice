@@ -1,93 +1,168 @@
 {% extends 'front/_layout/_base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Deemed Unfit (fr){% endblock %}
 
 {% block body %}
 
-    <div class="strip backgrounded deemed-unfit adaptative titled">
-        <div>
-            <h1>Deemed Unfit</h1>
-            <p>[FR] - Si vous êtes MJ, retrouvez ici tous les éléments nécessaires à la gestion du jeu Deemed Unfit</p>
+    <div class="strip backgrounded deemed-unfit screenEmphasis">
+        <div class="widget contained ghost">
+            <h1 class="spaceAfter">[FR] - Deemed Unfit</h1>
+            <p class="spaceAfter">Deemed Unfit est un jeu de rôle sur table proposant d'incarner des personnages prédéfinis au sein d'une campagne d'une vingtaine d'heures. Le jeu est majoritairement articulé autour du scénario, de l'exploration et de la survie. Il est prévu pour un·e MJ et 2 à 3 joueurs et joueuses.</p>
+            <p class="spaceAfter">Retrouvez ici toutes les informations et ressources nécessaires pour, en tant que meneur ou meneuse de jeu, proposer Deemed Unfit à vos joueurs et joueuses.</p>
+            <div class="goToBottom" onclick="scrollToElement('start')"><p>⯆</p></div>
         </div>
     </div>
 
-    <div class="strip column horizontalBreath secondaryDarker">
+    <div class="strip column horizontalBreath primaryDarker" id="start">
+        <h2>Le point de départ de Deemed Unfit</h2>
+    </div>
+    <div class="strip backgrounded column corner img_forest breath">
+        <div></div>
+        <div class="widget">
+            <p class="spaceAfter">Au cours du XXIIème siècle, un enchaînement de catastrophes entraîne de lourdes pertes, tant sur le plan humain que sur le plan territorial. L'humanité, à la recherche d'une autre planète habitable, finit par abandonner l'idée d'une migration lorsqu'ils découvrent un artefact en orbite d'une planète baptisée Narayan. De cet artefact coule une matière jusqu'alors inconnue : la Shiva, et celle-ci leur permet de reprendre le dessus sur la Terre.</p>
+            <p class="spaceAfter">Afin de réserver la Terre et les territoires progressivement reconquis aux plus méritant·e·s, le gouvernement met en place un exil, qui consiste à condamner les personnes jugées "inaptes à la progression de l'humanité" à un voyage sans retour sur Narayan. C'est ainsi qu'une centaine d'exilé·e·s se retrouvent progressivement envoyé·e·s sur la planète, au niveau du Hameau de Narayan, une région habitable avec quelques constructions entamées à l'époque où l'humanité songeait encore à s'y installer.</p>
+            <p class="spaceAfter">Les joueurs et joueuses incarnent chacun·e un personnage prédéfini parmi Najma, Caleb et Willow, qui font partie d'un groupe d'exilé·e·s envoyé·e·s sur Narayan. La fin du voyage ne se déroule cependant pas comme prévu et leur navette s'écrase dans une forêt bordant le Hameau de Narayan. Parmi la vingtaine de voyageurs et voyageuses, seules neuf personnes survivent à l'accident.</p>
+            <p>Les heures passent mais personne ne leur vient en aide. Sans aucun moyen de communication, Najma, Caleb et Willow, parmi les plus aptes à s'aventurer à l'extérieur, sortent pour aller à la rencontre des autres exilé·e·s. Le Hameau de Narayan s'avère cependant bien plus vide et hostile que prévu.</p>
+        </div>
     </div>
 
-    <div class="strip primaryDarker expand img_forest breath corner">
+    <div class="strip column horizontalBreath secondaryDarker" id="start">
+        <h2>Les ressources pour proposer le jeu (MJ uniquement)</h2>
+    </div>
+    <div class="strip backgrounded column corner reverse img_cosmos breath">
         <div></div>
         <div class="presentationPanelsContainer">
-            <div>
-                <h2><span>La bible de Deemed Unfit</span></h2>
+            <div class="extend">
+                <h2><span>Bible du jeu</span></h2>
                 <p>
-                    La bible est réservée au meneur ou à la meneuse de jeu. Elle comprend toutes les informations nécessaires pour comprendre
-                    l'univers, le scénario, les personnages, les règles, les éléments de jeu, etc.
+                    La bible de Deemed Unfit permet à un·e MJ de proposer le jeu à ses joueurs et joueuses. Elle contient toutes les informations nécessaires pour comprendre l'univers, les mécaniques de jeu, les règles et l'histoire des personnages.
+                    Elle est strictement réservée à la personne qui prendra le rôle de MJ et les joueurs et joueuses ne doivent pas la lire.
                 </p>
-                <p class="spaceBefore">
-                    Si vous souhaitez proposer le jeu de rôle à votre entourage, la lecture de cette bible est nécessaire.
+                <p></p>
+                <div class="linksEmphasisContainer spaceBefore">
+                    <a target="_blank" href="https://drive.google.com/file/d/1fy4WLdT4Gw_60maYcbbRmEEOehlg-YK1/view?usp=sharing">Bible de Deemed Unfit (MJ)</a>
+                </div>
+            </div>
+            <div class="extend">
+                <h2><span>Carte et level design</span></h2>
+                <p>
+                    La carte globale permet d'avoir une idée d'ensemble du lieu dans lequel le jeu prendra place. Le level design, quant à lui, contient toutes les informations
+                    détaillées de la carte : emplacement des PNJs, des objets, des ennemis fixes, description des lieux, etc. Le level design est proposé au format PDF (plus léger)
+                    et au format AI (pour celles et ceux qui souhaiteraient faire des modifications). Comme la bible, la carte globale avec les noms ainsi que le level design sont des
+                    éléments strictement réservés à la personne qui prendra le rôle de MJ.
                 </p>
-                <p class="spaceBefore">
-                    La carte permet d'avoir une vision d'ensemble des lieux. Le level design, quant à lui, permet de savoir
-                    comment les éléments du jeu sont placés (ennemis, objets, etc.).
-                </p>
-                <div class="linksEmphasisContainer spaceBefore"><a href="">Bible de Deemed Unfit (MJ)</a></div>
-                <div class="linksEmphasisContainer"><a href="">Carte avec les noms des lieux)</a></div>
-                <div class="linksEmphasisContainer"><a href="">Level design complet (PDF)</a></div>
-                <div class="linksEmphasisContainer"><a href="">Level design complet (Illustrator)</a></div>
+                <p></p>
+                <div class="linksEmphasisContainer spaceBefore">
+                    <a target="_blank" href="https://drive.google.com/file/d/17CI9dKmKAQCkS8jAIBBJQubEyyQ3XZjj/view?usp=sharing">Level design (PDF)</a>
+                    <a target="_blank" href="https://drive.google.com/file/d/1V2_TmHdRFNsd4pf0jnC6SLa3DTYvHLOd/view?usp=sharing">Level design (Illustrator)</a>
+                </div>
+                <div class="linksEmphasisContainer">
+                    <a target="_blank" href="https://drive.google.com/file/d/1zZPd9GISgyM0RkkoRquuKLSRDRX7MHyn/view?usp=sharing">Carte (avec noms)</a>
+                    <a target="_blank" href="https://drive.google.com/file/d/1mHbJO8YoufuFzmHjYE_tHzZTE9WFFEhK/view?usp=sharing">Carte (sans noms)</a>
+                </div>
             </div>
             <div>
                 <h2><span>Documents joueurs et joueuses</span></h2>
                 <p>
-                    Pour accéder aux documents que vous pourrez donner à vos joueurs et vos joueuses, cliquez sur le personnage concerné :
+                    La personne qui prendra le rôle d'MJ, une fois les personnages attribués aux joueurs et aux joueuses, pourra leur communiquer
+                    le document lié à leur personnage. Ces documents ne contiennent que des informations qui peuvent être sues par les joueurs
+                    et les joueuses avant le début de jeu : une description de l'univers et du point de départ du jeu, des détails sur leurs personnages
+                    respectifs ainsi que les règles basiques du jeu.
                 </p>
-                <div class="linksEmphasisContainer spaceBefore"><a href="">Document sur Najma</a></div>
-                <div class="linksEmphasisContainer"><a href="">Document sur Caleb</a></div>
-                <div class="linksEmphasisContainer"><a href="">Document sur Willow</a></div>
-                <div class="linksEmphasisContainer"><a href="">Carte sans les noms des lieux</a></div>
+                <div class="linksEmphasisContainer spaceBefore"><a target="_blank" href="https://drive.google.com/file/d/1i3696bxNfFiTnfdwZ5UkMwGr284SC3Ni/view?usp=sharing">Document pour Najma</a></div>
+                <div class="linksEmphasisContainer"><a target="_blank" href="https://drive.google.com/file/d/1k68dvOGX2e7G6oxQPWYxYIgCGhtILK54/view?usp=sharing">Document pour Caleb</a></div>
+                <div class="linksEmphasisContainer"><a target="_blank" href="https://drive.google.com/file/d/1g61215nbwaAx2STb0dnhkDaKo-BV3mEV/view?usp=sharing">Document pour Willow</a></div>
             </div>
             <div>
-                <h2><span>Musiques de Deemed Unfit</span></h2>
+                <h2><span>Musiques</span></h2>
                 <p>
-                    Les musiques bla bla
+                    Un album, également baptisé Deemed Unfit, a été composé spécifiquement pour le jeu de rôle. Chaque musique correspond à un événement, un lieu ou un combat, et l'OST peut être utilisée durant le jeu.
                 </p>
-                <div class="linksEmphasisContainer spaceBefore"><a href="">Lien 1</a></div>
-                <div class="linksEmphasisContainer"><a href="">Lien 2</a></div>
+                <p class="spaceBefore">
+                    L'OST est disponible en deux versions : l'une pour l'écoute (album complet sur les plateformes de streaming type Spotify, Deezer, Soundcloud, etc.) et l'autre pour le jeu (versions bouclées de +- 50 minutes pour chaque musique afin d'être jouées sans interruption durant la partie).
+                </p>
+                <div class="linksEmphasisContainer spaceBefore"><a target="_blank" href="https://mel-aludra.com/deemed-unfit">OST de Deemed Unfit</a></div>
+                <div class="linksEmphasisContainer"><a target="_blank" href="https://drive.google.com/drive/folders/12rQQA6ZXxsnSTtAmF-1atmWqGFom6LuK?usp=sharing">Version bouclée</a></div>
             </div>
-            <div class="extend">
-                <h2><span>Créer le jeu de rôle Deemed Unfit sur Prepare to dice</span></h2>
+            <div>
+                <h2><span>Contact et retour d'expérience</span></h2>
                 <p>
-                    Cher MJ, chère MJ, si vous souhaitez proposer le jeu de rôle Deemed Unfit à votre entourage, vous n'avez qu'à cliquer sur
-                    le bouton "Créer le jeu Deemed Unfit" pour créer un jeu avec tous les éléments nécessaires pour y jouer (personnages, compétences,
-                    objets, etc.). Vous le retrouverez après dans la section "My games" et serez automatiquement MJ. Vous n'aurez plus qu'à inviter
-                    vos joueurs et joueuses (dans l'admin, rubrique "Game settings" > "Invitation"). Une fois l'invitation acceptée, vous pourrez leur
-                    attribuer leur personnage (dans l'admin, rubrique "Game settings" > "Player(s)" > "Update user characters").
+                    Si vous avez des questions sur l'univers ou les règles, n'hésitez pas à me contacter par mail (mel.aludra@gmail.com), je tenterai de répondre
+                    au plus vite.
                 </p>
-                {% if app.user is not null %}
-                    <div class="linksEmphasisContainer">
-                        <a href="{{ path('front_deemedUnfit_add') }}">Créer un jeu sur le template Deemed Unfit</a>
-                    </div>
-                {% else %}
-                    <br />
-                    <p class="labelRow damage">Vous devez avoir un compte et être loggé pour pouvoir créer un jeu sur le template de Deemed Unfit</p>
-                {% endif %}
+                <p class="spaceBefore">
+                    Si vous décidez de proposer le jeu à vos joueurs et joueuses, n'hésitez pas à me faire un retour d'expérience !
+                </p>
             </div>
         </div>
     </div>
 
-    <div class="strip column secondaryDarker breath">
-        <p>Le jeu et les musiques ont été créés par <strong>Mel Aludra</strong> et les illustrations par <strong>Chlowski</strong> :</p>
-        <div class="spaceBefore">
+    <div class="strip column horizontalBreath primaryDarker" id="start">
+        <h2>Gérer le jeu de rôle sur Prepare to dice</h2>
+    </div>
+    <div class="strip backgrounded column corner breath">
+        <div></div>
+        <div class="widget">
+            <p>
+                Sur Preparetodice, vous pouvez gérer vos jeux de rôle en paramétrant vos propres ressources, attributs, compétences, personnages, inventaires, etc. et en utilisant le moteur de combat en tour par tour.
+            </p>
+            <p class="spaceBefore">
+                En utilisant Preparetodice, vous permettez également à vos joueurs et joueuses d'avoir accès à leur fiche personnage (par exemple sur leur téléphone pendant la partie, afin que toutes leurs données soient actualisées en direct sans avoir besoin de calculer quoique ce soit de tête).
+            </p>
+            <p class="spaceBefore">
+                Deemed Unfit a été prévu pour fonctionner avec Preparetodice et l'application propose de créer un jeu en utilisant toutes les données nécessaires à Deemed Unfit déjà intégrées à votre jeu. Ainsi, tous les personnages, ennemis, objets, armes, etc. seront déjà dans l'interface MJ sans que vous n'ayez besoin de paramétrer quoique ce soit. Vous n'aurez plus qu'à demander à vos joueurs et joueuses de créer un compte également pour les inviter puis leur attribuer leurs personnages respectifs.
+            </p>
+            {% if app.user is not null %}
+                <div class="linksEmphasisContainer spaceBefore">
+                    <a href="{{ path('front_deemedUnfit_add') }}">Créer un jeu sur le template Deemed Unfit</a>
+                </div>
+            {% else %}
+                <br />
+                <p class="labelRow damage">Vous devez avoir un compte et être loggé pour pouvoir créer un jeu sur le template de Deemed Unfit</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="strip column horizontalBreath secondaryDarker"><h2>Crédits et mot de Mel Aludra</h2></div>
+    <div class="strip column backgrounded img_modernLandscape corner reverse secondaryDarker breath">
+        <div></div>
+        <p>Le scénario, les personnages, les règles du jeu ainsi que les musiques ont été créés par <strong>Mel Aludra</strong> :</p>
+        <div class="genericFlex">
             <a class="solidLink" href="https://twitter.com/MelAludra" target="_blank">Twitter Mel Aludra</a>
+            <a class="solidLink" style="margin-left: 12px" href="https://mel-aludra.com" target="_blank">Musiques Mel Aludra</a>
         </div>
-        <div class="spaceBefore">
-            <a class="solidLink" href="https://mel-aludra.com" target="_blank">Musiques Mel Aludra</a>
-        </div>
-        <div class="spaceBefore">
+        <p class="spaceBefore">L'illustration principale, la pochette de l'OST et le character design des trois personnages principaux ont été créés par la très talentueuse <strong>Chlowski</strong> :</p>
+        <div class="genericFlex">
             <a class="solidLink" href="https://twitter.com/Chlowski" target="_blank">Twitter Chlowski</a>
+            <a class="solidLink" style="margin-left: 12px" href="https://chlowski.artstation.com/" target="_blank">Artstation Chlowski</a>
         </div>
-        <div class="spaceBefore">
-            <a class="solidLink" href="https://chlowski.artstation.com/" target="_blank">Artstation Chlowski</a>
+        <div class="widget ghost spaceBefore">
+            <p><i>Bonjour, je suis Mel Aludra, créateur de Deemed Unfit.</i></p>
+            <p class="spaceBefore">
+                <i>
+                    Depuis plusieurs années, je propose des jeux de rôle à mon entourage proche, des jeux pour lesquels je me plais à créer mon propre univers et
+                    mes propres règles. pour Deemed Unfit, j'ai décidé d'aller un peu plus loin en rédigeant une bible qui permettra à quiconque souhaiterait
+                    mettre en place le jeu et le proposer à ses ami·e·s de le faire.
+                </i>
+            </p>
+            <p class="spaceBefore">
+                <i>
+                    L'application Preparetodice a avant tout été créée pour mes propres besoins. J'ai tenté de la stabiliser au maximum afin de permettre
+                    aux autres MJ de pouvoir l'utiliser s'ils le souhaitaient.
+                </i>
+            </p>
+            <p class="spaceBefore">
+                <i>
+                    Je suis également compositeur de musique, et j'ai donc décidé de créer l'OST de Deemed Unfit afin de baigner mes joueurs et mes joueuses
+                    dans l'ambiance que j'avais prévue pour eux.
+                </i>
+            </p>
+            <p class="spaceBefore">
+                <i>
+                    J'ai pu déjà proposer le jeu à mes ami·e·s avant de le publier. Ils ont beaucoup apprécié, alors j'espère de tout coeur que ce sera le cas des votres
+                    aussi !
+                </i>
+            </p>
         </div>
     </div>
-
 {% endblock %}

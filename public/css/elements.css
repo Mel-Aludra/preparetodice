@@ -176,6 +176,7 @@ div.largeSeparator {
 /* Success / error messages */
 
 .infoPlate {
+    z-index: 99;
     font-family: "PtdRegular", sans-serif;
     position: fixed;
     bottom: 9px;
