@@ -23,7 +23,11 @@
 /* Strips > large padding */
 
 .strip.breath { padding: 45px 180px; width: calc(100% - 360px); }
+.strip.largeBreath { padding: 45px 180px; width: calc(100% - 360px); }
 .strip.horizontalBreath { padding-left: 180px; padding-right: 180px; width: calc(100% - 360px); }
+@media all AND (min-width: 1600px) {
+    .strip.largeBreath { padding: 45px 300px; width: calc(100% - 600px); }
+}
 
 /* --- BACKGROUNDED --- */
 
