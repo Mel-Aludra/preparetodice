@@ -34,7 +34,7 @@ class DeemedUnfitController extends AbstractController
      * @param HydrateGameService $hydrateGameService
      * @return Response
      */
-    public function addGame(EntityManagerInterface $manager, Request $request, HydrateGameService $hydrateGameService)
+    public function addDuGame(EntityManagerInterface $manager, Request $request, HydrateGameService $hydrateGameService)
     {
         $game = new Game();
         $game->setMoneyTerm("Argent");
