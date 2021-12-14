@@ -110,6 +110,7 @@
     .strip.focus { align-items: flex-start; }
     .strip { flex-direction: column; align-items: center; width: calc(100% - 30px); }
     .strip.breath { padding: 15px; width: calc(100% - 30px); }
+    .strip.largeBreath { padding: 15px; width: calc(100% - 30px); }
     .strip.horizontalBreath { padding-left: 15px; padding-right: 15px; width: calc(100% - 30px); }
     .corner>div:first-child { display: none; }
     .strip.backgrounded.screenEmphasis { height: calc(100vh - var(--header-height)); }
